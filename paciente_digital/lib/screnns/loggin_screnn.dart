@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paciente_digital/routs/app_routes.dart';
 
 class LoginScrenn extends StatelessWidget {
   @override
@@ -10,7 +11,7 @@ class LoginScrenn extends StatelessWidget {
           child: Text(
             'Paciente Digital',
             style: TextStyle(
-              color: Colors.amberAccent,
+              color: Colors.grey[100],
             ),
           ),
         ),
@@ -40,7 +41,9 @@ class LoginScrenn extends StatelessWidget {
               child: Container(
                 child: Text('Entrar'),
               ),
-              onPressed: () {},
+              onPressed: () {
+               Navigator.of(context).pushReplacementNamed(AppRoutes.MAIN);
+              },
             ),
           ],
         ),
