@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paciente_digital/screnns/home_screnn.dart';
 import 'package:paciente_digital/screnns/loggin_screnn.dart';
-import 'package:paciente_digital/routs/app_routes.dart';
+import 'package:paciente_digital/utils/app_routes.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,8 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: '',
       theme: ThemeData(
-        primaryColor: Colors.lightGreen,
-        accentColor: Colors.teal,
+        primaryColor: Colors.black,
+        accentColor: Colors.grey,
       ),
       debugShowCheckedModeBanner: false,
       home: LoginScrenn(),

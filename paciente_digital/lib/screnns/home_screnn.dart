@@ -15,37 +15,10 @@ class HomeScrenn extends StatelessWidget {
         ),
         backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: Container(
-        child: GridTile(
-          child: Column(
-            children: [
-              Card(
-                margin: EdgeInsets.all(10),
-                color: Theme.of(context).primaryColor,
-                child: Row(
-                  children: [
-                    Container(
-                      height: 120,
-                      width: 120,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50)),
-                      child: Icon(
-                        Icons.account_box_rounded,
-                        color: Colors.blueGrey,
-                        size: 125,
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        Text(''),
-                      ],
-                    )
-                  ],
-                ),
-              )
-            ],
+      body: ListView.builder(itemBuilder: (ctx, index)=>
+          ListTile(
+
           ),
-        ),
       ),
     );
   }

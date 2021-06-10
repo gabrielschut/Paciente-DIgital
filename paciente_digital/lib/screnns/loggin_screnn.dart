@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paciente_digital/routs/app_routes.dart';
+import 'package:paciente_digital/utils/app_routes.dart';
 
 class LoginScrenn extends StatelessWidget {
   @override
