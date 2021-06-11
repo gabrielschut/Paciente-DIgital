@@ -1,53 +1,51 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 import 'package:paciente_digital/utils/app_routes.dart';
 
 class LoginScrenn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: Center(
-          child: Text(
-            'Paciente Digital',
-            style: TextStyle(
-              color: Colors.grey[100],
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
+          title: Center(
+            child: Text(
+              'Paciente Digital',
+              style: TextStyle(
+                color: Colors.grey[100],
+              ),
             ),
           ),
         ),
-      ),
-      body: Container(
-        color: Theme.of(context).accentColor,
-        child: Column(
-          children: [
-            Container(
-              height: 120,
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              child: Icon(
-                Icons.admin_panel_settings,
-                size: 300,
-                color: Colors.amberAccent,
-              ),
-            ),
-            Container(
-              height: 80,
-            ),
-            FloatingActionButton(
-             splashColor: Colors.white60,
-              elevation: 10,
-              backgroundColor: Theme.of(context).primaryColor,
-              child: Container(
-                child: Text('Entrar'),
-              ),
-              onPressed: () {
-               Navigator.of(context).pushReplacementNamed(AppRoutes.MAIN);
-              },
-            ),
-          ],
-        ),
-      ),
+        body: Stack(children: [
+          Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+              colors: [
+                Color.fromRGBO(10, 47, 17, 0.75),
+                Color.fromRGBO(0, 0, 0, 1.0),
+              ],
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+            )),
+          ),
+          SingleChildScrollView(
+            padding: EdgeInsets.only(top: 110),
+            child: Container(
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 200,
+                      width: 300,
+                      color: Colors.white,
+                    ),
+                  ],
+                )),
+          ),
+        ]),
     );
   }
 }
