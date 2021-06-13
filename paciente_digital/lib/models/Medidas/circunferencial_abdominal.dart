@@ -14,13 +14,12 @@ class CircunferenciaAbdominal{
     return circunferencia;
   }
 
-  Map<String, dynamic> toMap(){
-    var map = <String, dynamic>{
-      'id' : id,
-      'idPaciente' : idPaciente,
-      'circunferencia': circunferencia,
-      'date': date,
-    };
+  Future<Map<String, dynamic>> toMap() async {
+    var map = Map<String,dynamic>();
+    map['id'] = id;
+    map['idPaciente'] = idPaciente;
+    map['circunferencia'] = circunferencia;
+    map['date'] = date;
     return map;
   }
 

@@ -33,14 +33,13 @@ class Medicamento {
     return dataFim = novaData;
   }
 
-  Map<String, dynamic> toMap(){
-    var map = <String, dynamic>{
-      'id' : id,
-      'idPaciente' : idPaciente,
-      'dataInicio': dataInicio,
-      'dataFim' : dataFim,
-      'nome': nome,
-    };
+  Future<Map<String, dynamic>> toMap() async {
+    var map = Map<String,dynamic>();
+    map['id'] = id;
+    map['idPaciente'] = idPaciente;
+    map['nome'] = nome;
+    map['dataInicio'] = dataInicio;
+    map['dataFim'] = dataFim;
     return map;
   }
 

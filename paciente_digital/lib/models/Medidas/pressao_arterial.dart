@@ -27,14 +27,13 @@ class PressaoArterial {
     return date;
   }
 
-  Map<String, dynamic> toMap() {
-    var map = <String, dynamic>{
-      'id': id,
-      'idPaciente': idPaciente,
-      'pressaoMax': pressaoMax,
-      'pressaoMin': pressaoMin,
-      'date': date,
-    };
+  Future<Map<String, dynamic>> toMap() async {
+    var map = Map<String,dynamic>();
+    map['id'] = id;
+    map['idPaciente'] = idPaciente;
+    map['pMaxima'] = pMaxima;
+    map['pMinima'] = pMinima;
+    map['date'] = date;
     return map;
   }
 

@@ -14,13 +14,12 @@ class NivelGlicemia{
     return glicemia;
   }
 
-  Map<String, dynamic> toMap(){
-    var map = <String, dynamic>{
-      'id' : id,
-      'idPaciente' : idPaciente,
-      'glicemia': glicemia,
-      'date': date,
-    };
+  Future<Map<String, dynamic>> toMap() async {
+    var map = Map<String,dynamic>();
+    map['id'] = id;
+    map['idPaciente'] = idPaciente;
+    map['glicemia'] = glicemia;
+    map['date'] = date;
     return map;
   }
 
@@ -30,7 +29,6 @@ class NivelGlicemia{
     item.idPaciente = map['idPaciente'];
     item.glicemia = map['glicemia'];
     item.date = map['date'];
-
     return item;
   }
 }

@@ -14,13 +14,12 @@ class Peso {
     return peso;
   }
 
-  Map<String, dynamic> toMap() {
-    var map = <String, dynamic>{
-      'id': id,
-      'idPaciente': idPaciente,
-      'peso': peso,
-      'date': date,
-    };
+  Future<Map<String, dynamic>> toMap() async {
+    var map = Map<String,dynamic>();
+    map['id'] = id;
+    map['idPaciente'] = idPaciente;
+    map['peso'] = peso;
+    map['date'] = date;
     return map;
   }
 
