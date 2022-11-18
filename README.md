@@ -1,7 +1,16 @@
-# Paciente Digital
+# paciente_digital
 
-Esse projto foi idealizado para ser um aplicativo android, que auxilie no trabalho dos enfermeiros
- para que eles passem menos tempo preenchendo papeis e possam ter mais tempo para realizar o atendimentos dos paciêntes.
+Trabalho de graduação
 
-Aquele que tiver interesse em dar continuidade ao projeto, e até publica-lo , peço que faça de forma gratuíta. 
-Atenciosamente, Gabriel
+## Getting Started
+
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.

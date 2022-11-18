@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Paciente-DIgital.iml" filepath="$PROJECT_DIR$/.idea/Paciente-DIgital.iml" />
+      <module fileurl="file://$PROJECT_DIR$/paciente_digital.iml" filepath="$PROJECT_DIR$/paciente_digital.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/paciente_digital_android.iml" filepath="$PROJECT_DIR$/android/paciente_digital_android.iml" />
     </modules>
   </component>
 </project>
