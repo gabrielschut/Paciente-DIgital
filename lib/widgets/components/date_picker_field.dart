@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class DatePickerField extends StatefulWidget {
   final String hint;
-  final String fieldName;
   final String suffix;
+  final String dateFieldName;
+  final TextEditingController? initialDateController;
 
   const DatePickerField({
     Key? key,
     required this.hint,
-    required this.fieldName,
     required this.suffix,
+    required this.dateFieldName,
+    this.initialDateController,
   }) : super(key: key);
 
   @override
@@ -17,55 +20,47 @@ class DatePickerField extends StatefulWidget {
 }
 
 class _DatePickerFieldState extends State<DatePickerField> {
-  DateTime _dateTime = DateTime.now();
+  final maskDate = MaskTextInputFormatter(mask: '##/##/####');
 
   @override
   Widget build(BuildContext context) {
     return Material(
       child: Padding(
-          padding: EdgeInsets.fromLTRB(16, 8, 0, 8),
+          padding: const EdgeInsets.fromLTRB(16, 8, 0, 8),
           child: Row(
             children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 12, 0),
-                child: Text("Data inicial"),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 24),
-                child: IconButton(
-                  color: Colors.lightBlue,
-                  iconSize: 45,
-                  splashColor: Colors.lightBlue[100],
-                  onPressed: () {
-                    CalendarDatePicker(
-                      initialDate: DateTime.now(),
-                      lastDate: DateTime(2130),
-                      firstDate: DateTime(1900),
-                      onDateChanged: (DateTime value) {
-                        _dateTime = value;
-                      },
-                    );
-                  }, icon: Icon(Icons.calendar_month),
+                padding: const EdgeInsets.fromLTRB(0, 0, 12, 16),
+                child: Text(
+                  widget.dateFieldName,
+                  style: const TextStyle(
+                    color: Colors.lightBlue,
+                  ),
                 ),
               ),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(40, 0, 8, 0),
+                child: SizedBox(),
+              ),
               Padding(
-                padding: EdgeInsets.all(8),
-                child: Container(
+                padding: const EdgeInsets.all(8),
+                child: SizedBox(
                   width: 230,
-                  child: TextFormField(
-                    style: TextStyle(
-                      color: Colors.black87,
-                    ),
-                    decoration: InputDecoration(
-                      helperText: widget.suffix,
-                      hintText: widget.hint,
-                      labelText: widget.fieldName,
-                      labelStyle: TextStyle(
-                        color: Colors.lightBlue,
+                  child: Flexible(
+                    child: TextFormField(
+                      inputFormatters: [maskDate],
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                        signed: false,
                       ),
-                      suffixText: widget.suffix,
+                      style: const TextStyle(
+                        color: Colors.black87,
+                      ),
+                      decoration: InputDecoration(
+                        helperText: "",
+                        hintText: widget.hint,
+                      ),
                     ),
-                    initialValue: _dateTime.toString(),
                   ),
                 ),
               ),

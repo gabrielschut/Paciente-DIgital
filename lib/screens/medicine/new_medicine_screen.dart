@@ -100,9 +100,21 @@ class _NewMedicineState extends State<NewMedicine> {
               ],
             ),
           ),
-          DatePickerField(
-              fieldName: "Data Incial", hint: "01/01/2000", suffix: ""),
+          Padding(
+            padding: EdgeInsets.all(8),
+            child: DatePickerField(
+              hint: "01/01/2001",
+              dateFieldName: "data inicial",
+              suffix: "",
+            ),
+          ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.check, color: Colors.white,),
+        onPressed: (){
+          //chamar o save medicine
+        },
       ),
     );
   }

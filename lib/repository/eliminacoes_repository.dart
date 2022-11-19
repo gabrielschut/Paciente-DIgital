@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:paciente_digital/model/afericoes/eliminaces.dart';
+import 'package:paciente_digital/model/afericoes/eliminacoes.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../db/database.dart';

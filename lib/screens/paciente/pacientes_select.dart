@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/cards/paciente_card.dart';
+import '../../widgets/cards/paciente_card.dart';
 
 class PacienteSelect extends StatefulWidget {
   const PacienteSelect({Key? key}) : super(key: key);

@@ -19,6 +19,11 @@ class DropdownField extends StatelessWidget {
         ),
       ),
       value: (value != null)? null : value,
+      style: TextStyle(
+        fontSize: 14,
+        color: Colors.black,
+
+      ),
       iconSize: 28,
       iconEnabledColor: Colors.lightBlue,
     );
