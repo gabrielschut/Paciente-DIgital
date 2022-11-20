@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paciente_digital/widgets/components/date_picker_field.dart';
 import 'package:paciente_digital/widgets/components/dropdown_field.dart';
 import 'package:paciente_digital/widgets/components/multilene_field.dart';
 
@@ -10,6 +11,8 @@ class NewEliminacao extends StatefulWidget {
 }
 
 class _NewEliminacaoState extends State<NewEliminacao> {
+  final TextEditingController _dateController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +29,7 @@ class _NewEliminacaoState extends State<NewEliminacao> {
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.fromLTRB(8, 32, 8, 8),
+            padding: EdgeInsets.fromLTRB(8, 16, 16, 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -52,7 +55,16 @@ class _NewEliminacaoState extends State<NewEliminacao> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
+            padding: EdgeInsets.fromLTRB(16, 0, 0, 0),
+            child: DatePickerField(
+              hint: "01/01/2000",
+              dateFieldName: "Data      ",
+              suffix: "",
+              initialDateController: _dateController,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
             child: MultilineField(),
           ),
         ],

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class PacienteDIgitalInputTheme{
   OutlineInputBorder _buildBorder(Color color){
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(24),
+      borderRadius: BorderRadius.circular(20),
       borderSide: BorderSide(
         color: color,
         width: 2.0,
@@ -19,7 +19,7 @@ class PacienteDIgitalInputTheme{
   }
 
   InputDecorationTheme theme() => InputDecorationTheme(
-    contentPadding: EdgeInsets.all(16),
+    contentPadding: EdgeInsets.all(20),
     floatingLabelBehavior:  FloatingLabelBehavior.always,
     enabledBorder: _buildBorder(Colors.lightBlueAccent),
     errorBorder: _buildBorder(Colors.red.shade500),

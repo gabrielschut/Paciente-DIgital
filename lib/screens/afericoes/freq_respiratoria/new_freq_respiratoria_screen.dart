@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:paciente_digital/widgets/components/date_picker_field.dart';
 import 'package:paciente_digital/widgets/components/number_field.dart';
 
-class NewFreqCardiaca extends StatefulWidget {
-  const NewFreqCardiaca({Key? key}) : super(key: key);
+class NewFreqRespiratoria extends StatefulWidget {
+  const NewFreqRespiratoria({Key? key}) : super(key: key);
 
   @override
-  State<NewFreqCardiaca> createState() => _NewFreqCardiacaState();
+  State<NewFreqRespiratoria> createState() => _NewFreqRespiratoriaState();
 }
 
-class _NewFreqCardiacaState extends State<NewFreqCardiaca> {
+class _NewFreqRespiratoriaState extends State<NewFreqRespiratoria> {
   final TextEditingController _dateController = TextEditingController();
 
   @override
@@ -18,7 +18,7 @@ class _NewFreqCardiacaState extends State<NewFreqCardiaca> {
       appBar: AppBar(
         title: const Center(
           child: Text(
-            "Frequência Cardiaca",
+            "Frequência Respiratória",
             style: TextStyle(
               color: Colors.white,
             ),
@@ -60,9 +60,9 @@ class _NewFreqCardiacaState extends State<NewFreqCardiaca> {
                   child: SizedBox(
                     width: 230,
                     child: NumberField(
-                      hint: "80.5",
-                      fieldName: "Batimentos / min",
-                      suffix: "/min",
+                      hint: "80",
+                      fieldName: "Respirações / min",
+                      suffix: "mrm",
                     ),
                   ),
                 ),

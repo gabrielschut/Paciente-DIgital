@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:paciente_digital/widgets/components/date_picker_field.dart';
 import 'package:paciente_digital/widgets/components/number_field.dart';
 
-class NewFreqCardiaca extends StatefulWidget {
-  const NewFreqCardiaca({Key? key}) : super(key: key);
+class NewPressaoArterial extends StatefulWidget {
+  const NewPressaoArterial({Key? key}) : super(key: key);
 
   @override
-  State<NewFreqCardiaca> createState() => _NewFreqCardiacaState();
+  State<NewPressaoArterial> createState() => _NewPressaoArterialState();
 }
 
-class _NewFreqCardiacaState extends State<NewFreqCardiaca> {
+class _NewPressaoArterialState extends State<NewPressaoArterial> {
   final TextEditingController _dateController = TextEditingController();
 
   @override
@@ -18,7 +18,7 @@ class _NewFreqCardiacaState extends State<NewFreqCardiaca> {
       appBar: AppBar(
         title: const Center(
           child: Text(
-            "Frequência Cardiaca",
+            "Pressão Arterial",
             style: TextStyle(
               color: Colors.white,
             ),
@@ -42,9 +42,9 @@ class _NewFreqCardiacaState extends State<NewFreqCardiaca> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(24, 0, 16, 24),
+                  padding: EdgeInsets.fromLTRB(24, 0, 16, 18),
                   child: Text(
-                    'Frequência',
+                    'Preesão Art.',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.lightBlue,
@@ -53,16 +53,35 @@ class _NewFreqCardiacaState extends State<NewFreqCardiaca> {
                   ),
                 ),
                 SizedBox(
-                  width: 30,
+                  width: 15,
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(8, 0, 24, 0),
                   child: SizedBox(
                     width: 230,
                     child: NumberField(
-                      hint: "80.5",
-                      fieldName: "Batimentos / min",
-                      suffix: "/min",
+                      hint: "120",
+                      fieldName: "Sistólica | Maxima",
+                      suffix: "mmHg",
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                SizedBox(
+                  width: 120,
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(8, 0, 24, 0),
+                  child: SizedBox(
+                    width: 230,
+                    child: NumberField(
+                      hint: "80",
+                      fieldName: "Diastólica | Minima",
+                      suffix: "mmHg",
                     ),
                   ),
                 ),
@@ -73,7 +92,7 @@ class _NewFreqCardiacaState extends State<NewFreqCardiaca> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          //chamar o save frequencia cardiaca.
+          //chamar o save glicemia.
         },
         child: Icon(
           Icons.check,

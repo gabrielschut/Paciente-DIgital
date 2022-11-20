@@ -3,7 +3,6 @@ class PressaoArterial {
   int idPaciente;
   final DateTime createAt;
   int maxima;
-
   int minima;
 
   PressaoArterial(

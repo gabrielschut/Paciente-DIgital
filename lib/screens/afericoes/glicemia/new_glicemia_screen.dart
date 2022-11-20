@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:paciente_digital/widgets/components/date_picker_field.dart';
 import 'package:paciente_digital/widgets/components/number_field.dart';
 
-class NewFreqCardiaca extends StatefulWidget {
-  const NewFreqCardiaca({Key? key}) : super(key: key);
+class NewGlicemia extends StatefulWidget {
+  const NewGlicemia({Key? key}) : super(key: key);
 
   @override
-  State<NewFreqCardiaca> createState() => _NewFreqCardiacaState();
+  State<NewGlicemia> createState() => _NewGlicemiaState();
 }
 
-class _NewFreqCardiacaState extends State<NewFreqCardiaca> {
+class _NewGlicemiaState extends State<NewGlicemia> {
   final TextEditingController _dateController = TextEditingController();
 
   @override
@@ -18,7 +18,7 @@ class _NewFreqCardiacaState extends State<NewFreqCardiaca> {
       appBar: AppBar(
         title: const Center(
           child: Text(
-            "Frequência Cardiaca",
+            "Aferição de Glicemia",
             style: TextStyle(
               color: Colors.white,
             ),
@@ -44,7 +44,7 @@ class _NewFreqCardiacaState extends State<NewFreqCardiaca> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(24, 0, 16, 24),
                   child: Text(
-                    'Frequência',
+                    'Glicose',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.lightBlue,
@@ -60,9 +60,9 @@ class _NewFreqCardiacaState extends State<NewFreqCardiaca> {
                   child: SizedBox(
                     width: 230,
                     child: NumberField(
-                      hint: "80.5",
-                      fieldName: "Batimentos / min",
-                      suffix: "/min",
+                      hint: "100",
+                      fieldName: "Valor",
+                      suffix: "ml/dl",
                     ),
                   ),
                 ),
@@ -73,7 +73,7 @@ class _NewFreqCardiacaState extends State<NewFreqCardiaca> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          //chamar o save frequencia cardiaca.
+          //chamar o save glicemia.
         },
         child: Icon(
           Icons.check,

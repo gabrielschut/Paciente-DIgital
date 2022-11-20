@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paciente_digital/screens/afericoes/frequencia_cardiaca/new_freq_cardiaca_screen.dart';
+import 'package:paciente_digital/screens/afericoes/reclamacoes/new_reclamacoes_screen.dart';
 import 'package:paciente_digital/theme/paciente_digital_input_theme.dart';
 
 void main() {
@@ -22,7 +22,7 @@ class _PacienteDigitalState extends State<PacienteDigital> {
         primarySwatch: Colors.lightBlue,
         inputDecorationTheme: PacienteDIgitalInputTheme().theme(),
       ),
-      home: NewFreqCardiaca(),
+      home: NewReclamacao(),
     );
   }
 }
