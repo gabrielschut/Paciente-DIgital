@@ -65,129 +65,186 @@ class _PacienteInfoState extends State<PacienteInfo> {
                   padding: const EdgeInsets.only(top: 0),
                   child: Container(
                     decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                        width: 1,
-                        color: Colors.black87,
+                        border: Border(
+                      bottom: BorderSide(
+                        width: 2,
+                        color: Colors.blueAccent,
                       ),
-                      )
-                    ),
+                    )),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
                           "Sexo",
-                          style: TextStyle(fontSize: 22, color: Colors.black87),
+                          style: TextStyle(fontSize: 22, color: Colors.blueAccent),
                         ),
                         Text(
                           widget.paciente.sexo,
-                          style: TextStyle(fontSize: 22, color: Colors.black87),
+                          style: TextStyle(fontSize: 22, color: Colors.blueAccent),
                         ),
                       ],
                     ),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Idade",
-                      style: TextStyle(fontSize: 22, color: Colors.black87),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border(
+                    bottom: BorderSide(
+                      width: 2,
+                      color: Colors.blueAccent,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(right: 32),
-                      child: Text(
-                        widget.paciente.idade.toString(),
-                        style: TextStyle(fontSize: 22, color: Colors.black87),
+                  )),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Idade",
+                        style: TextStyle(fontSize: 22, color: Colors.blueAccent),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.only(right: 32),
+                        child: Text(
+                          widget.paciente.idade.toString(),
+                          style: TextStyle(fontSize: 22, color: Colors.blueAccent),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Tipo Sanguíneo",
-                      style: TextStyle(fontSize: 22, color: Colors.black87),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border(
+                    bottom: BorderSide(
+                      width: 2,
+                      color: Colors.blueAccent,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(right: 28),
-                      child: Text(
-                        widget.paciente.tipoSanguineo != null
-                            ? widget.paciente.tipoSanguineo.toString()
-                            : "???",
-                        style: TextStyle(fontSize: 22, color: Colors.black87),
+                  )),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Tipo Sanguíneo",
+                        style: TextStyle(fontSize: 22, color: Colors.blueAccent),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.only(right: 28),
+                        child: Text(
+                          widget.paciente.tipoSanguineo != null
+                              ? widget.paciente.tipoSanguineo.toString()
+                              : "???",
+                          style: TextStyle(fontSize: 22, color: Colors.blueAccent),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Peso",
-                      style: TextStyle(fontSize: 22, color: Colors.black87),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border(
+                    bottom: BorderSide(
+                      width: 2,
+                      color: Colors.blueAccent,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(right: 28),
-                      child: Text(
-                        widget.paciente.peso != null
-                            ? widget.paciente.peso.toString()
-                            : "???",
-                        style: TextStyle(fontSize: 22, color: Colors.black87),
+                  )),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Peso",
+                        style: TextStyle(fontSize: 22, color: Colors.blueAccent),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.only(right: 20),
+                        child: Text(
+                          widget.paciente.peso != null
+                              ? widget.paciente.peso.toString()
+                              : "???",
+                          style: TextStyle(
+                            fontSize: 21,
+                            color: Colors.blueAccent,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Diabetico?",
-                      style: TextStyle(fontSize: 22, color: Colors.black87),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border(
+                    bottom: BorderSide(
+                      width: 2,
+                      color: Colors.blueAccent,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(right: 20),
-                      child: Text(
-                        widget.paciente.diabetis ? "Sim" : "Não",
-                        style: TextStyle(fontSize: 22, color: Colors.black87),
+                  )),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Diabético",
+                        style: TextStyle(fontSize: 22, color: Colors.blueAccent),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.only(right: 20),
+                        child: Text(
+                          widget.paciente.diabetis ? "Sim" : "Não",
+                          style: TextStyle(fontSize: 22, color: Colors.blueAccent),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Cardíaco?",
-                      style: TextStyle(fontSize: 22, color: Colors.black87),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border(
+                    bottom: BorderSide(
+                      width: 2,
+                      color: Colors.blueAccent,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(right: 20),
-                      child: Text(
-                        widget.paciente.cardiaco ? "Sim" : "Não",
-                        style: TextStyle(fontSize: 22, color: Colors.black87),
+                  )),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Cardíaco",
+                        style: TextStyle(fontSize: 22, color: Colors.blueAccent),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.only(right: 20),
+                        child: Text(
+                          widget.paciente.cardiaco ? "Sim" : "Não",
+                          style: TextStyle(fontSize: 22, color: Colors.blueAccent),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Circ. Abdominal",
-                      style: TextStyle(fontSize: 22, color: Colors.black87),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border(
+                    bottom: BorderSide(
+                      width: 2,
+                      color: Colors.blueAccent,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(right: 12),
-                      child: Text(
-                        widget.paciente.circunferenciaAbdominal != null
-                            ? widget.paciente.circunferenciaAbdominal.toString()
-                            : "???",
-                        style: TextStyle(fontSize: 22, color: Colors.black87),
+                  )),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Circ. Abdominal",
+                        style: TextStyle(fontSize: 22, color: Colors.blueAccent),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.only(right: 20),
+                        child: Text(
+                          widget.paciente.circunferenciaAbdominal != null
+                              ? widget.paciente.circunferenciaAbdominal
+                                  .toString()
+                              : "???",
+                          style: TextStyle(fontSize: 21, color: Colors.blueAccent),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

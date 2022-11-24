@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paciente_digital/model/paciente.dart';
-import 'package:paciente_digital/screens/paciente/paciente_info_screen.dart';
+import 'package:paciente_digital/screens/afericoes/select_afericao_type_screen.dart';
 import 'package:paciente_digital/theme/paciente_digital_input_theme.dart';
 
 void main() {
@@ -37,7 +37,7 @@ class _PacienteDigitalState extends State<PacienteDigital> {
         primarySwatch: Colors.lightBlue,
         inputDecorationTheme: PacienteDIgitalInputTheme().theme(),
       ),
-      home: PacienteInfo(paciente: paciente,),
+      home: SelectAfericaoType(paciente: paciente),
     );
   }
 }
