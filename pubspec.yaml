@@ -31,14 +31,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  flutter_localizations: # Add this line
+    sdk: flutter         # Add this line
   # data Bank
   sqflite: ^2.0.0+3
 
   #format datetime
   intl: ^0.17.0
 
+  #aplica mascara em campos de texto
   mask_text_input_formatter: ^2.4.0
+
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

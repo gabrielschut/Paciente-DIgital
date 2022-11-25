@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paciente_digital/model/paciente.dart';
+import 'package:paciente_digital/widgets/cards/medicine_card.dart';
 
 class SelectAfericaoType extends StatefulWidget {
   final Paciente paciente;
@@ -54,7 +55,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
               ),
             ),
           ),
-          height: 550,
+          height: 580,
           width: 380,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
@@ -65,7 +66,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                   padding: EdgeInsets.fromLTRB(8, 36, 0, 10),
                   child: Container(
                     width: 300,
-                    height: 50,
+                    height: 60,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
@@ -77,7 +78,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                       child: Text(
                         "Eliminações",
                         style: TextStyle(color: Colors.white,
-                          fontSize: 18,
+                          fontSize: 20,
                         ),
                       ),
                     ),
@@ -87,7 +88,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                   padding: EdgeInsets.fromLTRB(8, 8, 0, 10),
                   child: Container(
                     width: 300,
-                    height: 50,
+                    height: 60,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
@@ -99,7 +100,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                       child: Text(
                         "Freq. Cardíaca",
                         style: TextStyle(color: Colors.white,
-                          fontSize: 18,
+                          fontSize: 20,
                         ),
                       ),
                     ),
@@ -109,7 +110,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                   padding: EdgeInsets.fromLTRB(8, 8, 0, 10),
                   child: Container(
                     width: 300,
-                    height: 50,
+                    height: 60,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
@@ -121,7 +122,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                       child: Text(
                         "Frequência Respiratória",
                         style: TextStyle(color: Colors.white,
-                          fontSize: 18,
+                          fontSize: 20,
                         ),
                       ),
                     ),
@@ -131,7 +132,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                   padding: EdgeInsets.fromLTRB(8, 8, 0, 10),
                   child: Container(
                     width: 300,
-                    height: 50,
+                    height: 60,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
@@ -143,7 +144,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                       child: Text(
                         "Glicemia",
                         style: TextStyle(color: Colors.white,
-                          fontSize: 18,
+                          fontSize: 20,
                         ),
                       ),
                     ),
@@ -153,7 +154,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                   padding: EdgeInsets.fromLTRB(8, 8, 0, 10),
                   child: Container(
                     width: 300,
-                    height: 50,
+                    height: 60,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
@@ -165,7 +166,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                       child: Text(
                         "Pressão Arterial",
                         style: TextStyle(color: Colors.white,
-                          fontSize: 18,
+                          fontSize: 20,
                         ),
                       ),
                     ),
@@ -175,7 +176,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                   padding: EdgeInsets.fromLTRB(8, 8, 0, 10),
                   child: Container(
                     width: 300,
-                    height: 50,
+                    height: 60,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
@@ -187,7 +188,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                       child: Text(
                         "Reclamações",
                         style: TextStyle(color: Colors.white,
-                          fontSize: 18,
+                          fontSize: 20,
                         ),
                       ),
                     ),
