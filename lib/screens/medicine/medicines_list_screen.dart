@@ -16,9 +16,15 @@ class MedicinesListScreen extends StatefulWidget {
   State<MedicinesListScreen> createState() => _MedicinesListScreenState();
 }
 
+void removeDupliciti(List<Medicamento> medicamento){
+  medicamento = medicamento.toSet().toList();
+}
+
 class _MedicinesListScreenState extends State<MedicinesListScreen> {
   @override
   Widget build(BuildContext context) {
+    removeDupliciti(widget.medicines);
+
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -95,4 +101,5 @@ class _MedicinesListScreenState extends State<MedicinesListScreen> {
       ),
     );
   }
+
 }
