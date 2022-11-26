@@ -1,34 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:paciente_digital/model/medicamento.dart';
-import 'package:paciente_digital/widgets/cards/medicine_card.dart';
+import 'package:paciente_digital/model/afericoes/glicemia.dart';
+import 'package:paciente_digital/widgets/cards/glicemi_card.dart';
 
-class MedicinesListScreen extends StatefulWidget {
-  final List<Medicamento> medicines;
+class ListGlicemia extends StatefulWidget {
+  final List<Glicemia> glicemias;
   final String paienteName;
 
-  const MedicinesListScreen({
+  const ListGlicemia({
     Key? key,
-    required this.medicines,
+    required this.glicemias,
     required this.paienteName,
   }) : super(key: key);
 
   @override
-  State<MedicinesListScreen> createState() => _MedicinesListScreenState();
+  State<ListGlicemia> createState() => _ListGlicemiaState();
 }
 
-void removeDupliciti(List<Medicamento> medicamento){
-  medicamento = medicamento.toSet().toList();
+void removeDupliciti(List<Glicemia> glicemias) {
+  glicemias = glicemias.toSet().toList();
 }
 
-class _MedicinesListScreenState extends State<MedicinesListScreen> {
+class _ListGlicemiaState extends State<ListGlicemia> {
   @override
   Widget build(BuildContext context) {
-    removeDupliciti(widget.medicines);
+    removeDupliciti(widget.glicemias);
+
     return Scaffold(
       appBar: AppBar(
         title: Center(
           child: Text(
-            "${widget.paienteName}",
+            widget.paienteName,
             style: const TextStyle(
               color: Colors.white,
             ),
@@ -36,14 +37,14 @@ class _MedicinesListScreenState extends State<MedicinesListScreen> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(16, 16, 8, 8),
+        padding: const EdgeInsets.fromLTRB(16, 16, 8, 8),
         child: Container(
-          padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
           alignment: Alignment.topLeft,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
             shape: BoxShape.rectangle,
-            border: Border(
+            border: const Border(
               top: BorderSide(
                 width: 2,
                 color: Colors.lightBlue,
@@ -66,22 +67,22 @@ class _MedicinesListScreenState extends State<MedicinesListScreen> {
           width: 800,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
-            child: widget.medicines.length > 0
+            child: widget.glicemias.isNotEmpty
                 ? ListView.builder(
                     itemBuilder: (context, index) {
                       return ListTile(
-                        title: MedicineCard(
-                          medicine: widget.medicines[index],
+                        title: GlicemiaCard(
+                          glicemia: widget.glicemias[index],
                         ),
-                        onTap: () => removeDupliciti(widget.medicines),
                       );
                     },
-                    itemCount: widget.medicines.length,
+                    itemCount: widget.glicemias.length,
                   )
-                : Container(
-                    child: Center(
+                : const Center(
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(16, 0, 8, 0),
                       child: Text(
-                        "Nenhum medicamento cadastrado",
+                        "Nenhuma aferição de frequencia cardiaca foi registrada",
                         style: TextStyle(
                           color: Colors.blueAccent,
                           fontSize: 18,
@@ -93,13 +94,15 @@ class _MedicinesListScreenState extends State<MedicinesListScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(
+        onPressed: () {
+          //nova eliminação seja destruida após sair ou finalizar e traga
+          // de volta para esta tela. E essa pagina seja carregada do zero.
+        },
+        child: const Icon(
           Icons.add,
           color: Colors.white,
         ),
       ),
     );
   }
-
 }
