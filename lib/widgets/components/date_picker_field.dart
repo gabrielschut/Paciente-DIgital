@@ -5,14 +5,14 @@ class DatePickerField extends StatefulWidget {
   final String hint;
   final String suffix;
   final String dateFieldName;
-  final TextEditingController? initialDateController;
+  final TextEditingController? controller;
 
   const DatePickerField({
     Key? key,
     required this.hint,
     required this.suffix,
     required this.dateFieldName,
-    this.initialDateController,
+    this.controller,
   }) : super(key: key);
 
   @override

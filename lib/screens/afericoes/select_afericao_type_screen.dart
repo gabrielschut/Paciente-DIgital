@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:paciente_digital/model/paciente.dart';
-import 'package:paciente_digital/widgets/cards/medicine_card.dart';
+import 'package:paciente_digital/screens/afericoes/eliminacoes/list_eliminacoes.dart';
+import 'package:paciente_digital/screens/afericoes/freq_respiratoria/list_freq_respirat%C3%B3ria_screen.dart';
+import 'package:paciente_digital/screens/afericoes/frequencia_cardiaca/list_freq_cardicada_screen.dart';
+import 'package:paciente_digital/screens/afericoes/glicemia/list_glicemia.dart';
+import 'package:paciente_digital/screens/afericoes/pressao_arterial/list_pressao_arterial.dart';
+import 'package:paciente_digital/screens/afericoes/reclamacoes/list_reclamacoes_screen.dart';
 
 class SelectAfericaoType extends StatefulWidget {
   final Paciente paciente;
@@ -17,18 +22,7 @@ class SelectAfericaoType extends StatefulWidget {
 class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text(
-            "${widget.paciente.nome} ${widget.paciente.sobrenome}",
-            style: const TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
-      body: Padding(
+    return Padding(
         padding: EdgeInsets.fromLTRB(16, 16, 8, 8),
         child: Container(
           padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
@@ -74,7 +68,11 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                       color: Colors.blueAccent,
                     ),
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => ListEliminacoes(eliminacoes: [],))
+                        );
+                      },
                       child: Text(
                         "Eliminações",
                         style: TextStyle(color: Colors.white,
@@ -96,7 +94,11 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                       color: Colors.blueAccent,
                     ),
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => ListFrequenciaCardiaca(frequencias: [],))
+                        );
+                      },
                       child: Text(
                         "Freq. Cardíaca",
                         style: TextStyle(color: Colors.white,
@@ -118,7 +120,11 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                       color: Colors.blueAccent,
                     ),
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => ListFrequenciaRespiratoria(frequencias: [],))
+                        );
+                      },
                       child: Text(
                         "Frequência Respiratória",
                         style: TextStyle(color: Colors.white,
@@ -140,7 +146,11 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                       color: Colors.blueAccent,
                     ),
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => ListGlicemia(glicemias: [],))
+                        );
+                      },
                       child: Text(
                         "Glicemia",
                         style: TextStyle(color: Colors.white,
@@ -162,7 +172,11 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                       color: Colors.blueAccent,
                     ),
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => ListPressaoArterial(pressoes: [],))
+                        );
+                      },
                       child: Text(
                         "Pressão Arterial",
                         style: TextStyle(color: Colors.white,
@@ -184,7 +198,11 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                       color: Colors.blueAccent,
                     ),
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => ListReclaacoesScreen(listReclamacoes: [],))
+                        );
+                      },
                       child: Text(
                         "Reclamações",
                         style: TextStyle(color: Colors.white,
@@ -198,7 +216,6 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }

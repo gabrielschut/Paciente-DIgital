@@ -10,7 +10,9 @@ class NewPressaoArterial extends StatefulWidget {
 }
 
 class _NewPressaoArterialState extends State<NewPressaoArterial> {
-  final TextEditingController _dateController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  TextEditingController maxController = TextEditingController();
+  TextEditingController minController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +37,12 @@ class _NewPressaoArterialState extends State<NewPressaoArterial> {
                 hint: "01/01/2000",
                 dateFieldName: "Tirado em ",
                 suffix: "",
-                initialDateController: _dateController,
+                controller: dateController,
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Padding(
                   padding: EdgeInsets.fromLTRB(24, 0, 16, 18),
                   child: Text(
@@ -63,6 +65,7 @@ class _NewPressaoArterialState extends State<NewPressaoArterial> {
                       hint: "120",
                       fieldName: "Sistólica | Maxima",
                       suffix: "mmHg",
+                      controller: maxController,
                     ),
                   ),
                 ),
@@ -70,7 +73,7 @@ class _NewPressaoArterialState extends State<NewPressaoArterial> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 SizedBox(
                   width: 120,
                 ),
@@ -82,6 +85,7 @@ class _NewPressaoArterialState extends State<NewPressaoArterial> {
                       hint: "80",
                       fieldName: "Diastólica | Minima",
                       suffix: "mmHg",
+                      controller: minController,
                     ),
                   ),
                 ),
@@ -93,6 +97,7 @@ class _NewPressaoArterialState extends State<NewPressaoArterial> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           //chamar o save glicemia.
+          Navigator.of(context).pop();
         },
         child: Icon(
           Icons.check,

@@ -10,7 +10,9 @@ class NewFreqRespiratoria extends StatefulWidget {
 }
 
 class _NewFreqRespiratoriaState extends State<NewFreqRespiratoria> {
-  final TextEditingController _dateController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  TextEditingController frequenciaController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +37,12 @@ class _NewFreqRespiratoriaState extends State<NewFreqRespiratoria> {
                 hint: "01/01/2000",
                 dateFieldName: "Tirado em ",
                 suffix: "",
-                initialDateController: _dateController,
+                controller: dateController,
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Padding(
                   padding: EdgeInsets.fromLTRB(24, 0, 16, 24),
                   child: Text(
@@ -63,6 +65,7 @@ class _NewFreqRespiratoriaState extends State<NewFreqRespiratoria> {
                       hint: "80",
                       fieldName: "Respirações / min",
                       suffix: "mrm",
+                      controller: frequenciaController,
                     ),
                   ),
                 ),
@@ -74,6 +77,7 @@ class _NewFreqRespiratoriaState extends State<NewFreqRespiratoria> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           //chamar o save frequencia cardiaca.
+          Navigator.of(context).pop();
         },
         child: Icon(
           Icons.check,

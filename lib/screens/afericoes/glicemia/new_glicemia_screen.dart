@@ -10,7 +10,8 @@ class NewGlicemia extends StatefulWidget {
 }
 
 class _NewGlicemiaState extends State<NewGlicemia> {
-  final TextEditingController _dateController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  TextEditingController valueController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +36,12 @@ class _NewGlicemiaState extends State<NewGlicemia> {
                 hint: "01/01/2000",
                 dateFieldName: "Tirado em ",
                 suffix: "",
-                initialDateController: _dateController,
+                controller: dateController,
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Padding(
                   padding: EdgeInsets.fromLTRB(24, 0, 16, 24),
                   child: Text(
@@ -63,6 +64,7 @@ class _NewGlicemiaState extends State<NewGlicemia> {
                       hint: "100",
                       fieldName: "Valor",
                       suffix: "ml/dl",
+                      controller: valueController,
                     ),
                   ),
                 ),
@@ -74,6 +76,7 @@ class _NewGlicemiaState extends State<NewGlicemia> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           //chamar o save glicemia.
+          Navigator.of(context).pop();
         },
         child: Icon(
           Icons.check,

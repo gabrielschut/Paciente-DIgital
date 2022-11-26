@@ -10,7 +10,8 @@ class NewReclamacao extends StatefulWidget {
 }
 
 class _NewReclamacaoState extends State<NewReclamacao> {
-  final TextEditingController _dateController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  TextEditingController reclamacaoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,18 +34,19 @@ class _NewReclamacaoState extends State<NewReclamacao> {
               hint: "01/01/2000",
               dateFieldName: "Feita em  ",
               suffix: "",
-              initialDateController: _dateController,
+              controller: dateController,
             ),
           ),
           Padding(
             padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-            child: MultilineField(),
+            child: MultilineField(controller: reclamacaoController,),
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
           //chamar o save eliminação
+          Navigator.of(context).pop();
         },
         child: Icon(Icons.check,color: Colors.white,),
       ),

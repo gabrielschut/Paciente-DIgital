@@ -4,6 +4,7 @@ class Medicamento {
   int? id = 0;
   String nome;
   double dosagem;
+  String tarja;
   DateTime dataInicial;
   DateTime dataTermino;
 
@@ -12,6 +13,7 @@ class Medicamento {
     required this.idPaciente,
     required this.nome,
     required this.dosagem,
+    required this.tarja,
     required this.dataInicial,
     required this.dataTermino
   });

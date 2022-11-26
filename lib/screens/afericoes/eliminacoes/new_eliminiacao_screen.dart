@@ -11,7 +11,9 @@ class NewEliminacao extends StatefulWidget {
 }
 
 class _NewEliminacaoState extends State<NewEliminacao> {
-  final TextEditingController _dateController = TextEditingController();
+  TextEditingController eliminacaoController = TextEditingController();
+  TextEditingController descricaoController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,8 @@ class _NewEliminacaoState extends State<NewEliminacao> {
                   width: 300,
                   child: DropdownField(
                     hint: "Urina",
-                    DropOpcoes: ["Urina", "Fezes", "Vomito", "Outro"],
+                    DropOpcoes: const ["Urina", "Fezes", "Vomito", "Outro"],
+                    controller: eliminacaoController,
                   ),
                 ),
               ],
@@ -60,18 +63,21 @@ class _NewEliminacaoState extends State<NewEliminacao> {
               hint: "01/01/2000",
               dateFieldName: "Data      ",
               suffix: "",
-              initialDateController: _dateController,
+              controller: dateController,
             ),
           ),
           Padding(
             padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-            child: MultilineField(),
+            child: MultilineField(
+              controller: descricaoController,
+            ),
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
           //chamar o save eliminação
+          Navigator.of(context).pop();
         },
         child: Icon(Icons.check,color: Colors.white,),
       ),

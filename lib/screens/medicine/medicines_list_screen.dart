@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:paciente_digital/model/medicamento.dart';
+import 'package:paciente_digital/screens/medicine/new_medicine_screen.dart';
 import 'package:paciente_digital/widgets/cards/medicine_card.dart';
 
 class MedicinesListScreen extends StatefulWidget {
   final List<Medicamento> medicines;
-  final String paienteName;
 
   const MedicinesListScreen({
     Key? key,
     required this.medicines,
-    required this.paienteName,
   }) : super(key: key);
 
   @override
@@ -25,16 +24,6 @@ class _MedicinesListScreenState extends State<MedicinesListScreen> {
   Widget build(BuildContext context) {
     removeDupliciti(widget.medicines);
     return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text(
-            "${widget.paienteName}",
-            style: const TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(16, 16, 8, 8),
         child: Container(
@@ -93,8 +82,12 @@ class _MedicinesListScreenState extends State<MedicinesListScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(
+        onPressed: () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => NewMedicine())
+          );
+        },
+        child: const Icon(
           Icons.add,
           color: Colors.white,
         ),

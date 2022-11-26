@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class MultilineField extends StatefulWidget {
-  const MultilineField({Key? key}) : super(key: key);
+  final TextEditingController controller;
+
+  MultilineField({Key? key,
+  required this.controller}) : super(key: key);
 
   @override
   State<MultilineField> createState() => _MultilineFieldState();

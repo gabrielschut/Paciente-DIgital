@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:paciente_digital/model/afericoes/pressao_arterial.dart';
+import 'package:paciente_digital/screens/afericoes/pressao_arterial/new_pressao_arterial_screen.dart';
 import 'package:paciente_digital/widgets/cards/pressao_aterial_card.dart';
 
 class ListPressaoArterial extends StatefulWidget {
   final List<PressaoArterial> pressoes;
-  final String paienteName;
 
   const ListPressaoArterial({
     Key? key,
     required this.pressoes,
-    required this.paienteName,
   }) : super(key: key);
 
   @override
@@ -29,7 +28,7 @@ class _ListPressaoArterialState extends State<ListPressaoArterial> {
       appBar: AppBar(
         title: Center(
           child: Text(
-            widget.paienteName,
+            "Pressões arteriais",
             style: const TextStyle(
               color: Colors.white,
             ),
@@ -97,6 +96,9 @@ class _ListPressaoArterialState extends State<ListPressaoArterial> {
         onPressed: () {
           //nova eliminação seja destruida após sair ou finalizar e traga
           // de volta para esta tela. E essa pagina seja carregada do zero.
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => NewPressaoArterial())
+          );
         },
         child: const Icon(
           Icons.add,

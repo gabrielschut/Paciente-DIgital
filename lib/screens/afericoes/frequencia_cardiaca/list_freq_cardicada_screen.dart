@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:paciente_digital/model/afericoes/frequencia_cardiaca.dart';
+import 'package:paciente_digital/screens/afericoes/frequencia_cardiaca/new_freq_cardiaca_screen.dart';
 import 'package:paciente_digital/widgets/cards/freq_cardiaca_card.dart';
 
 class ListFrequenciaCardiaca extends StatefulWidget {
   final List<FrenquenciaCardiaca> frequencias;
-  final String paienteName;
 
   const ListFrequenciaCardiaca({
     Key? key,
     required this.frequencias,
-    required this.paienteName,
   }) : super(key: key);
 
   @override
@@ -29,7 +28,7 @@ class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
       appBar: AppBar(
         title: Center(
           child: Text(
-            widget.paienteName,
+            "Frequências cardiácas",
             style: const TextStyle(
               color: Colors.white,
             ),
@@ -97,6 +96,9 @@ class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
         onPressed: () {
           //nova eliminação seja destruida após sair ou finalizar e traga
           // de volta para esta tela. E essa pagina seja carregada do zero.
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => NewFreqCardiaca())
+          );
         },
         child: const Icon(
           Icons.add,

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:paciente_digital/model/afericoes/glicemia.dart';
-import 'package:paciente_digital/model/afericoes/pressao_arterial.dart';
-import 'package:paciente_digital/model/medicamento.dart';
-import 'package:paciente_digital/screens/afericoes/glicemia/list_glicemia.dart';
-import 'package:paciente_digital/screens/afericoes/pressao_arterial/list_pressao_arterial.dart';
+import 'package:paciente_digital/model/paciente.dart';
+import 'package:paciente_digital/screens/paciente/pacientes_select.dart';
 import 'package:paciente_digital/theme/paciente_digital_input_theme.dart';
 
 void main() {
@@ -18,19 +15,45 @@ class PacienteDigital extends StatefulWidget {
 }
 
 class _PacienteDigitalState extends State<PacienteDigital> {
-  final List<Medicamento> medicamentos = [];
-
   @override
   Widget build(BuildContext context) {
+
+    Paciente paciente = Paciente(
+        nome: "Gabriel Braz",
+        sexo: "Masculino",
+        idade: 26,
+        diabetis: true,
+        cardiaco: false);
+    Paciente paciente1 = Paciente(
+        nome: "Gabriel Filho",
+        sexo: "Masculino",
+        idade: 26,
+        diabetis: false,
+        cardiaco: true);
+    Paciente paciente2 = Paciente(
+        nome: "Gabriel Silva",
+        sexo: "Masculino",
+        idade: 26,
+        diabetis: true,
+        cardiaco: true);
+    Paciente paciente3 = Paciente(
+        nome: "Gabriel Almeida",
+        sexo: "Masculino",
+        idade: 26,
+        diabetis: false,
+        cardiaco: false);
+    List<Paciente> pacientes = [];
+    pacientes.addAll([paciente, paciente1, paciente2, paciente3]);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,
         inputDecorationTheme: PacienteDIgitalInputTheme().theme(),
       ),
-      home:  ListPressaoArterial(pressoes: [
-        PressaoArterial(idPaciente: 1, createAt: DateTime(2022,01,25), maxima: 120, minima: 80)
-      ],paienteName: "Gabriel"),
+      initialRoute: '/',
+      routes: {
+        '/': (context) =>  PacienteSelect(pacientes: pacientes),
+      },
     );
   }
 }

@@ -16,18 +16,7 @@ class PacienteInfo extends StatefulWidget {
 class _PacienteInfoState extends State<PacienteInfo> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text(
-            "${widget.paciente.nome} ${widget.paciente.sobrenome}",
-            style: const TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
-      body: Padding(
+    return Padding(
         padding: EdgeInsets.fromLTRB(16, 16, 8, 8),
         child: Container(
           padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
@@ -250,7 +239,6 @@ class _PacienteInfoState extends State<PacienteInfo> {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }

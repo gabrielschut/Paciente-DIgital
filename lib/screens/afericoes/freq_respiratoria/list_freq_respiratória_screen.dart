@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:paciente_digital/model/afericoes/frequencia_respiratoria.dart';
+import 'package:paciente_digital/screens/afericoes/freq_respiratoria/new_freq_respiratoria_screen.dart';
 import 'package:paciente_digital/widgets/cards/card_frequencia_resirat%C3%B3ria.dart';
 
 class ListFrequenciaRespiratoria extends StatefulWidget {
   final List<FrequenciaRespiratoria> frequencias;
-  final String paienteName;
 
   const ListFrequenciaRespiratoria({
     Key? key,
     required this.frequencias,
-    required this.paienteName,
   }) : super(key: key);
 
   @override
@@ -31,7 +30,7 @@ class _ListFrequenciaRespiratoriaState
       appBar: AppBar(
         title: Center(
           child: Text(
-            widget.paienteName,
+            "Frequências respiratórias",
             style: const TextStyle(
               color: Colors.white,
             ),
@@ -99,6 +98,9 @@ class _ListFrequenciaRespiratoriaState
         onPressed: () {
           //nova eliminação seja destruida após sair ou finalizar e traga
           // de volta para esta tela. E essa pagina seja carregada do zero.
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => NewFreqRespiratoria())
+          );
         },
         child: const Icon(
           Icons.add,

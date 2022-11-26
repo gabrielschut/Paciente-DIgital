@@ -2,19 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:paciente_digital/string_extension.dart';
 
-class NumberField extends StatelessWidget {
+class NumberField extends StatefulWidget {
   final String hint;
   final String fieldName;
   final String suffix;
+  final TextEditingController controller;
 
-  const NumberField(
-      {Key? key,
-      required this.hint,
-      required this.fieldName,
-      required this.suffix,
-      })
-      : super(key: key);
+  NumberField({
+    Key? key,
+    required this.hint,
+    required this.fieldName,
+    required this.suffix,
+    required this.controller,
+  }) : super(key: key);
 
+  @override
+  State<NumberField> createState() => _NumberFieldState();
+}
+
+class _NumberFieldState extends State<NumberField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -22,24 +28,23 @@ class NumberField extends StatelessWidget {
         decimal: true,
         signed: false,
       ),
-
-      validator: (s){
-        if(!s!.isValidDouble() || s.isValidInt()){
+      validator: (s) {
+        if (!s!.isValidDouble() || s.isValidInt()) {
           return "Valor inválido";
-        }else{
+        } else {
           return null;
         }
       },
       maxLength: 6,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
       decoration: InputDecoration(
-        labelText: fieldName,
+        labelText: widget.fieldName,
         labelStyle: TextStyle(
           color: Colors.lightBlue,
         ),
         helperText: "",
-        hintText: hint,
-        suffixText: suffix,
+        hintText: widget.hint,
+        suffixText: widget.suffix,
       ),
     );
   }

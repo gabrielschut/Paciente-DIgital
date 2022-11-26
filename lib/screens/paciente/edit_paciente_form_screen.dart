@@ -11,7 +11,15 @@ class EditPacienteForm extends StatefulWidget {
 }
 
 class _EditPacienteFormState extends State<EditPacienteForm> {
-  var pacienteNameController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController sexController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
+  TextEditingController bloodTypeController = TextEditingController();
+  TextEditingController wightController = TextEditingController();
+  TextEditingController diabetisController = TextEditingController();
+  TextEditingController cariacoController = TextEditingController();
+  TextEditingController circAbdominalCOntroller = TextEditingController();
+  TextEditingController heightController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -19,19 +27,20 @@ class _EditPacienteFormState extends State<EditPacienteForm> {
       appBar: AppBar(
         title: const Center(
           child: Text(
-            'Alterar info. do paciente',
+            'Cadastro de novo paciente',
             style: TextStyle(color: Colors.white),
           ),
         ),
       ),
       body: SingleChildScrollView(
         child: Column(children: [
-          const Padding(
-            padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
             child: MyTextField(
               hint: 'João Maria',
               fieldName: 'Nome',
               suffix: 'abc',
+              controller: nameController,
             ),
           ),
           Padding(
@@ -52,12 +61,16 @@ class _EditPacienteFormState extends State<EditPacienteForm> {
                 ),
                 SizedBox(
                   width: 250,
-                  child: DropdownField(DropOpcoes: const [
-                    'Masculino',
-                    'Feminino',
-                    'Masculino Trans',
-                    'Feminino Trans'
-                  ], hint: 'Genero'),
+                  child: DropdownField(
+                    DropOpcoes: const [
+                      'Masculino',
+                      'Feminino',
+                      'Masculino Trans',
+                      'Feminino Trans'
+                    ],
+                    hint: 'Genero',
+                    controller: sexController,
+                  ),
                 ),
               ],
             ),
@@ -77,34 +90,40 @@ class _EditPacienteFormState extends State<EditPacienteForm> {
                 ),
                 SizedBox(
                   width: 250,
-                  child: DropdownField(DropOpcoes: const [
-                    'A+',
-                    'B+',
-                    'AB+',
-                    'O+',
-                    'A-',
-                    'B-',
-                    'AB-',
-                    'O-'
-                  ], hint: 'AB-'),
+                  child: DropdownField(
+                    DropOpcoes: const [
+                      'A+',
+                      'B+',
+                      'AB+',
+                      'O+',
+                      'A-',
+                      'B-',
+                      'AB-',
+                      'O-'
+                    ],
+                    hint: 'AB-',
+                    controller: bloodTypeController,
+                  ),
                 ),
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
             child: NumberField(
               suffix: 'KG',
               fieldName: 'Peso',
               hint: "70.45",
+              controller: wightController,
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
             child: NumberField(
               suffix: 'Metros',
               fieldName: 'Altura',
               hint: "1.70",
+              controller: heightController,
             ),
           ),
           Padding(
@@ -126,7 +145,10 @@ class _EditPacienteFormState extends State<EditPacienteForm> {
                 SizedBox(
                   width: 250,
                   child: DropdownField(
-                      DropOpcoes: const ['Sim', 'Não'], hint: '???'),
+                    DropOpcoes: const ['Sim', 'Não'],
+                    hint: '???',
+                    controller: cariacoController,
+                  ),
                 ),
               ],
             ),
@@ -150,31 +172,35 @@ class _EditPacienteFormState extends State<EditPacienteForm> {
                 SizedBox(
                   width: 250,
                   child: DropdownField(
-                      DropOpcoes: const ['Sim', 'Não'], hint: '???'),
+                      DropOpcoes: const ['Sim', 'Não'],
+                      hint: '???',
+                      controller: diabetisController),
                 ),
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
             child: NumberField(
               suffix: 'Centimetros',
               fieldName: 'Circunferência Abdominal',
               hint: "101,5",
+              controller: circAbdominalCOntroller,
             ),
           ),
         ]),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          //chamar put do paciente
+          //chamar o post paciente
+          Navigator.of(context).pop();
         },
+        backgroundColor: Colors.indigo,
         child: const Icon(
           Icons.check,
           color: Colors.white,
           size: 28,
         ),
-        backgroundColor: Colors.indigo,
       ),
     );
   }

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:paciente_digital/model/afericoes/glicemia.dart';
+import 'package:paciente_digital/screens/afericoes/glicemia/new_glicemia_screen.dart';
 import 'package:paciente_digital/widgets/cards/glicemi_card.dart';
 
 class ListGlicemia extends StatefulWidget {
   final List<Glicemia> glicemias;
-  final String paienteName;
 
   const ListGlicemia({
     Key? key,
     required this.glicemias,
-    required this.paienteName,
   }) : super(key: key);
 
   @override
@@ -29,7 +28,7 @@ class _ListGlicemiaState extends State<ListGlicemia> {
       appBar: AppBar(
         title: Center(
           child: Text(
-            widget.paienteName,
+            "Glicemias",
             style: const TextStyle(
               color: Colors.white,
             ),
@@ -97,6 +96,9 @@ class _ListGlicemiaState extends State<ListGlicemia> {
         onPressed: () {
           //nova eliminação seja destruida após sair ou finalizar e traga
           // de volta para esta tela. E essa pagina seja carregada do zero.
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => NewGlicemia())
+          );
         },
         child: const Icon(
           Icons.add,
