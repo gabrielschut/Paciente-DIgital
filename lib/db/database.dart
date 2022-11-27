@@ -1,28 +1,24 @@
+import 'dart:io';
+
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:path_provider/path_provider.dart';
 
-class AppDatabase {
-  static final AppDatabase instance = AppDatabase._init();
-
+class DatabaseHelper {
+  DatabaseHelper._privateConstructor();
+  static final DatabaseHelper INSTANCE = DatabaseHelper._privateConstructor();
   static Database? _database;
+  Future<Database> get database async => _database ??= await _initDatabase();
 
-  AppDatabase._init();
-
-  get database async {
-    if (_database != null) return _database;
-
-    return await _initDB('pacienteDigital.db');
+  Future<Database> _initDatabase() async{
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path, 'pacienteDigital.db');
+    return await openDatabase(path,
+    version: 1,
+    onCreate: _onCreate);
   }
 
-  _initDB(String filePath) async {
-    return await openDatabase(
-      join(await getDatabasesPath(), 'pacienteDigital.db'),
-      version: 1,
-      onCreate: _createDB,
-    );
-  }
-
-  _createDB(Database db, int version) async {
+  Future _onCreate(Database db, int version) async {
     await db.execute(_paciente);
     await db.execute(_medicamento);
     await db.execute(_eliminacoes);
@@ -34,20 +30,15 @@ class AppDatabase {
 
   }
 
-  Future close() async {
-    final db = await instance.database;
-    db.close();
-  }
-
   String get _paciente => ''' 
     CREATE TABLE paciente (
     id INTEGER Primary Key AUTOINCREMENT,
     nome TEXT NOT NULL,
-    sobrenome TEXT NOT NUL,
     sexo TEXT,
     idade INTEGER,
     tipo_saguineo TEXT,
     peso REAL,
+    altura REAL,
     diabetico INTEGER,
     cardiaco INTEGER,
     circ_abdominal REAL,
