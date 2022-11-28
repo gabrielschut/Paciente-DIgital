@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:paciente_digital/model/paciente.dart';
+import 'package:paciente_digital/repository/paciente_repository.dart';
 import 'package:paciente_digital/widgets/components/dropdown_field.dart';
 import 'package:paciente_digital/widgets/components/number_field.dart';
 import 'package:paciente_digital/widgets/components/text_field.dart';
@@ -17,7 +19,7 @@ class _NewPacienteFormState extends State<NewPacienteForm> {
   TextEditingController bloodTypeController = TextEditingController();
   TextEditingController wightController = TextEditingController();
   TextEditingController diabetisController = TextEditingController();
-  TextEditingController cariacoController = TextEditingController();
+  TextEditingController cardiacoController = TextEditingController();
   TextEditingController circAbdominalCOntroller = TextEditingController();
   TextEditingController heightController = TextEditingController();
 
@@ -147,7 +149,7 @@ class _NewPacienteFormState extends State<NewPacienteForm> {
                   child: DropdownField(
                     DropOpcoes: const ['Sim', 'Não'],
                     hint: '???',
-                    controller: cariacoController,
+                    controller: cardiacoController,
                   ),
                 ),
               ],
@@ -191,8 +193,31 @@ class _NewPacienteFormState extends State<NewPacienteForm> {
         ]),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          //chamar o post paciente
+        onPressed: () async {
+          Paciente paciente = Paciente(
+            nome: nameController.text,
+            cardiaco: cardiacoController.text == "Sim" ? true : false,
+            sexo: sexController.text,
+            diabetis: diabetisController.text == "Sim" ? true : false,
+            idade: int.parse(ageController.text),
+            circunferenciaAbdominal:
+                double.tryParse(circAbdominalCOntroller.text),
+            tipoSanguineo: bloodTypeController.text,
+            peso: double.tryParse(wightController.text),
+            altura: double.tryParse(heightController.text),
+          );
+          PacienteRepository.INSTANCE.create(paciente);
+          setState(() {
+            nameController.clear();
+            cardiacoController.clear();
+            sexController.clear();
+            diabetisController.clear();
+            ageController.clear();
+            circAbdominalCOntroller.clear();
+            bloodTypeController.clear();
+            wightController.clear();
+            heightController.clear();
+          });
           Navigator.of(context).pop();
         },
         backgroundColor: Colors.indigo,

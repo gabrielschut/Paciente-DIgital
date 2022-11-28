@@ -36,42 +36,43 @@ class DatabaseHelper {
     nome TEXT NOT NULL,
     sexo TEXT,
     idade INTEGER,
-    tipo_saguineo TEXT,
+    tipoSanguineo TEXT,
     peso REAL,
     altura REAL,
-    diabetico INTEGER,
+    diabetis INTEGER,
     cardiaco INTEGER,
-    circ_abdominal REAL,
-    is_active INTEGER
+    circunferenciaAbdominal REAL,
+    isActive INTEGER
     ); 
    ''';
 
   String get _medicamento => '''
   CREATE TABLE medicamento(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  id_paciente INTEGER FOREIGN KEY,
+  idPaciente INTEGER FOREIGN KEY,
   nome TEXT NOT NULL,
   dosagem REAL,
-  data_inicio INT NOT NULL,
-  data_termino INT NOT NULL
+  tarja TEXT,
+  dataInicial INT NOT NULL,
+  dataTermino INT NOT NULL
   );
   ''';
 
   String get _eliminacoes => '''
   CREATE TABLE eliminacoes(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  id_paciente INTEGER FOREIGN KEY,
-  create_at INT NOT NULL,
+  idPaciente INTEGER FOREIGN KEY,
+  createAt INT NOT NULL,
   excrecao TEXT,
-  descricao TEXT
+  description TEXT
   );
   ''';
 
   String get _frequenciaCardiaca => '''
   CREATE TABLE frequecia_cardiaca(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  id_paciente INTEGER FOREIGN KEY,
-  create_at INT NOT NULL,
+  idPaciente INTEGER FOREIGN KEY,
+  createAt INT NOT NULL,
   frequencia REAL NOT NULL
   )
   ''';
@@ -79,8 +80,8 @@ class DatabaseHelper {
   String get _frequenciaRespiratoria => '''
   CREATE TABLE frequencia_respiratoria(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  id_paciente INTEGER FOREIGN KEY,
-  create_at INT NOT NULL,
+  idPaciente INTEGER FOREIGN KEY,
+  createAt INT NOT NULL,
   frequencia INTEGER NOT NULL,
   );
   ''';
@@ -88,8 +89,8 @@ class DatabaseHelper {
   String get _glicemia => '''
   CREATE TABLE glicemia(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  id_paciente INTEGER FOREIGN KEY,
-  create_at INT NOT NULL,
+  idPaciente INTEGER FOREIGN KEY,
+  createA INT NOT NULL,
   value REAL NOT NULL,
   );
   ''';
@@ -97,8 +98,8 @@ class DatabaseHelper {
   String get _pressaoArterial => '''
   CREATE TABLE pressao_arterial(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  id_paciente INTEGER FOREIGN KEY,
-  create_at INT NOT NULL,
+  idPaciente INTEGER FOREIGN KEY,
+  createAt INT NOT NULL,
   maxima INTEGER NOT NULL,
   minima INTEGER NOT NULL,
   );
@@ -107,8 +108,8 @@ class DatabaseHelper {
   String get _reclamacoes => '''
   CREATE TABLE reclamacoes(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  id_paciente INTEGER FOREIGN KEY,
-  create_at INT NOT NULL,
+  idPaciente INTEGER FOREIGN KEY,
+  createAt INT NOT NULL,
   reclamacao TEXT NOT NULL
   );
   ''';
