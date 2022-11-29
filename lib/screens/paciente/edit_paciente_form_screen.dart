@@ -1,25 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:paciente_digital/controller/paciente_controller.dart';
+import 'package:paciente_digital/string_extension.dart';
 import 'package:paciente_digital/widgets/components/dropdown_field.dart';
-import 'package:paciente_digital/widgets/components/number_field.dart';
-import 'package:paciente_digital/widgets/components/text_field.dart';
 
-class EditPacienteForm extends StatefulWidget {
-  const EditPacienteForm({Key? key}) : super(key: key);
+class EditPacienteForm extends GetView<PacienteController> {
 
-  @override
-  State<EditPacienteForm> createState() => _EditPacienteFormState();
-}
-
-class _EditPacienteFormState extends State<EditPacienteForm> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController sexController = TextEditingController();
-  TextEditingController ageController = TextEditingController();
-  TextEditingController bloodTypeController = TextEditingController();
-  TextEditingController wightController = TextEditingController();
-  TextEditingController diabetisController = TextEditingController();
-  TextEditingController cariacoController = TextEditingController();
-  TextEditingController circAbdominalCOntroller = TextEditingController();
-  TextEditingController heightController = TextEditingController();
+  final controller = Get.find<PacienteController>();
+  List<String> DropOpcoes = ["Sim", "Não"];
+  ValueNotifier dropValue = ValueNotifier('');
 
   @override
   Widget build(BuildContext context) {
@@ -32,167 +22,261 @@ class _EditPacienteFormState extends State<EditPacienteForm> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-            child: MyTextField(
-              hint: 'João Maria',
-              fieldName: 'Nome',
-              suffix: 'abc',
-              controller: nameController,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                const Text(
-                  'Gênero',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.lightBlue,
-                    fontWeight: FontWeight.w400,
+      body: Form(
+        key: controller.formKey,
+        child: SingleChildScrollView(
+          child: Column(children: [
+            Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                child: Flexible(
+                  child: TextFormField(
+                    controller: controller.nameController,
+                    focusNode: controller.nameFocusNode,
+                    textInputAction: TextInputAction.next,
+                    onFieldSubmitted: (String string){
+                      controller.nameFocusNode.requestFocus();
+                    },
+                    style: const TextStyle(
+                      color: Colors.black87,
+                    ),
+                    decoration: InputDecoration(
+                      helperText: "",
+                      hintText: "João Maria",
+                      labelText: "nome",
+                      labelStyle: const TextStyle(
+                        color: Colors.lightBlue,
+                      ),
+                      suffixText: "abc",
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  width: 30,
-                ),
-                SizedBox(
-                  width: 250,
-                  child: DropdownField(
-                    DropOpcoes: const [
-                      'Masculino',
-                      'Feminino',
-                      'Masculino Trans',
-                      'Feminino Trans'
-                    ],
-                    hint: 'Genero',
-                    controller: sexController,
+                )
+            ),
+            Padding(
+                padding: const EdgeInsets.all(8),
+                child: Flexible(
+                  child: TextFormField(
+                    controller: controller.sexController,
+                    focusNode: controller.sexFocusNode,
+                    textInputAction: TextInputAction.next,
+                    onFieldSubmitted: (String string){
+                      controller.sexFocusNode.requestFocus();
+                    },
+                    style: const TextStyle(
+                      color: Colors.black87,
+                    ),
+                    decoration: InputDecoration(
+                      helperText: "",
+                      hintText: "Masculino",
+                      labelText: "Genero",
+                      labelStyle: const TextStyle(
+                        color: Colors.lightBlue,
+                      ),
+                      suffixText: "abc",
+                    ),
                   ),
-                ),
-              ],
+                )
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                const Text(
-                  'Tipo Sanguíneo',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.lightBlue,
-                    fontWeight: FontWeight.w400,
+            Padding(
+                padding: const EdgeInsets.all(8),
+                child: Flexible(
+                  child: TextFormField(
+                    controller: controller.bloodTypeController,
+                    focusNode: controller.bloodTypeFocusNode,
+                    textInputAction: TextInputAction.next,
+                    onFieldSubmitted: (String string){
+                      controller.bloodTypeFocusNode.requestFocus();
+                    },
+                    style: const TextStyle(
+                      color: Colors.black87,
+                    ),
+                    decoration: InputDecoration(
+                      helperText: "",
+                      hintText: "AB+",
+                      labelText: "Tipo sanguíneo",
+                      labelStyle: const TextStyle(
+                        color: Colors.lightBlue,
+                      ),
+                      suffixText: "abc",
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 250,
-                  child: DropdownField(
-                    DropOpcoes: const [
-                      'A+',
-                      'B+',
-                      'AB+',
-                      'O+',
-                      'A-',
-                      'B-',
-                      'AB-',
-                      'O-'
-                    ],
-                    hint: 'AB-',
-                    controller: bloodTypeController,
+                )
+            ),
+            Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                child: TextFormField(
+                  controller: controller.wightController,
+                  focusNode: controller.wightFocusNode,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (String string){
+                    controller.wightFocusNode.requestFocus();
+                  },
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                    signed: false,
                   ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-            child: NumberField(
-              suffix: 'KG',
-              fieldName: 'Peso',
-              hint: "70.45",
-              controller: wightController,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-            child: NumberField(
-              suffix: 'Metros',
-              fieldName: 'Altura',
-              hint: "1.70",
-              controller: heightController,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                const Text(
-                  'É Cardíaco',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.lightBlue,
-                    fontWeight: FontWeight.w400,
+                  validator: (s) {
+                    if (!s!.isValidDouble() || s.isValidInt()) {
+                      return "Valor inválido";
+                    } else {
+                      return null;
+                    }
+                  },
+                  maxLength: 6,
+                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                  decoration: InputDecoration(
+                    labelText: "Peso",
+                    labelStyle: TextStyle(
+                      color: Colors.lightBlue,
+                    ),
+                    helperText: "",
+                    hintText: "80.5",
+                    suffixText: "Kg",
                   ),
-                ),
-                const SizedBox(
-                  width: 30,
-                ),
-                SizedBox(
-                  width: 250,
-                  child: DropdownField(
-                    DropOpcoes: const ['Sim', 'Não'],
-                    hint: '???',
-                    controller: cariacoController,
+                )
+            ),
+            Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                child: TextFormField(
+                  controller: controller.heightController,
+                  focusNode: controller.heightFocusNode,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (String string){
+                    controller.heightFocusNode.requestFocus();
+                  },
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                    signed: false,
                   ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                const Text(
-                  'É Diabético',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.lightBlue,
-                    fontWeight: FontWeight.w400,
+                  validator: (s) {
+                    if (!s!.isValidDouble() || s.isValidInt()) {
+                      return "Valor inválido";
+                    } else {
+                      return null;
+                    }
+                  },
+                  maxLength: 6,
+                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                  decoration: InputDecoration(
+                    labelText: "Altura",
+                    labelStyle: TextStyle(
+                      color: Colors.lightBlue,
+                    ),
+                    helperText: "",
+                    hintText: "1.70",
+                    suffixText: "Metros",
                   ),
-                ),
-                const SizedBox(
-                  width: 30,
-                ),
-                SizedBox(
-                  width: 250,
-                  child: DropdownField(
-                      DropOpcoes: const ['Sim', 'Não'],
-                      hint: '???',
-                      controller: diabetisController),
-                ),
-              ],
+                )
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-            child: NumberField(
-              suffix: 'Centimetros',
-              fieldName: 'Circunferência Abdominal',
-              hint: "101,5",
-              controller: circAbdominalCOntroller,
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const Text(
+                    'É Cardíaco',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.lightBlue,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  SizedBox(
+                    width: 250,
+                    child: DropdownButtonFormField(
+                      items: DropOpcoes.map(buildMenuItem).toList(),
+                      onChanged: (value) => dropValue.value = value.toString(),
+                      hint: Text(
+                        "Cardíaco",
+                        style: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      ),
+                      value: (dropValue != null) ? dropValue.toString() : null,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                      ),
+                      iconSize: 28,
+                      iconEnabledColor: Colors.lightBlue,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ]),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const Text(
+                    'É Diabético',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.lightBlue,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  SizedBox(
+                    width: 250,
+                    child: DropdownField(
+                        DropOpcoes: const ['Sim', 'Não'],
+                        hint: '???',
+                        controller: controller.diabetisController),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                child: TextFormField(
+                  controller: controller.circAbdominalCOntroller,
+                  focusNode: controller.cardiacoFocusNode,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (String string){
+                    controller.cardiacoFocusNode.requestFocus();
+                    if (controller.loading.value == true) {
+                      Get.dialog(Center(child: CircularProgressIndicator()));
+                    }
+                  },
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                    signed: false,
+                  ),
+                  validator: (s) {
+                    if (!s!.isValidDouble() || s.isValidInt()) {
+                      return "Valor inválido";
+                    } else {
+                      return null;
+                    }
+                  },
+                  maxLength: 6,
+                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                  decoration: InputDecoration(
+                    labelText: "Circ. Abdominal",
+                    labelStyle: TextStyle(
+                      color: Colors.lightBlue,
+                    ),
+                    helperText: "",
+                    hintText: "90.2",
+                    suffixText: "Centimetros",
+                  ),
+                )
+            ),
+          ]),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          //chamar o post paciente
+        onPressed: () async {
+          controller.editUpdateMode();
+          if (controller.loading.value == true) {
+            Get.dialog(Center(child: CircularProgressIndicator()));
+          }
           Navigator.of(context).pop();
         },
         backgroundColor: Colors.indigo,
@@ -204,4 +288,13 @@ class _EditPacienteFormState extends State<EditPacienteForm> {
       ),
     );
   }
+
+  DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
+    value: item,
+    child: Text(
+      item,
+      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+    ),
+  );
+
 }

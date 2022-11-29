@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 
 class MultilineField extends StatefulWidget {
   final TextEditingController controller;
+  final FocusNode focusNode;
 
-  MultilineField({Key? key,
-  required this.controller}) : super(key: key);
+  MultilineField({
+    Key? key,
+    required this.controller,
+    required this.focusNode,
+  }) : super(key: key);
 
   @override
   State<MultilineField> createState() => _MultilineFieldState();
@@ -14,6 +18,11 @@ class _MultilineFieldState extends State<MultilineField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.controller,
+      focusNode: widget.focusNode,
+      onFieldSubmitted: (String string){
+        widget.focusNode.requestFocus();
+      },
       maxLines: 8,
       maxLength: 255,
       decoration: InputDecoration(

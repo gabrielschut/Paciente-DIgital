@@ -5,14 +5,16 @@ class DatePickerField extends StatefulWidget {
   final String hint;
   final String suffix;
   final String dateFieldName;
-  final TextEditingController? controller;
+  final TextEditingController controller;
+  final FocusNode focusNode;
 
   const DatePickerField({
     Key? key,
     required this.hint,
     required this.suffix,
     required this.dateFieldName,
-    this.controller,
+    required this.controller,
+    required this.focusNode,
   }) : super(key: key);
 
   @override
@@ -48,6 +50,11 @@ class _DatePickerFieldState extends State<DatePickerField> {
                   width: 230,
                   child: Flexible(
                     child: TextFormField(
+                      controller: widget.controller,
+                      focusNode: widget.focusNode,
+                      onFieldSubmitted: (String string){
+                        widget.focusNode.requestFocus();
+                      },
                       inputFormatters: [maskDate],
                       keyboardType: const TextInputType.numberWithOptions(
                         decimal: true,

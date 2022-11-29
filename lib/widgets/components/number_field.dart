@@ -7,6 +7,7 @@ class NumberField extends StatefulWidget {
   final String fieldName;
   final String suffix;
   final TextEditingController controller;
+  final FocusNode focusNode;
 
   NumberField({
     Key? key,
@@ -14,6 +15,7 @@ class NumberField extends StatefulWidget {
     required this.fieldName,
     required this.suffix,
     required this.controller,
+    required this.focusNode,
   }) : super(key: key);
 
   @override
@@ -24,6 +26,11 @@ class _NumberFieldState extends State<NumberField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.controller,
+      focusNode: widget.focusNode,
+      onFieldSubmitted: (String string){
+        widget.focusNode.requestFocus();
+      },
       keyboardType: const TextInputType.numberWithOptions(
         decimal: true,
         signed: false,
