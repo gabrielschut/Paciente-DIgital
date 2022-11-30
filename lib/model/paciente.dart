@@ -15,8 +15,6 @@ class Paciente {
       altura: json['altura'],
       peso: json['peso'],
       tipoSanguineo: json['tipoSanguineo'],
-      diabetis: json['diabetis'],
-      cardiaco: json['cardiaco'],
       circunferenciaAbdominal: json['circunferenciaAbdominal'],
       isActive: json['isActive'],
       id: json['id']);
@@ -29,8 +27,6 @@ class Paciente {
         "altura": altura,
         "peso": peso,
         "tipoSanguineo": tipoSanguineo,
-        "diabetis": diabetis,
-        "cardiaco": cardiaco,
         "circunferenciaAbdominal": circunferenciaAbdominal,
         "isActive": isActive
       };
@@ -42,8 +38,6 @@ class Paciente {
   String? tipoSanguineo;
   double? peso;
   double? altura;
-  bool diabetis;
-  bool cardiaco;
   double? circunferenciaAbdominal;
   bool isActive = true;
 
@@ -55,8 +49,6 @@ class Paciente {
       this.tipoSanguineo,
       this.peso,
       this.altura,
-      required this.diabetis,
-      required this.cardiaco,
       this.circunferenciaAbdominal,
       this.isActive = true});
 
@@ -68,8 +60,6 @@ class Paciente {
     String? tipoSanguineo,
     double? peso,
     double? altura,
-    bool? diabetis,
-    bool? cardiaco,
     double? circunferenciaAbdominal,
     bool? isActive,
   }) =>
@@ -81,8 +71,6 @@ class Paciente {
         tipoSanguineo: tipoSanguineo ?? this.tipoSanguineo,
         peso: peso ?? this.peso,
         altura: altura ?? this.altura,
-        diabetis: diabetis ?? this.diabetis,
-        cardiaco: cardiaco ?? this.cardiaco,
         circunferenciaAbdominal:
             circunferenciaAbdominal ?? this.circunferenciaAbdominal,
         isActive: isActive ?? this.isActive,

@@ -3,10 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:paciente_digital/controller/paciente_controller.dart';
 import 'package:paciente_digital/string_extension.dart';
-import 'package:paciente_digital/widgets/components/dropdown_field.dart';
 
 class EditPacienteForm extends GetView<PacienteController> {
-
   final controller = Get.find<PacienteController>();
   List<String> DropOpcoes = ["Sim", "Não"];
   ValueNotifier dropValue = ValueNotifier('');
@@ -33,7 +31,7 @@ class EditPacienteForm extends GetView<PacienteController> {
                     controller: controller.nameController,
                     focusNode: controller.nameFocusNode,
                     textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (String string){
+                    onFieldSubmitted: (String string) {
                       controller.nameFocusNode.requestFocus();
                     },
                     style: const TextStyle(
@@ -49,8 +47,7 @@ class EditPacienteForm extends GetView<PacienteController> {
                       suffixText: "abc",
                     ),
                   ),
-                )
-            ),
+                )),
             Padding(
                 padding: const EdgeInsets.all(8),
                 child: Flexible(
@@ -58,7 +55,7 @@ class EditPacienteForm extends GetView<PacienteController> {
                     controller: controller.sexController,
                     focusNode: controller.sexFocusNode,
                     textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (String string){
+                    onFieldSubmitted: (String string) {
                       controller.sexFocusNode.requestFocus();
                     },
                     style: const TextStyle(
@@ -74,8 +71,7 @@ class EditPacienteForm extends GetView<PacienteController> {
                       suffixText: "abc",
                     ),
                   ),
-                )
-            ),
+                )),
             Padding(
                 padding: const EdgeInsets.all(8),
                 child: Flexible(
@@ -83,7 +79,7 @@ class EditPacienteForm extends GetView<PacienteController> {
                     controller: controller.bloodTypeController,
                     focusNode: controller.bloodTypeFocusNode,
                     textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (String string){
+                    onFieldSubmitted: (String string) {
                       controller.bloodTypeFocusNode.requestFocus();
                     },
                     style: const TextStyle(
@@ -99,15 +95,14 @@ class EditPacienteForm extends GetView<PacienteController> {
                       suffixText: "abc",
                     ),
                   ),
-                )
-            ),
+                )),
             Padding(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
                 child: TextFormField(
                   controller: controller.wightController,
                   focusNode: controller.wightFocusNode,
                   textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (String string){
+                  onFieldSubmitted: (String string) {
                     controller.wightFocusNode.requestFocus();
                   },
                   keyboardType: const TextInputType.numberWithOptions(
@@ -132,15 +127,14 @@ class EditPacienteForm extends GetView<PacienteController> {
                     hintText: "80.5",
                     suffixText: "Kg",
                   ),
-                )
-            ),
+                )),
             Padding(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
                 child: TextFormField(
                   controller: controller.heightController,
                   focusNode: controller.heightFocusNode,
                   textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (String string){
+                  onFieldSubmitted: (String string) {
                     controller.heightFocusNode.requestFocus();
                   },
                   keyboardType: const TextInputType.numberWithOptions(
@@ -165,81 +159,15 @@ class EditPacienteForm extends GetView<PacienteController> {
                     hintText: "1.70",
                     suffixText: "Metros",
                   ),
-                )
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  const Text(
-                    'É Cardíaco',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.lightBlue,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 30,
-                  ),
-                  SizedBox(
-                    width: 250,
-                    child: DropdownButtonFormField(
-                      items: DropOpcoes.map(buildMenuItem).toList(),
-                      onChanged: (value) => dropValue.value = value.toString(),
-                      hint: Text(
-                        "Cardíaco",
-                        style: TextStyle(
-                          color: Colors.grey,
-                        ),
-                      ),
-                      value: (dropValue != null) ? dropValue.toString() : null,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black,
-                      ),
-                      iconSize: 28,
-                      iconEnabledColor: Colors.lightBlue,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  const Text(
-                    'É Diabético',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.lightBlue,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 30,
-                  ),
-                  SizedBox(
-                    width: 250,
-                    child: DropdownField(
-                        DropOpcoes: const ['Sim', 'Não'],
-                        hint: '???',
-                        controller: controller.diabetisController),
-                  ),
-                ],
-              ),
-            ),
+                )),
             Padding(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
                 child: TextFormField(
                   controller: controller.circAbdominalCOntroller,
-                  focusNode: controller.cardiacoFocusNode,
+                  focusNode: controller.circAbdominalFocusNode,
                   textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (String string){
-                    controller.cardiacoFocusNode.requestFocus();
+                  onFieldSubmitted: (String string) {
+                    controller.circAbdominalFocusNode.requestFocus();
                     if (controller.loading.value == true) {
                       Get.dialog(Center(child: CircularProgressIndicator()));
                     }
@@ -266,8 +194,7 @@ class EditPacienteForm extends GetView<PacienteController> {
                     hintText: "90.2",
                     suffixText: "Centimetros",
                   ),
-                )
-            ),
+                )),
           ]),
         ),
       ),
@@ -290,11 +217,10 @@ class EditPacienteForm extends GetView<PacienteController> {
   }
 
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
-    value: item,
-    child: Text(
-      item,
-      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-    ),
-  );
-
+        value: item,
+        child: Text(
+          item,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+      );
 }

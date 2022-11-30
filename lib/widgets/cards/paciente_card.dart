@@ -16,18 +16,6 @@ class CardPacienteWidget extends StatefulWidget {
 }
 
 class _CardPacienteWidgetState extends State<CardPacienteWidget> {
-  Color setCardColor(Paciente paciente){
-    if(paciente.cardiaco && paciente.diabetis){
-      return Colors.red.shade100;
-    }
-    if(paciente.cardiaco){
-      return Colors.orange.shade100;
-    }
-    if(paciente.diabetis){
-      return Colors.blue.shade100;
-    }
-    return Colors.white;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +26,6 @@ class _CardPacienteWidgetState extends State<CardPacienteWidget> {
           Paciente paciente = Paciente(
             nome: "Gabriel Schutt",
             sexo: "Masculino",
-            diabetis: false,
-            cardiaco: false,
             idade: 26,
             peso: 60,
             circunferenciaAbdominal: 76.5,
@@ -63,7 +49,7 @@ class _CardPacienteWidgetState extends State<CardPacienteWidget> {
           height: 110,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
-            color: setCardColor(widget.paciente),
+            color: Colors.black26,
             shape: BoxShape.rectangle,
             border: Border(
               top: BorderSide(
@@ -143,29 +129,6 @@ class _CardPacienteWidgetState extends State<CardPacienteWidget> {
                       SizedBox(width: 30,),
                       Text(
                         "Idade : " + widget.paciente.idade.toString(),
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 24),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.paciente.diabetis ? "Diabético" : " ",
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 18,
-                        ),
-                      ),
-                      SizedBox(width: widget.paciente.diabetis? 20: 0),
-                      Text(
-                        widget.paciente.cardiaco? "Cardiáco" : " ",
                         style: TextStyle(
                           color: Colors.black87,
                           fontSize: 18,

@@ -26,16 +26,28 @@ class PacienteSelect extends GetView<PacienteController> {
             child: CircularProgressIndicator(),
           );
         }
-        return ListView.builder(
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: CardPacienteWidget(
-                paciente: controller.pacienteList[index],
+        if (controller.pacienteList.length > 0) {
+          return ListView.builder(
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: CardPacienteWidget(
+                  paciente: controller.pacienteList[index],
+                ),
+              );
+            },
+            itemCount: controller.pacienteList.length,
+          );
+        } else {
+          return Center(
+            child: Text(
+              "Nenhum paciente cadastrado",
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.blueAccent,
               ),
-            );
-          },
-          itemCount: controller.pacienteList.length,
-        );
+            ),
+          );
+        }
       }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -50,5 +62,3 @@ class PacienteSelect extends GetView<PacienteController> {
     );
   }
 }
-
-

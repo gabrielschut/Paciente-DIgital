@@ -19,8 +19,6 @@ class PacienteController extends GetxController {
   TextEditingController ageController = TextEditingController();
   TextEditingController bloodTypeController = TextEditingController();
   TextEditingController wightController = TextEditingController();
-  TextEditingController diabetisController = TextEditingController();
-  TextEditingController cardiacoController = TextEditingController();
   TextEditingController circAbdominalCOntroller = TextEditingController();
   TextEditingController heightController = TextEditingController();
 
@@ -29,8 +27,6 @@ class PacienteController extends GetxController {
   FocusNode ageFocusNode = FocusNode();
   FocusNode bloodTypeFocusNode = FocusNode();
   FocusNode wightFocusNode = FocusNode();
-  FocusNode diabetisFocusNode = FocusNode();
-  FocusNode cardiacoFocusNode = FocusNode();
   FocusNode circAbdominalFocusNode = FocusNode();
   FocusNode heightFocusNode = FocusNode();
 
@@ -76,8 +72,6 @@ class PacienteController extends GetxController {
     ageController.text = "";
     bloodTypeController.text = "";
     wightController.text = "";
-    diabetisController.text = "";
-    cardiacoController.text = "";
     circAbdominalCOntroller.text = "";
     heightController.text = "";
     Get.to(() => NewPacienteForm());
@@ -90,9 +84,6 @@ class PacienteController extends GetxController {
     ageController.text = paciente.idade.toString();
     bloodTypeController.text = paciente.tipoSanguineo!;
     wightController.text = paciente.peso.toString();
-    diabetisController.text = paciente.diabetis == true ? "Sim" : "Não";
-    cardiacoController.text = paciente.cardiaco == true ? "Sim" : "Não";
-    ;
     circAbdominalCOntroller.text = paciente.circunferenciaAbdominal.toString();
     heightController.text = paciente.altura.toString();
     Get.to(() => EditPacienteForm());
@@ -100,15 +91,14 @@ class PacienteController extends GetxController {
 
   savePaciente() async {
     final Paciente newPaciente = Paciente(
+      id: 0,
       nome: nameController.text.trim(),
-      sexo: sexController.text.trim(),
+      sexo: sexController.text.trim().isNotEmpty? sexController.text : "Indefinido",
       idade: int.parse(ageController.text.trim()),
       peso: double.tryParse(wightController.text.trim()),
       altura: double.tryParse(heightController.text.trim()),
-      tipoSanguineo: bloodTypeController.text.trim(),
+      tipoSanguineo: bloodTypeController.text.trim().isNotEmpty? bloodTypeController.text : "Indefinido",
       circunferenciaAbdominal: double.tryParse(circAbdominalCOntroller.text.trim()),
-      diabetis: diabetisController.text == "Sim"? true : false,
-      cardiaco: cardiacoController.text == "Sim"? true : false,
     );
     pacienteProvider.save(newPaciente).then((value){
       loading(false);
@@ -126,8 +116,6 @@ class PacienteController extends GetxController {
       altura: double.tryParse(heightController.text.trim()),
       tipoSanguineo: bloodTypeController.text.trim(),
       circunferenciaAbdominal: double.tryParse(circAbdominalCOntroller.text.trim()),
-      diabetis: diabetisController.text == "Sim"? true : false,
-      cardiaco: cardiacoController.text == "Sim"? true : false,
     );
     pacienteProvider.update(newPaciente).then((value){
       loading(false);

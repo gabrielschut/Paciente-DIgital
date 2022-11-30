@@ -7,24 +7,14 @@ class DataBaseService extends GetxService {
   late Database db;
 
   Future<DataBaseService> init() async {
-    // final paciente = Paciente(
-    //   nome: "Gabriel Schutt",
-    //   sexo: "Masculino",
-    //   idade: 26,
-    //   diabetis: false,
-    //   cardiaco: false,
-    //   isActive: true,
-    //   peso: 60,
-    //   altura: 1.83,
-    //   tipoSanguineo: "O+",
-    //   circunferenciaAbdominal: 76.3,
-    // );
-    // await savePaciente(paciente);
+    db = await getDatabase();
     return this;
   }
 
   Future<Database> getDatabase() async {
     var databasePath = await getDatabasesPath();
+    // String path = join(databasePath, 'pacienteDigital.db');
+    // await deleteDatabase(path);
     return db = await openDatabase(
       join(databasePath, 'pacienteDigital.db'),
       onCreate: (db, version) {
@@ -48,8 +38,8 @@ class DataBaseService extends GetxService {
 
   Future<Paciente> savePaciente(Paciente paciente) async {
     final id = await db.rawInsert(
-        'INSERT INTO paciente (nome, idade, sexo, altura, peso, tipoSanguineo,'
-        ' diabetis, cardiaco, circunferenciaAbdominal, isActive',
+        'INSERT INTO paciente (nome, idade, sexo, altura, peso, tipoSanguineo, circunferenciaAbdominal, isActive)'
+            ' VALUES (?, ?, ?, ?,?, ?, ?, ?)',
         [
           paciente.nome,
           paciente.idade,
@@ -57,8 +47,6 @@ class DataBaseService extends GetxService {
           paciente.altura,
           paciente.peso,
           paciente.tipoSanguineo,
-          paciente.diabetis,
-          paciente.cardiaco,
           paciente.circunferenciaAbdominal,
           paciente.isActive,
         ]);
@@ -71,7 +59,7 @@ class DataBaseService extends GetxService {
   Future<Paciente> updatePaciente(Paciente paciente) async {
     final id = await db.rawUpdate(
         "UPDATE paciente SET nome = ?, idade = ?,sexo = ?, "
-        "altura = ?, peso = ?, tipoSanguineo = ?, diabetis = ?, cardiaco = ?,"
+        "altura = ?, peso = ?, tipoSanguineo = ?,"
         " circunferenciaAbdominal =?, isActive =? ",
         [
           paciente.nome,
@@ -80,8 +68,6 @@ class DataBaseService extends GetxService {
           paciente.altura,
           paciente.peso,
           paciente.tipoSanguineo,
-          paciente.diabetis,
-          paciente.cardiaco,
           paciente.circunferenciaAbdominal,
           paciente.isActive,
           paciente.id
@@ -112,8 +98,6 @@ class DataBaseService extends GetxService {
     tipoSanguineo TEXT,
     peso REAL,
     altura REAL,
-    diabetis INTEGER,
-    cardiaco INTEGER,
     circunferenciaAbdominal REAL,
     isActive INTEGER
     ); 
@@ -122,7 +106,7 @@ class DataBaseService extends GetxService {
   String get _medicamento => '''
   CREATE TABLE medicamento(
   id INTEGER PRIMARY KEY,
-  idPaciente INTEGER FOREIGN KEY,
+  idPaciente INTEGER,
   nome TEXT NOT NULL,
   dosagem REAL,
   tarja TEXT,
@@ -134,7 +118,7 @@ class DataBaseService extends GetxService {
   String get _eliminacoes => '''
   CREATE TABLE eliminacoes(
   id INTEGER PRIMARY KEY ,
-  idPaciente INTEGER FOREIGN KEY,
+  idPaciente INTEGER,
   createAt INT NOT NULL,
   excrecao TEXT,
   description TEXT
@@ -144,44 +128,44 @@ class DataBaseService extends GetxService {
   String get _frequenciaCardiaca => '''
   CREATE TABLE frequecia_cardiaca(
   id INTEGER PRIMARY KEY,
-  idPaciente INTEGER FOREIGN KEY,
+  idPaciente INTEGER,
   createAt INT NOT NULL,
   frequencia REAL NOT NULL
-  )
+  );
   ''';
 
   String get _frequenciaRespiratoria => '''
   CREATE TABLE frequencia_respiratoria(
   id INTEGER PRIMARY KEY,
-  idPaciente INTEGER FOREIGN KEY,
+  idPaciente INTEGER,
   createAt INT NOT NULL,
-  frequencia INTEGER NOT NULL,
+  frequencia INTEGER NOT NULL
   );
   ''';
 
   String get _glicemia => '''
   CREATE TABLE glicemia(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  idPaciente INTEGER FOREIGN KEY,
+  idPaciente INTEGER,
   createA INT NOT NULL,
-  value REAL NOT NULL,
+  value REAL NOT NULL
   );
   ''';
 
   String get _pressaoArterial => '''
   CREATE TABLE pressao_arterial(
   id INTEGER PRIMARY KEY,
-  idPaciente INTEGER FOREIGN KEY,
+  idPaciente INTEGER,
   createAt INT NOT NULL,
   maxima INTEGER NOT NULL,
-  minima INTEGER NOT NULL,
+  minima INTEGER NOT NULL
   );
   ''';
 
   String get _reclamacoes => '''
   CREATE TABLE reclamacoes(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  idPaciente INTEGER FOREIGN KEY,
+  idPaciente INTEGER,
   createAt INT NOT NULL,
   reclamacao TEXT NOT NULL
   );

@@ -169,56 +169,6 @@ class _PacienteInfoState extends State<PacienteInfo> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        "Diabético",
-                        style: TextStyle(fontSize: 22, color: Colors.blueAccent),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 20),
-                        child: Text(
-                          widget.paciente.diabetis ? "Sim" : "Não",
-                          style: TextStyle(fontSize: 22, color: Colors.blueAccent),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border(
-                    bottom: BorderSide(
-                      width: 2,
-                      color: Colors.blueAccent,
-                    ),
-                  )),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Cardíaco",
-                        style: TextStyle(fontSize: 22, color: Colors.blueAccent),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 20),
-                        child: Text(
-                          widget.paciente.cardiaco ? "Sim" : "Não",
-                          style: TextStyle(fontSize: 22, color: Colors.blueAccent),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border(
-                    bottom: BorderSide(
-                      width: 2,
-                      color: Colors.blueAccent,
-                    ),
-                  )),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
                         "Circ. Abdominal",
                         style: TextStyle(fontSize: 22, color: Colors.blueAccent),
                       ),

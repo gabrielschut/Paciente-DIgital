@@ -43,12 +43,12 @@ class _TabBarPacienteControllState extends State<TabBarPacienteControll> {
               //     color: Colors.white,
               //   ),
               // ),
-              Tab(
-                child: Icon(
-                  Icons.edit_note_sharp,
-                  color: Colors.white,
-                ),
-              ),
+              // Tab(
+              //   child: Icon(
+              //     Icons.edit_note_sharp,
+              //     color: Colors.white,
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -56,7 +56,7 @@ class _TabBarPacienteControllState extends State<TabBarPacienteControll> {
           children: [
             PacienteInfo(paciente: widget.paciente,),
             // MedicinesListScreen(medicines: widget.medicines,),
-            SelectAfericaoType(paciente: widget.paciente),
+            // SelectAfericaoType(paciente: widget.paciente),
           ],
         ),
       ),
