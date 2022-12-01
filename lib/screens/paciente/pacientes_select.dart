@@ -26,7 +26,7 @@ class PacienteSelect extends GetView<PacienteController> {
             child: CircularProgressIndicator(),
           );
         }
-        if (controller.pacienteList.length > 0) {
+        if (controller.pacienteList.isNotEmpty) {
           return ListView.builder(
             itemBuilder: (context, index) {
               return ListTile(

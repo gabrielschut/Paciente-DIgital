@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:paciente_digital/controller/paciente_controller.dart';
-import 'package:paciente_digital/string_extension.dart';
+import 'package:paciente_digital/model/paciente.dart';
+import 'package:paciente_digital/widgets/components/number_field.dart';
+import 'package:paciente_digital/widgets/components/text_field.dart';
 
 class EditPacienteForm extends GetView<PacienteController> {
+  @override
   final controller = Get.find<PacienteController>();
-  List<String> DropOpcoes = ["Sim", "Não"];
-  ValueNotifier dropValue = ValueNotifier('');
+  Paciente paciente;
+
+  EditPacienteForm({super.key, required this.paciente});
 
   @override
   Widget build(BuildContext context) {
+  controller.editPaciente(paciente);
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -25,202 +29,133 @@ class EditPacienteForm extends GetView<PacienteController> {
         child: SingleChildScrollView(
           child: Column(children: [
             Padding(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                child: Flexible(
-                  child: TextFormField(
-                    controller: controller.nameController,
-                    focusNode: controller.nameFocusNode,
-                    textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (String string) {
-                      controller.nameFocusNode.requestFocus();
-                    },
-                    style: const TextStyle(
-                      color: Colors.black87,
-                    ),
-                    decoration: InputDecoration(
-                      helperText: "",
-                      hintText: "João Maria",
-                      labelText: "nome",
-                      labelStyle: const TextStyle(
-                        color: Colors.lightBlue,
-                      ),
-                      suffixText: "abc",
-                    ),
-                  ),
-                )),
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+              child: MyTextField(
+                hint: 'João Maria',
+                fieldName: 'Nome',
+                suffix: 'abc',
+                controller: controller.nameController,
+                focusNode: controller.nameFocusNode,
+              ),
+            ),
             Padding(
-                padding: const EdgeInsets.all(8),
-                child: Flexible(
-                  child: TextFormField(
-                    controller: controller.sexController,
-                    focusNode: controller.sexFocusNode,
-                    textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (String string) {
-                      controller.sexFocusNode.requestFocus();
-                    },
-                    style: const TextStyle(
-                      color: Colors.black87,
-                    ),
-                    decoration: InputDecoration(
-                      helperText: "",
-                      hintText: "Masculino",
-                      labelText: "Genero",
-                      labelStyle: const TextStyle(
-                        color: Colors.lightBlue,
-                      ),
-                      suffixText: "abc",
-                    ),
-                  ),
-                )),
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+              child: NumberField(
+                suffix: 'Anos',
+                fieldName: 'Idade',
+                hint: "30",
+                controller: controller.ageController,
+                focusNode: controller.ageFocusNode,
+              ),
+            ),
             Padding(
-                padding: const EdgeInsets.all(8),
-                child: Flexible(
-                  child: TextFormField(
-                    controller: controller.bloodTypeController,
-                    focusNode: controller.bloodTypeFocusNode,
-                    textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (String string) {
-                      controller.bloodTypeFocusNode.requestFocus();
-                    },
-                    style: const TextStyle(
-                      color: Colors.black87,
-                    ),
-                    decoration: InputDecoration(
-                      helperText: "",
-                      hintText: "AB+",
-                      labelText: "Tipo sanguíneo",
-                      labelStyle: const TextStyle(
-                        color: Colors.lightBlue,
-                      ),
-                      suffixText: "abc",
-                    ),
-                  ),
-                )),
-            Padding(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-                child: TextFormField(
-                  controller: controller.wightController,
-                  focusNode: controller.wightFocusNode,
-                  textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (String string) {
-                    controller.wightFocusNode.requestFocus();
-                  },
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                    signed: false,
-                  ),
-                  validator: (s) {
-                    if (!s!.isValidDouble() || s.isValidInt()) {
-                      return "Valor inválido";
-                    } else {
-                      return null;
-                    }
-                  },
-                  maxLength: 6,
-                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                  decoration: InputDecoration(
-                    labelText: "Peso",
-                    labelStyle: TextStyle(
+              padding: const EdgeInsets.all(8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const Text(
+                    'Gênero',
+                    style: TextStyle(
+                      fontSize: 16,
                       color: Colors.lightBlue,
+                      fontWeight: FontWeight.w400,
                     ),
-                    helperText: "",
-                    hintText: "80.5",
-                    suffixText: "Kg",
                   ),
-                )),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  SizedBox(
+                    width: 250,
+                    child: MyTextField(
+                      hint: "Masculino",
+                      controller: controller.sexController,
+                      focusNode: controller.sexFocusNode,
+                      fieldName: "Sexo",
+                      suffix: "",
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Padding(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-                child: TextFormField(
-                  controller: controller.heightController,
-                  focusNode: controller.heightFocusNode,
-                  textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (String string) {
-                    controller.heightFocusNode.requestFocus();
-                  },
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                    signed: false,
-                  ),
-                  validator: (s) {
-                    if (!s!.isValidDouble() || s.isValidInt()) {
-                      return "Valor inválido";
-                    } else {
-                      return null;
-                    }
-                  },
-                  maxLength: 6,
-                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                  decoration: InputDecoration(
-                    labelText: "Altura",
-                    labelStyle: TextStyle(
+              padding: const EdgeInsets.all(8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const Text(
+                    'Tipo Sanguíneo',
+                    style: TextStyle(
+                      fontSize: 16,
                       color: Colors.lightBlue,
+                      fontWeight: FontWeight.w400,
                     ),
-                    helperText: "",
-                    hintText: "1.70",
-                    suffixText: "Metros",
                   ),
-                )),
+                  SizedBox(
+                    width: 250,
+                    child: MyTextField(
+                      hint: "O+",
+                      controller: controller.bloodTypeController,
+                      focusNode: controller.bloodTypeFocusNode,
+                      fieldName: "Tipo sang.",
+                      suffix: "",
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Padding(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-                child: TextFormField(
-                  controller: controller.circAbdominalCOntroller,
-                  focusNode: controller.circAbdominalFocusNode,
-                  textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (String string) {
-                    controller.circAbdominalFocusNode.requestFocus();
-                    if (controller.loading.value == true) {
-                      Get.dialog(Center(child: CircularProgressIndicator()));
-                    }
-                  },
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                    signed: false,
-                  ),
-                  validator: (s) {
-                    if (!s!.isValidDouble() || s.isValidInt()) {
-                      return "Valor inválido";
-                    } else {
-                      return null;
-                    }
-                  },
-                  maxLength: 6,
-                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                  decoration: InputDecoration(
-                    labelText: "Circ. Abdominal",
-                    labelStyle: TextStyle(
-                      color: Colors.lightBlue,
-                    ),
-                    helperText: "",
-                    hintText: "90.2",
-                    suffixText: "Centimetros",
-                  ),
-                )),
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+              child: NumberField(
+                suffix: 'KG',
+                fieldName: 'Peso',
+                hint: "70.45",
+                controller: controller.wightController,
+                focusNode: controller.wightFocusNode,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+              child: NumberField(
+                suffix: 'Metros',
+                fieldName: 'Altura',
+                hint: "1.70",
+                controller: controller.heightController,
+                focusNode: controller.heightFocusNode,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+              child: NumberField(
+                suffix: 'Centimetros',
+                fieldName: 'Circunferência Abdominal',
+                hint: "101,5",
+                controller: controller.circAbdominalCOntroller,
+                focusNode: controller.circAbdominalFocusNode,
+              ),
+            ),
+            FloatingActionButton(
+              onPressed: () async {
+                controller.updatePaciente();
+
+                controller.nameController.text = "";
+                controller.ageController.text = "";
+                controller.sexController.text = "";
+                controller.bloodTypeController.text = "";
+                controller.wightController.text = "";
+                controller.heightController.text = "";
+                controller.circAbdominalCOntroller.text = "";
+                Navigator.pop(context);
+              },
+              backgroundColor: Colors.indigo,
+              child: const Icon(
+                Icons.check,
+                color: Colors.white,
+                size: 28,
+              ),
+            ),
           ]),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          controller.editUpdateMode();
-          if (controller.loading.value == true) {
-            Get.dialog(Center(child: CircularProgressIndicator()));
-          }
-          Navigator.of(context).pop();
-        },
-        backgroundColor: Colors.indigo,
-        child: const Icon(
-          Icons.check,
-          color: Colors.white,
-          size: 28,
         ),
       ),
     );
   }
-
-  DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
-        value: item,
-        child: Text(
-          item,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        ),
-      );
 }

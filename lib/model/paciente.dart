@@ -16,7 +16,6 @@ class Paciente {
       peso: json['peso'],
       tipoSanguineo: json['tipoSanguineo'],
       circunferenciaAbdominal: json['circunferenciaAbdominal'],
-      isActive: json['isActive'],
       id: json['id']);
 
   Map<String, dynamic> toJson() => {
@@ -28,7 +27,6 @@ class Paciente {
         "peso": peso,
         "tipoSanguineo": tipoSanguineo,
         "circunferenciaAbdominal": circunferenciaAbdominal,
-        "isActive": isActive
       };
 
   int? id;
@@ -39,7 +37,6 @@ class Paciente {
   double? peso;
   double? altura;
   double? circunferenciaAbdominal;
-  bool isActive = true;
 
   Paciente(
       {this.id,
@@ -49,8 +46,7 @@ class Paciente {
       this.tipoSanguineo,
       this.peso,
       this.altura,
-      this.circunferenciaAbdominal,
-      this.isActive = true});
+      this.circunferenciaAbdominal});
 
   Paciente copy({
     int? id,
@@ -73,6 +69,5 @@ class Paciente {
         altura: altura ?? this.altura,
         circunferenciaAbdominal:
             circunferenciaAbdominal ?? this.circunferenciaAbdominal,
-        isActive: isActive ?? this.isActive,
       );
 }

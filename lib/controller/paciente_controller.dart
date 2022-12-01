@@ -2,13 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:paciente_digital/model/paciente.dart';
 import 'package:paciente_digital/provider/paciente_provider.dart';
-import 'package:paciente_digital/screens/paciente/edit_paciente_form_screen.dart';
 import 'package:paciente_digital/screens/paciente/new_paciente_form_screen.dart';
 
 class PacienteController extends GetxController {
   final PacienteProvider pacienteProvider = PacienteProvider();
 
-  final pacienteList = <Paciente>[].obs;
+  List<Paciente> pacienteList = <Paciente>[].obs;
   RxBool loading = false.obs;
   String message = "";
   final idPaciente = 0;
@@ -40,29 +39,11 @@ class PacienteController extends GetxController {
   getAll() {
     loading(true);
     pacienteProvider.getAll().then((data) {
-      pacienteList.value = data;
-      loading(false);
+      pacienteList = data;
+    }, onError: (e) {
+      message = "Erro ao acessar o servço";
     });
-  }
-
-  editSaveMode() {
-    circAbdominalFocusNode.unfocus();
-    if (formKey.currentState!.validate()) {
-      loading(true);
-      if (Get.arguments == null) {
-        savePaciente();
-      }
-    }
-  }
-
-  editUpdateMode() {
-    circAbdominalFocusNode.unfocus();
-    if (formKey.currentState!.validate()) {
-      loading(true);
-      if (Get.arguments == null) {
-        updatePaciente();
-      }
-    }
+    loading(false);
   }
 
   addPaciente() {
@@ -86,21 +67,25 @@ class PacienteController extends GetxController {
     wightController.text = paciente.peso.toString();
     circAbdominalCOntroller.text = paciente.circunferenciaAbdominal.toString();
     heightController.text = paciente.altura.toString();
-    Get.to(() => EditPacienteForm());
   }
 
   savePaciente() async {
     final Paciente newPaciente = Paciente(
       id: 0,
       nome: nameController.text.trim(),
-      sexo: sexController.text.trim().isNotEmpty? sexController.text : "Indefinido",
+      sexo: sexController.text.trim().isNotEmpty
+          ? sexController.text
+          : "Indefinido",
       idade: int.parse(ageController.text.trim()),
       peso: double.tryParse(wightController.text.trim()),
       altura: double.tryParse(heightController.text.trim()),
-      tipoSanguineo: bloodTypeController.text.trim().isNotEmpty? bloodTypeController.text : "Indefinido",
-      circunferenciaAbdominal: double.tryParse(circAbdominalCOntroller.text.trim()),
+      tipoSanguineo: bloodTypeController.text.trim().isNotEmpty
+          ? bloodTypeController.text
+          : "Indefinido",
+      circunferenciaAbdominal:
+          double.tryParse(circAbdominalCOntroller.text.trim()),
     );
-    pacienteProvider.save(newPaciente).then((value){
+    pacienteProvider.save(newPaciente).then((value) {
       loading(false);
       refreshPacienteList();
     });
@@ -109,15 +94,16 @@ class PacienteController extends GetxController {
   updatePaciente() async {
     final Paciente newPaciente = Paciente(
       id: Get.arguments,
-      nome: nameController.text.trim(),
-      sexo: sexController.text.trim(),
+      nome: nameController.text,
+      sexo: sexController.text,
       idade: int.parse(ageController.text.trim()),
       peso: double.tryParse(wightController.text.trim()),
       altura: double.tryParse(heightController.text.trim()),
       tipoSanguineo: bloodTypeController.text.trim(),
-      circunferenciaAbdominal: double.tryParse(circAbdominalCOntroller.text.trim()),
+      circunferenciaAbdominal:
+          double.tryParse(circAbdominalCOntroller.text.trim()),
     );
-    pacienteProvider.update(newPaciente).then((value){
+    pacienteProvider.update(newPaciente).then((value) {
       loading(false);
       refreshPacienteList();
     });
@@ -125,15 +111,14 @@ class PacienteController extends GetxController {
 
   deletePaciente(int id) async {
     loading(true);
-    pacienteProvider.delete(id).then((value){
+    pacienteProvider.delete(id).then((value) {
       loading(false);
       refreshPacienteList();
     });
   }
 
-  refreshPacienteList() {
-    getAll();
-    Get.back();
-    Get.back();
+  refreshPacienteList() async {
+    await getAll();
+    Get.put(PacienteController());
   }
 }

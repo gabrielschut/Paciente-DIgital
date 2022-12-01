@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:paciente_digital/controller/medicamento_controller.dart';
+import 'package:paciente_digital/controller/paciente_controller.dart';
 import 'package:paciente_digital/model/medicamento.dart';
 import 'package:paciente_digital/model/paciente.dart';
+import 'package:paciente_digital/screens/paciente/edit_paciente_form_screen.dart';
 import 'package:paciente_digital/screens/tabBar_paciente_controll_screen.dart';
 
-class CardPacienteWidget extends StatefulWidget {
+class CardPacienteWidget extends GetView<PacienteController> {
+  @override
+  final controller = Get.find<PacienteController>();
   final Paciente paciente;
 
   CardPacienteWidget({
@@ -12,44 +18,21 @@ class CardPacienteWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<CardPacienteWidget> createState() => _CardPacienteWidgetState();
-}
-
-class _CardPacienteWidgetState extends State<CardPacienteWidget> {
-
-  @override
   Widget build(BuildContext context) {
+    MedicamentoController medicineController = MedicamentoController(idPaciente: paciente.id!);
+    List<Medicamento> medicamentos = [];
     return Material(
       child: InkWell(
         splashColor: Colors.lightBlue,
         onDoubleTap: () {
-          Paciente paciente = Paciente(
-            nome: "Gabriel Schutt",
-            sexo: "Masculino",
-            idade: 26,
-            peso: 60,
-            circunferenciaAbdominal: 76.5,
-            isActive: true,
-            id: 1,
-            tipoSanguineo: "O+",
-          );
-          Medicamento medicamento = Medicamento(
-              idPaciente: 1,
-              nome: "BuscoPan",
-              dosagem: 300,
-              tarja: "Amarela",
-              dataInicial: DateTime(2022, 11, 25),
-              dataTermino: DateTime(2022, 11, 26));
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => TabBarPacienteControll(
-                  paciente: paciente, medicines: [medicamento])));
+          Get.lazyPut(() => medicineController);
         },
         child: Container(
           width: 400,
           height: 110,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
-            color: Colors.black26,
+            color: Colors.white,
             shape: BoxShape.rectangle,
             border: Border(
               top: BorderSide(
@@ -81,7 +64,7 @@ class _CardPacienteWidgetState extends State<CardPacienteWidget> {
                     Padding(
                       padding: EdgeInsets.only(left: 8),
                       child: Text(
-                        widget.paciente.nome,
+                        paciente.nome,
                         style: TextStyle(
                           color: Colors.black87,
                           fontSize: 18,
@@ -95,15 +78,20 @@ class _CardPacienteWidgetState extends State<CardPacienteWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (context) => EditPacienteForm(paciente: paciente)));
+                          },
                           icon: Icon(
                             Icons.edit,
-                            color: Colors.black,
+                            color: Colors.lightBlueAccent,
                             size: 26,
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            controller.deletePaciente(paciente.id!.toInt());
+                          },
                           icon: Icon(
                             Icons.close_sharp,
                             color: Colors.redAccent,
@@ -120,7 +108,7 @@ class _CardPacienteWidgetState extends State<CardPacienteWidget> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "Sexo : " + widget.paciente.sexo,
+                        "Sexo : ${paciente.sexo}",
                         style: TextStyle(
                           color: Colors.black87,
                           fontSize: 18,
@@ -128,7 +116,7 @@ class _CardPacienteWidgetState extends State<CardPacienteWidget> {
                       ),
                       SizedBox(width: 30,),
                       Text(
-                        "Idade : " + widget.paciente.idade.toString(),
+                        "Idade : ${paciente.idade}",
                         style: TextStyle(
                           color: Colors.black87,
                           fontSize: 18,

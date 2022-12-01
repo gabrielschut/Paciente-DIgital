@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:paciente_digital/model/medicamento.dart';
 import 'package:paciente_digital/model/paciente.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -13,8 +14,6 @@ class DataBaseService extends GetxService {
 
   Future<Database> getDatabase() async {
     var databasePath = await getDatabasesPath();
-    // String path = join(databasePath, 'pacienteDigital.db');
-    // await deleteDatabase(path);
     return db = await openDatabase(
       join(databasePath, 'pacienteDigital.db'),
       onCreate: (db, version) {
@@ -33,13 +32,15 @@ class DataBaseService extends GetxService {
 
   Future<List<Paciente>> getAllPacientes() async {
     final result = await db.rawQuery("SELECT * from paciente ORDER BY id");
-    return result.map((json) => Paciente.fromJson(json)).toList();
+    List<Paciente> pacientes = [];
+    pacientes.addAll(result.map((json) => Paciente.fromJson(json)));
+    return pacientes;
   }
 
   Future<Paciente> savePaciente(Paciente paciente) async {
     final id = await db.rawInsert(
-        'INSERT INTO paciente (nome, idade, sexo, altura, peso, tipoSanguineo, circunferenciaAbdominal, isActive)'
-            ' VALUES (?, ?, ?, ?,?, ?, ?, ?)',
+        'INSERT INTO paciente (nome, idade, sexo, altura, peso, tipoSanguineo, circunferenciaAbdominal)'
+        ' VALUES (?, ?, ?, ?,?, ?, ?)',
         [
           paciente.nome,
           paciente.idade,
@@ -48,19 +49,16 @@ class DataBaseService extends GetxService {
           paciente.peso,
           paciente.tipoSanguineo,
           paciente.circunferenciaAbdominal,
-          paciente.isActive,
         ]);
 
-    return paciente.copy(
-      id: id,
-    );
+    return paciente.copy(id: id);
   }
 
   Future<Paciente> updatePaciente(Paciente paciente) async {
     final id = await db.rawUpdate(
         "UPDATE paciente SET nome = ?, idade = ?,sexo = ?, "
         "altura = ?, peso = ?, tipoSanguineo = ?,"
-        " circunferenciaAbdominal =?, isActive =? ",
+        " circunferenciaAbdominal =? WHERE id = ?",
         [
           paciente.nome,
           paciente.idade,
@@ -69,14 +67,10 @@ class DataBaseService extends GetxService {
           paciente.peso,
           paciente.tipoSanguineo,
           paciente.circunferenciaAbdominal,
-          paciente.isActive,
           paciente.id
         ]);
 
-    paciente.copy(
-      id: id,
-    );
-    return paciente;
+    return paciente.copy(id: id);
   }
 
   Future<int> deletePaciente(int pacienteId) async {
@@ -89,6 +83,35 @@ class DataBaseService extends GetxService {
     db.close();
   }
 
+  Future<List<Medicamento>> getAllMedicamento(int idPaciente) async {
+    final result = await db.rawQuery("SELECT * from medicamento WHERE idPaciente = ?  ORDER BY id");
+    List<Medicamento> medicamentos = [];
+    medicamentos.addAll(result.map((json) => Medicamento.fromJson(json)));
+    return medicamentos;
+  }
+
+  Future<Medicamento> saveMedicamento(Medicamento medicamento) async {
+    final id = await db.rawInsert(
+        'INSERT INTO medicamento (nome, idPaciente, dataTermino, dataInicial, dosagem, tarja)'
+        ' VALUES (?, ?, ?, ?,?, ?)',
+        [
+          medicamento.nome,
+          medicamento.idPaciente,
+          medicamento.dataTermino,
+          medicamento.dataInicial,
+          medicamento.dosagem,
+          medicamento.tarja,
+        ]);
+
+    return medicamento.copy(id: id);
+  }
+
+  Future<int> deleteMedicamento(int medicamentoId) async {
+    final id = await db
+        .rawDelete("DELETE FROM medicamento WHERE id  = ?", [medicamentoId]);
+    return id;
+  }
+
   String get _paciente => ''' 
     CREATE TABLE paciente (
     id INTEGER Primary Key,
@@ -98,8 +121,7 @@ class DataBaseService extends GetxService {
     tipoSanguineo TEXT,
     peso REAL,
     altura REAL,
-    circunferenciaAbdominal REAL,
-    isActive INTEGER
+    circunferenciaAbdominal REAL
     ); 
    ''';
 

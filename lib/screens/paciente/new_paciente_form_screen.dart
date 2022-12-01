@@ -142,7 +142,6 @@ class NewPacienteForm extends GetView<PacienteController> {
                 controller.circAbdominalCOntroller.text = "";
                 Navigator.pop(context);
               },
-              backgroundColor: Colors.indigo,
               child: const Icon(
                 Icons.check,
                 color: Colors.white,
