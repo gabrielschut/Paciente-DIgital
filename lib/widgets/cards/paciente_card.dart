@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:paciente_digital/controller/medicamento_controller.dart';
 import 'package:paciente_digital/controller/paciente_controller.dart';
 import 'package:paciente_digital/model/medicamento.dart';
 import 'package:paciente_digital/model/paciente.dart';
+import 'package:paciente_digital/model/tab_paciente_entitie.dart';
 import 'package:paciente_digital/screens/paciente/edit_paciente_form_screen.dart';
 import 'package:paciente_digital/screens/tabBar_paciente_controll_screen.dart';
 
@@ -19,13 +19,24 @@ class CardPacienteWidget extends GetView<PacienteController> {
 
   @override
   Widget build(BuildContext context) {
-    MedicamentoController medicineController = MedicamentoController(idPaciente: paciente.id!);
-    List<Medicamento> medicamentos = [];
+
+    Medicamento medicamento1 = Medicamento(
+      idPaciente: 1,
+      nome: "CimeGripe",
+      dosagem: 30,
+      tarja: "Amarela",
+      dataInicial: DateTime(2022, 12, 1),
+      dataTermino: DateTime(2022, 12, 3),
+    );
+    TabPacienteEntitie entitie =
+        TabPacienteEntitie(paciente: paciente, medicamentos: [medicamento1]);
+
     return Material(
       child: InkWell(
         splashColor: Colors.lightBlue,
         onDoubleTap: () {
-          Get.lazyPut(() => medicineController);
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => TabBarPacienteControll(entitie: entitie)));
         },
         child: Container(
           width: 400,
@@ -79,8 +90,9 @@ class CardPacienteWidget extends GetView<PacienteController> {
                       children: [
                         IconButton(
                           onPressed: () {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (context) => EditPacienteForm(paciente: paciente)));
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    EditPacienteForm(paciente: paciente)));
                           },
                           icon: Icon(
                             Icons.edit,
@@ -114,7 +126,9 @@ class CardPacienteWidget extends GetView<PacienteController> {
                           fontSize: 18,
                         ),
                       ),
-                      SizedBox(width: 30,),
+                      SizedBox(
+                        width: 30,
+                      ),
                       Text(
                         "Idade : ${paciente.idade}",
                         style: TextStyle(

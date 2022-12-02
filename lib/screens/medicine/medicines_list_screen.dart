@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paciente_digital/controller/medicamento_controller.dart';
+import 'package:paciente_digital/controller/paciente_controller.dart';
 import 'package:paciente_digital/model/medicamento.dart';
+import 'package:paciente_digital/model/tab_paciente_entitie.dart';
 import 'package:paciente_digital/screens/medicine/new_medicine_screen.dart';
 import 'package:paciente_digital/widgets/cards/medicine_card.dart';
 
-class MedicinesListScreen extends GetView<MedicamentoController> {
+class MedicinesListScreen extends GetView<PacienteController> {
 
   @override
-  final controller = Get.find<MedicamentoController>();
+  final controller = Get.find<PacienteController>();
 
-  final int idPaciente;
-  final List<Medicamento> medicines;
+
+  final TabPacienteEntitie entitie;
+  int id = 1;
 
   MedicinesListScreen({
     Key? key,
-    required this.medicines,
-    required this.idPaciente
+    required this.entitie,
   }) : super(key: key);
 
 void removeDupliciti(List<Medicamento> medicamento){
   medicamento = medicamento.toSet().toList();
 }
 
-
   @override
   Widget build(BuildContext context) {
-    removeDupliciti(medicines);
+    final MedicamentoController medController = MedicamentoController(idPaciente: entitie.paciente.id!);
+    removeDupliciti(entitie.medicamentos);
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.fromLTRB(16, 16, 8, 8),
@@ -59,16 +61,16 @@ void removeDupliciti(List<Medicamento> medicamento){
           width: 800,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
-            child: medicines.length > 0
+            child: entitie.medicamentos.isNotEmpty
                 ? ListView.builder(
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: MedicineCard(
-                          medicine: medicines[index],
+                          medicine: entitie.medicamentos[index],
                         ),
                       );
                     },
-                    itemCount: medicines.length,
+                    itemCount: entitie.medicamentos.length,
                   )
                 : Container(
                     child: Center(
@@ -86,9 +88,7 @@ void removeDupliciti(List<Medicamento> medicamento){
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => NewMedicine(idPaciente: idPaciente))
-          );
+          Get.lazyPut(medController.newMedicamento(entitie.paciente.id!));
         },
         child: const Icon(
           Icons.add,

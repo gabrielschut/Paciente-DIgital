@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:paciente_digital/model/medicamento.dart';
 import 'package:paciente_digital/provider/medicamento_provider.dart';
 import 'package:paciente_digital/screens/medicine/new_medicine_screen.dart';
+import 'package:paciente_digital/screens/paciente/edit_paciente_form_screen.dart';
 
 class MedicamentoController extends GetxController {
   final MedicamentoProvider medicamentoProvider = MedicamentoProvider();
@@ -87,5 +88,9 @@ class MedicamentoController extends GetxController {
   refreshMedicamentoList() async {
     await getAll(idPaciente);
     Get.put(MedicamentoController(idPaciente: idPaciente));
+  }
+
+  newMedicamento(int pacienteId){
+    Get.to(NewMedicine(idPaciente: pacienteId));
   }
 }

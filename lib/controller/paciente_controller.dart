@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:paciente_digital/model/paciente.dart';
+import 'package:paciente_digital/model/tab_paciente_entitie.dart';
 import 'package:paciente_digital/provider/paciente_provider.dart';
 import 'package:paciente_digital/screens/paciente/new_paciente_form_screen.dart';
 
@@ -10,6 +11,7 @@ class PacienteController extends GetxController {
   List<Paciente> pacienteList = <Paciente>[].obs;
   RxBool loading = false.obs;
   String message = "";
+  TabPacienteEntitie? entitie;
   final idPaciente = 0;
 
   final formKey = GlobalKey<FormState>();
@@ -44,6 +46,14 @@ class PacienteController extends GetxController {
       message = "Erro ao acessar o servço";
     });
     loading(false);
+  }
+
+  getTabPacienteEntite(int id){
+    loading(true);
+    pacienteProvider.generateTabEntite(id).then((value) {
+      entitie = value;
+      loading(false);
+    });
   }
 
   addPaciente() {

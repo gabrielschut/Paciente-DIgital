@@ -11,6 +11,7 @@ class PacienteSelect extends GetView<PacienteController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.getAll();
     return Scaffold(
       appBar: AppBar(
         title: const Text(

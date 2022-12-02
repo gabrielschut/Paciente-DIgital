@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:paciente_digital/model/medicamento.dart';
 import 'package:paciente_digital/model/paciente.dart';
+import 'package:paciente_digital/model/tab_paciente_entitie.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -35,6 +36,19 @@ class DataBaseService extends GetxService {
     List<Paciente> pacientes = [];
     pacientes.addAll(result.map((json) => Paciente.fromJson(json)));
     return pacientes;
+  }
+
+  Future<Paciente> getPacientes(int id) async {
+    final result = await db.rawQuery("SELECT * from paciente ORDER BY id");
+    List<Paciente> pacientes = [];
+    pacientes.addAll(result.map((json) => Paciente.fromJson(json)));
+    Paciente paciente = Paciente(nome: "unkow", sexo: "", idade: 0);
+    pacientes.forEach((element) {
+      if(element.id == id){
+        paciente = element;
+      }
+    });
+    return paciente;
   }
 
   Future<Paciente> savePaciente(Paciente paciente) async {
@@ -111,6 +125,15 @@ class DataBaseService extends GetxService {
         .rawDelete("DELETE FROM medicamento WHERE id  = ?", [medicamentoId]);
     return id;
   }
+
+  Future<TabPacienteEntitie> generateTabPaciente(int id) async {
+    Paciente paciente = getPacientes(id) as Paciente;
+    List<Medicamento> medicamentos = [];
+    medicamentos = getAllMedicamento(id) as List<Medicamento>;
+    TabPacienteEntitie tabPacienteEntitie = TabPacienteEntitie(paciente: paciente, medicamentos: medicamentos);
+    return tabPacienteEntitie;
+  }
+
 
   String get _paciente => ''' 
     CREATE TABLE paciente (
