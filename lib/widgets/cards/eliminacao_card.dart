@@ -4,8 +4,13 @@ import 'package:paciente_digital/model/afericoes/eliminacoes.dart';
 
 class EliminacaoCard extends StatefulWidget {
   final Eliminacoes eliminacao;
+  final List<Eliminacoes> eliminaceosList;
 
-  const EliminacaoCard({Key? key, required this.eliminacao}) : super(key: key);
+  const EliminacaoCard({
+    Key? key,
+    required this.eliminacao,
+    required this.eliminaceosList,
+  }) : super(key: key);
 
   @override
   State<EliminacaoCard> createState() => _EliminacaoCardState();
@@ -63,7 +68,9 @@ class _EliminacaoCardState extends State<EliminacaoCard> {
                     width: 30,
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      widget.eliminaceosList.remove(widget.eliminacao);
+                    },
                     icon: Icon(
                       Icons.close_sharp,
                       color: Colors.red,

@@ -4,11 +4,8 @@ import 'package:paciente_digital/screens/afericoes/reclamacoes/new_reclamacoes_s
 import 'package:paciente_digital/widgets/cards/reclamaaco_card.dart';
 
 class ListReclaacoesScreen extends StatefulWidget {
-  final List<Reclamacoes> listReclamacoes;
-
   const ListReclaacoesScreen({
     Key? key,
-    required this.listReclamacoes,
   }) : super(key: key);
 
   @override
@@ -22,7 +19,27 @@ void removeDupliciti(List<Reclamacoes> reclamacoes) {
 class _ListReclaacoesScreenState extends State<ListReclaacoesScreen> {
   @override
   Widget build(BuildContext context) {
-    removeDupliciti(widget.listReclamacoes);
+    Reclamacoes reclamacoes = Reclamacoes(
+      idPaciente: 1,
+      createAt: DateTime(2022, 10, 25),
+      reclamacao: "Dores no peito quando cai a noite",
+    );
+
+    Reclamacoes reclamacoes1 = Reclamacoes(
+      idPaciente: 1,
+      createAt: DateTime(2022, 10, 26),
+      reclamacao: "Calafrios e febre continua durante todo o dia",
+    );
+
+    Reclamacoes reclamacoes2 = Reclamacoes(
+      idPaciente: 1,
+      createAt: DateTime(2022, 10, 27),
+      reclamacao: "Tosse com sangue esporadicamente",
+    );
+    final List<Reclamacoes> listReclamacoes = [];
+    listReclamacoes.addAll([reclamacoes, reclamacoes1, reclamacoes2]);
+
+    removeDupliciti(listReclamacoes);
 
     return Scaffold(
       appBar: AppBar(
@@ -66,26 +83,26 @@ class _ListReclaacoesScreenState extends State<ListReclaacoesScreen> {
           width: 800,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
-            child: widget.listReclamacoes.isNotEmpty
+            child: listReclamacoes.isNotEmpty
                 ? ListView.builder(
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: ReclamacoesCard(
-                    reclamacoes: widget.listReclamacoes[index],
-                  ),
-                );
-              },
-              itemCount: widget.listReclamacoes.length,
-            )
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: ReclamacoesCard(
+                          reclamacao: listReclamacoes[index],
+                        ),
+                      );
+                    },
+                    itemCount: listReclamacoes.length,
+                  )
                 : const Center(
-              child: Text(
-                "Nenhuma eliminação foi registrada",
-                style: TextStyle(
-                  color: Colors.blueAccent,
-                  fontSize: 18,
-                ),
-              ),
-            ),
+                    child: Text(
+                      "Nenhuma eliminação foi registrada",
+                      style: TextStyle(
+                        color: Colors.blueAccent,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
           ),
         ),
       ),
@@ -93,9 +110,8 @@ class _ListReclaacoesScreenState extends State<ListReclaacoesScreen> {
         onPressed: () {
           //nova eliminação seja destruida após sair ou finalizar e traga
           // de volta para esta tela. E essa pagina seja carregada do zero.
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => NewReclamacao())
-          );
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => NewReclamacao()));
         },
         child: const Icon(
           Icons.add,

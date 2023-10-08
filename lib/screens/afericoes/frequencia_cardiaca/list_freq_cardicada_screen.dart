@@ -4,11 +4,8 @@ import 'package:paciente_digital/screens/afericoes/frequencia_cardiaca/new_freq_
 import 'package:paciente_digital/widgets/cards/freq_cardiaca_card.dart';
 
 class ListFrequenciaCardiaca extends StatefulWidget {
-  final List<FrenquenciaCardiaca> frequencias;
-
   const ListFrequenciaCardiaca({
     Key? key,
-    required this.frequencias,
   }) : super(key: key);
 
   @override
@@ -22,7 +19,16 @@ void removeDupliciti(List<FrenquenciaCardiaca> frequencias) {
 class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
   @override
   Widget build(BuildContext context) {
-    removeDupliciti(widget.frequencias);
+    FrenquenciaCardiaca frenquenciaCardiaca = FrenquenciaCardiaca(
+      idPaciente: 1,
+      createAt: DateTime(2022,10,25),
+      frequencia: 65,
+    );
+
+    List<FrenquenciaCardiaca> frequencias = [];
+    frequencias.addAll([frenquenciaCardiaca]);
+
+    removeDupliciti(frequencias);
 
     return Scaffold(
       appBar: AppBar(
@@ -66,16 +72,16 @@ class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
           width: 800,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
-            child: widget.frequencias.isNotEmpty
+            child: frequencias.isNotEmpty
                 ? ListView.builder(
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: CardFreqCardiaca(
-                          frenquenciaCardiaca: widget.frequencias[index],
+                          frenquenciaCardiaca: frequencias[index],
                         ),
                       );
                     },
-                    itemCount: widget.frequencias.length,
+                    itemCount: frequencias.length,
                   )
                 : const Center(
                     child: Padding(
@@ -96,9 +102,8 @@ class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
         onPressed: () {
           //nova eliminação seja destruida após sair ou finalizar e traga
           // de volta para esta tela. E essa pagina seja carregada do zero.
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => NewFreqCardiaca())
-          );
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => NewFreqCardiaca()));
         },
         child: const Icon(
           Icons.add,

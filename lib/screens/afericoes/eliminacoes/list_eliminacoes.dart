@@ -4,11 +4,9 @@ import 'package:paciente_digital/screens/afericoes/eliminacoes/new_eliminiacao_s
 import 'package:paciente_digital/widgets/cards/eliminacao_card.dart';
 
 class ListEliminacoes extends StatefulWidget {
-  final List<Eliminacoes> eliminacoes;
 
   const ListEliminacoes({
     Key? key,
-    required this.eliminacoes,
   }) : super(key: key);
 
   @override
@@ -22,7 +20,27 @@ void removeDupliciti(List<Eliminacoes> elimin) {
 class _ListEliminacoesState extends State<ListEliminacoes> {
   @override
   Widget build(BuildContext context) {
-    removeDupliciti(widget.eliminacoes);
+
+    Eliminacoes eliminacoes = Eliminacoes(idPaciente: 1,
+      createAt: DateTime(2022,12,3),
+      excrecao: "coco",
+      description: "Teste 123",);
+
+    Eliminacoes eliminacoes2 = Eliminacoes(idPaciente: 1,
+      createAt: DateTime(2022,12,3),
+      excrecao: "Urina",
+      description: "Esta verde",);
+
+    Eliminacoes eliminacoes3 = Eliminacoes(idPaciente: 1,
+      createAt: DateTime(2022,12,3),
+      excrecao: "Cartarro",
+      description: "Apresenta pontos vermelhos",);
+
+    List<Eliminacoes> listEsliminacoes = [];
+    listEsliminacoes.addAll([eliminacoes, eliminacoes2, eliminacoes3]);
+
+    removeDupliciti(listEsliminacoes);
+
 
     return Scaffold(
       appBar: AppBar(
@@ -66,33 +84,35 @@ class _ListEliminacoesState extends State<ListEliminacoes> {
           width: 800,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
-            child: widget.eliminacoes.isNotEmpty
+            child: listEsliminacoes.isNotEmpty
                 ? ListView.builder(
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: EliminacaoCard(
-                          eliminacao: widget.eliminacoes[index],
-                        ),
-                      );
-                    },
-                    itemCount: widget.eliminacoes.length,
-                  )
-                : const Center(
-                  child: Text(
-                    "Nenhuma eliminação foi registrada",
-                    style: TextStyle(
-                      color: Colors.blueAccent,
-                      fontSize: 18,
-                    ),
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: EliminacaoCard(
+                    eliminacao: listEsliminacoes[index],
+                    eliminaceosList: listEsliminacoes,
                   ),
+                );
+              },
+              itemCount: listEsliminacoes.length,
+            )
+                : const Center(
+              child: Text(
+                "Nenhuma eliminação foi registrada",
+                style: TextStyle(
+                  color: Colors.blueAccent,
+                  fontSize: 18,
                 ),
+              ),
+            ),
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => NewEliminacao())
+              MaterialPageRoute(builder: (context) =>
+                  NewEliminacao(listEliminacoes: listEsliminacoes,))
           );
         },
         child: const Icon(

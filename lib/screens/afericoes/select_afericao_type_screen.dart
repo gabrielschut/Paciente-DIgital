@@ -70,7 +70,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                     child: TextButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => ListEliminacoes(eliminacoes: [],))
+                            MaterialPageRoute(builder: (context) => ListEliminacoes())
                         );
                       },
                       child: Text(
@@ -96,7 +96,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                     child: TextButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => ListFrequenciaCardiaca(frequencias: [],))
+                            MaterialPageRoute(builder: (context) => ListFrequenciaCardiaca())
                         );
                       },
                       child: Text(
@@ -148,7 +148,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                     child: TextButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => ListGlicemia(glicemias: [],))
+                            MaterialPageRoute(builder: (context) => ListGlicemia())
                         );
                       },
                       child: Text(
@@ -200,7 +200,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                     child: TextButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => ListReclaacoesScreen(listReclamacoes: [],))
+                            MaterialPageRoute(builder: (context) => ListReclaacoesScreen())
                         );
                       },
                       child: Text(

@@ -3,9 +3,9 @@ import 'package:intl/intl.dart';
 import 'package:paciente_digital/model/afericoes/reclamacoes.dart';
 
 class ReclamacoesCard extends StatefulWidget {
-  final Reclamacoes reclamacoes;
+  final Reclamacoes reclamacao;
 
-  const ReclamacoesCard({Key? key, required this.reclamacoes}) : super(key: key);
+  const ReclamacoesCard({Key? key, required this.reclamacao}) : super(key: key);
 
   @override
   State<ReclamacoesCard> createState() => _ReclamacoesCardState();
@@ -52,7 +52,7 @@ class _ReclamacoesCardState extends State<ReclamacoesCard> {
                       children: [
                         Text(
                           "Feita em : ${DateFormat("dd/MM/yyyy")
-                                  .format(widget.reclamacoes.createAt)}",
+                                  .format(widget.reclamacao.createAt)}",
                           style: TextStyle(
                             color: Colors.blueAccent,
                             fontSize: 17,
@@ -82,8 +82,8 @@ class _ReclamacoesCardState extends State<ReclamacoesCard> {
                     Container(
                       width: 260,
                       child: Text(
-                        widget.reclamacoes.reclamacao != ""
-                            ? widget.reclamacoes.reclamacao
+                        widget.reclamacao.reclamacao != ""
+                            ? widget.reclamacao.reclamacao
                             : "Descrição não informada",
                         style: TextStyle(
                           color: Colors.blueAccent,

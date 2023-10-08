@@ -4,9 +4,9 @@ import 'package:paciente_digital/screens/afericoes/pressao_arterial/new_pressao_
 import 'package:paciente_digital/widgets/cards/pressao_aterial_card.dart';
 
 class ListPressaoArterial extends StatefulWidget {
-  final List<PressaoArterial> pressoes;
+  List<PressaoArterial> pressoes;
 
-  const ListPressaoArterial({
+  ListPressaoArterial({
     Key? key,
     required this.pressoes,
   }) : super(key: key);
@@ -24,6 +24,40 @@ class _ListPressaoArterialState extends State<ListPressaoArterial> {
   Widget build(BuildContext context) {
     removeDupliciti(widget.pressoes);
 
+    PressaoArterial pressaoArterial = PressaoArterial(
+      idPaciente: 1,
+      createAt: DateTime(2022, 10, 25),
+      maxima: 12,
+      minima: 8,
+    );
+
+    PressaoArterial pressaoArterial1 = PressaoArterial(
+      idPaciente: 1,
+      createAt: DateTime(2022, 10, 28),
+      maxima: 12,
+      minima: 8,
+    );
+
+    PressaoArterial pressaoArterial2 = PressaoArterial(
+      idPaciente: 1,
+      createAt: DateTime(2022, 11, 5),
+      maxima: 13,
+      minima: 10,
+    );
+
+    PressaoArterial pressaoArterial3 = PressaoArterial(
+      idPaciente: 1,
+      createAt: DateTime(2022, 11, 8),
+      maxima: 10,
+      minima: 6,
+    );
+
+    widget.pressoes.addAll([
+      pressaoArterial,
+      pressaoArterial1,
+      pressaoArterial2,
+      pressaoArterial3
+    ]);
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -68,27 +102,27 @@ class _ListPressaoArterialState extends State<ListPressaoArterial> {
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
             child: widget.pressoes.isNotEmpty
                 ? ListView.builder(
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: PressaoArterialCard(
-                   pressaoArterial : widget.pressoes[index],
-                  ),
-                );
-              },
-              itemCount: widget.pressoes.length,
-            )
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: PressaoArterialCard(
+                          pressaoArterial: widget.pressoes[index],
+                        ),
+                      );
+                    },
+                    itemCount: widget.pressoes.length,
+                  )
                 : const Center(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(16, 0, 8, 0),
-                child: Text(
-                  "Nenhuma aferição de nível de glicemia foi registrada",
-                  style: TextStyle(
-                    color: Colors.blueAccent,
-                    fontSize: 18,
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(16, 0, 8, 0),
+                      child: Text(
+                        "Nenhuma aferição de nível de glicemia foi registrada",
+                        style: TextStyle(
+                          color: Colors.blueAccent,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
           ),
         ),
       ),
@@ -97,8 +131,7 @@ class _ListPressaoArterialState extends State<ListPressaoArterial> {
           //nova eliminação seja destruida após sair ou finalizar e traga
           // de volta para esta tela. E essa pagina seja carregada do zero.
           Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => NewPressaoArterial())
-          );
+              MaterialPageRoute(builder: (context) => NewPressaoArterial()));
         },
         child: const Icon(
           Icons.add,

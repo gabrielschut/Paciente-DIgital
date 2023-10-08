@@ -28,8 +28,24 @@ class CardPacienteWidget extends GetView<PacienteController> {
       dataInicial: DateTime(2022, 12, 1),
       dataTermino: DateTime(2022, 12, 3),
     );
+    Medicamento medicamento2 = Medicamento(
+      idPaciente: 1,
+      nome: "Ristamin",
+      dosagem: 30,
+      tarja: "Amarela",
+      dataInicial: DateTime(2022, 12, 1),
+      dataTermino: DateTime(2022, 12, 4),
+    );
+    Medicamento medicamento3 = Medicamento(
+      idPaciente: 1,
+      nome: "Rivotril",
+      dosagem: 200,
+      tarja: "Preta",
+      dataInicial: DateTime(2018, 10, 1),
+      dataTermino: DateTime(2022, 12, 30),
+    );
     TabPacienteEntitie entitie =
-        TabPacienteEntitie(paciente: paciente, medicamentos: [medicamento1]);
+        TabPacienteEntitie(paciente: paciente, medicamentos: [medicamento1, medicamento2, medicamento3]);
 
     return Material(
       child: InkWell(

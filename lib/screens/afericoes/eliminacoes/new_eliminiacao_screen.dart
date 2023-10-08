@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:paciente_digital/model/afericoes/eliminacoes.dart';
 import 'package:paciente_digital/widgets/components/date_picker_field.dart';
 import 'package:paciente_digital/widgets/components/multilene_field.dart';
 import 'package:paciente_digital/widgets/components/text_field.dart';
 
 class NewEliminacao extends StatefulWidget {
-  const NewEliminacao({Key? key}) : super(key: key);
+  List<Eliminacoes> listEliminacoes;
+
+  NewEliminacao({Key? key, required this.listEliminacoes}) : super(key: key);
 
   @override
   State<NewEliminacao> createState() => _NewEliminacaoState();
@@ -69,7 +72,8 @@ class _NewEliminacaoState extends State<NewEliminacao> {
               hint: "01/01/2000",
               dateFieldName: "Data      ",
               suffix: "",
-              controller: dateController, focusNode: dateFocus,
+              controller: dateController,
+              focusNode: dateFocus,
             ),
           ),
           Padding(
@@ -81,11 +85,15 @@ class _NewEliminacaoState extends State<NewEliminacao> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          //chamar o save eliminação
+        onPressed: () {
+          Eliminacoes eliminacoes = Eliminacoes(idPaciente: 1,
+              createAt: DateTime.parse(dateController.text),
+              excrecao: eliminacaoController.text,
+              description: descricaoController.text);
+          widget.listEliminacoes.add(eliminacoes);
           Navigator.of(context).pop();
         },
-        child: Icon(Icons.check,color: Colors.white,),
+        child: Icon(Icons.check, color: Colors.white,),
       ),
     );
   }

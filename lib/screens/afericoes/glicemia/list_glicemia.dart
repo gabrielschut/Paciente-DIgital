@@ -4,11 +4,9 @@ import 'package:paciente_digital/screens/afericoes/glicemia/new_glicemia_screen.
 import 'package:paciente_digital/widgets/cards/glicemi_card.dart';
 
 class ListGlicemia extends StatefulWidget {
-  final List<Glicemia> glicemias;
 
   const ListGlicemia({
     Key? key,
-    required this.glicemias,
   }) : super(key: key);
 
   @override
@@ -22,7 +20,13 @@ void removeDupliciti(List<Glicemia> glicemias) {
 class _ListGlicemiaState extends State<ListGlicemia> {
   @override
   Widget build(BuildContext context) {
-    removeDupliciti(widget.glicemias);
+    Glicemia glicemia = Glicemia(idPaciente: 1, createA: DateTime(2022,10,25), value: 100);
+    Glicemia glicemia1 = Glicemia(idPaciente: 1, createA: DateTime(2022,10,26), value: 115);
+    Glicemia glicemia2 = Glicemia(idPaciente: 1, createA: DateTime(2022,10,27), value: 150);
+    List<Glicemia> glicemias = [];
+    glicemias.addAll([glicemia, glicemia1, glicemia2]);
+    
+    removeDupliciti(glicemias);
 
     return Scaffold(
       appBar: AppBar(
@@ -66,16 +70,16 @@ class _ListGlicemiaState extends State<ListGlicemia> {
           width: 800,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
-            child: widget.glicemias.isNotEmpty
+            child: glicemias.isNotEmpty
                 ? ListView.builder(
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: GlicemiaCard(
-                          glicemia: widget.glicemias[index],
+                          glicemia: glicemias[index],
                         ),
                       );
                     },
-                    itemCount: widget.glicemias.length,
+                    itemCount: glicemias.length,
                   )
                 : const Center(
                     child: Padding(
