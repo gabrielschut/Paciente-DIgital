@@ -24,7 +24,7 @@ class _GlicemiaCardState extends State<GlicemiaCard> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24),
           shape: BoxShape.rectangle,
-          border: Border(
+          border: const Border(
             top: BorderSide(
               width: 1,
               color: Colors.lightBlue,
@@ -44,7 +44,7 @@ class _GlicemiaCardState extends State<GlicemiaCard> {
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.fromLTRB(0, 4, 4, 0),
+          padding: const EdgeInsets.fromLTRB(0, 4, 4, 0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -52,22 +52,22 @@ class _GlicemiaCardState extends State<GlicemiaCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: 14),
+                    padding: const EdgeInsets.only(left: 14),
                     child: Text(
                       "$glicemia ml/dl",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.blueAccent,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 1,
                   ),
                   IconButton(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.close_sharp,
                       color: Colors.red,
                       size: 30,
@@ -76,13 +76,13 @@ class _GlicemiaCardState extends State<GlicemiaCard> {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.only(left: 32, bottom: 8),
+                padding: const EdgeInsets.only(left: 32, bottom: 8),
                 child: Row(
                   children: [
                     Text(
                       "Data : ${DateFormat("dd/MM/yyyy")
                               .format(widget.glicemia.createA)}",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.blueAccent,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

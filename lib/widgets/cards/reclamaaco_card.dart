@@ -19,7 +19,7 @@ class _ReclamacoesCardState extends State<ReclamacoesCard> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24),
           shape: BoxShape.rectangle,
-          border: Border(
+          border: const Border(
             top: BorderSide(
               width: 1,
               color: Colors.lightBlue,
@@ -39,7 +39,7 @@ class _ReclamacoesCardState extends State<ReclamacoesCard> {
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.fromLTRB(0, 4, 4, 8),
+          padding: const EdgeInsets.fromLTRB(0, 4, 4, 8),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -47,13 +47,13 @@ class _ReclamacoesCardState extends State<ReclamacoesCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: 16),
+                    padding: const EdgeInsets.only(left: 16),
                     child: Row(
                       children: [
                         Text(
                           "Feita em : ${DateFormat("dd/MM/yyyy")
                                   .format(widget.reclamacao.createAt)}",
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.blueAccent,
                             fontSize: 17,
                             fontWeight: FontWeight.bold,
@@ -62,12 +62,12 @@ class _ReclamacoesCardState extends State<ReclamacoesCard> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 30,
                   ),
                   IconButton(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.close_sharp,
                       color: Colors.red,
                       size: 30,
@@ -76,16 +76,16 @@ class _ReclamacoesCardState extends State<ReclamacoesCard> {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(16, 8, 0, 4),
+                padding: const EdgeInsets.fromLTRB(16, 8, 0, 4),
                 child: Row(
                   children: [
-                    Container(
+                    SizedBox(
                       width: 260,
                       child: Text(
                         widget.reclamacao.reclamacao != ""
                             ? widget.reclamacao.reclamacao
                             : "Descrição não informada",
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.blueAccent,
                           fontSize: 17,
                           fontWeight: FontWeight.bold,

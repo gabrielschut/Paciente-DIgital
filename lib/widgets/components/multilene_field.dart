@@ -4,7 +4,7 @@ class MultilineField extends StatefulWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
 
-  MultilineField({
+  const MultilineField({
     Key? key,
     required this.controller,
     required this.focusNode,
@@ -25,12 +25,12 @@ class _MultilineFieldState extends State<MultilineField> {
       },
       maxLines: 8,
       maxLength: 255,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         helperText: "",
         hintText: "Descreva em até 255 caracteres",
         label: Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children: [
             Padding(
               padding: EdgeInsets.only(left: 8),
               child: Text(

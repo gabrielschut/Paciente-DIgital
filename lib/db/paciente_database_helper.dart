@@ -22,6 +22,13 @@ class PacienteDatabaseHelper{
     return paciente;
   }
 
+  static Future<List<Map<String, dynamic>>> getAll() async {
+    final db = await DataBaseService.openDatabase();
+    Future<List<Map<String,dynamic>>> pacientes = db.query('paciente', orderBy: 'id');
+    db.close();
+    return pacientes;
+  }
+
   static Future<int> update(int id, String name, String sexo, int idade, String? tipoSanguineo, double? peso,
       int? altura, double? circAbdominal) async {
     final db = await DataBaseService.openDatabase();

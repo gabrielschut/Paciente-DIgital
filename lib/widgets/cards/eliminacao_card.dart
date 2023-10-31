@@ -24,7 +24,7 @@ class _EliminacaoCardState extends State<EliminacaoCard> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24),
           shape: BoxShape.rectangle,
-          border: Border(
+          border: const Border(
             top: BorderSide(
               width: 1,
               color: Colors.lightBlue,
@@ -44,7 +44,7 @@ class _EliminacaoCardState extends State<EliminacaoCard> {
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.fromLTRB(0, 4, 4, 8),
+          padding: const EdgeInsets.fromLTRB(0, 4, 4, 8),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -57,21 +57,21 @@ class _EliminacaoCardState extends State<EliminacaoCard> {
                       widget.eliminacao.excrecao != null
                           ? widget.eliminacao.excrecao.toString()
                           : "Eliminação",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.blueAccent,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 30,
                   ),
                   IconButton(
                     onPressed: () {
                       widget.eliminaceosList.remove(widget.eliminacao);
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.close_sharp,
                       color: Colors.red,
                       size: 30,
@@ -80,14 +80,11 @@ class _EliminacaoCardState extends State<EliminacaoCard> {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.only(left: 16),
+                padding: const EdgeInsets.only(left: 16),
                 child: Row(
                   children: [
-                    Text(
-                      "Data : " +
-                          DateFormat("dd/MM/yyyy")
-                              .format(widget.eliminacao.createAt),
-                      style: TextStyle(
+                    Text("Data : ${DateFormat("dd/MM/yyyy").format(widget.eliminacao.createAt)}",
+                      style: const TextStyle(
                         color: Colors.blueAccent,
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -97,16 +94,16 @@ class _EliminacaoCardState extends State<EliminacaoCard> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(16, 8, 0, 4),
+                padding: const EdgeInsets.fromLTRB(16, 8, 0, 4),
                 child: Row(
                   children: [
-                    Container(
+                    SizedBox(
                       width: 260,
                       child: Text(
                         widget.eliminacao.description != null
                             ? widget.eliminacao.description.toString()
                             : "Descrição não informada",
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.blueAccent,
                           fontSize: 17,
                           fontWeight: FontWeight.bold,

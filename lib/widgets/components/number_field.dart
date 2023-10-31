@@ -9,7 +9,7 @@ class NumberField extends StatefulWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
 
-  NumberField({
+  const NumberField({
     Key? key,
     required this.hint,
     required this.fieldName,
@@ -46,7 +46,7 @@ class _NumberFieldState extends State<NumberField> {
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
       decoration: InputDecoration(
         labelText: widget.fieldName,
-        labelStyle: TextStyle(
+        labelStyle: const TextStyle(
           color: Colors.lightBlue,
         ),
         helperText: "",

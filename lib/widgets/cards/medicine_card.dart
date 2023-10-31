@@ -20,7 +20,7 @@ class _MedicineCardState extends State<MedicineCard> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
         shape: BoxShape.rectangle,
-        border: Border(
+        border: const Border(
           top: BorderSide(
             width: 1,
             color: Colors.lightBlue,
@@ -40,7 +40,7 @@ class _MedicineCardState extends State<MedicineCard> {
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.fromLTRB(0, 4, 4, 8),
+        padding: const EdgeInsets.fromLTRB(0, 4, 4, 8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -48,17 +48,17 @@ class _MedicineCardState extends State<MedicineCard> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: 8),
+                  padding: const EdgeInsets.only(left: 8),
                   child: Text(
                     widget.medicine.nome,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.blueAccent,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 30,
                 ),
                 Row(
@@ -66,7 +66,7 @@ class _MedicineCardState extends State<MedicineCard> {
                   children: [
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.edit,
                         color: Colors.blue,
                         size: 26,
@@ -74,7 +74,7 @@ class _MedicineCardState extends State<MedicineCard> {
                     ),
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.close_sharp,
                         color: Colors.red,
                         size: 30,
@@ -85,13 +85,13 @@ class _MedicineCardState extends State<MedicineCard> {
               ],
             ),
             Padding(
-              padding: EdgeInsets.only(left: 16),
+              padding: const EdgeInsets.only(left: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    "Dosagem " + widget.medicine.dosagem.toString(),
-                    style: TextStyle(
+                    "Dosagem ${widget.medicine.dosagem}",
+                    style: const TextStyle(
                       color: Colors.blueAccent,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -101,25 +101,19 @@ class _MedicineCardState extends State<MedicineCard> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 8),
+              padding: const EdgeInsets.only(left: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(
-                    "De: " +
-                        DateFormat("dd/MM/yyyy")
-                            .format(widget.medicine.dataInicial),
-                    style: TextStyle(
+                   Text("De: ${DateFormat("dd/MM/yyyy").format(widget.medicine.dataInicial)}",
+                    style: const TextStyle(
                       color: Colors.blueAccent,
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text(
-                    "Até: " +
-                        DateFormat("dd/MM/yyyy")
-                            .format(widget.medicine.dataTermino),
-                    style: TextStyle(
+                  Text("Até: ${DateFormat("dd/MM/yyyy").format(widget.medicine.dataTermino)}",
+                    style: const TextStyle(
                       color: Colors.blueAccent,
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
