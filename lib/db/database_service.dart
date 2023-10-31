@@ -21,14 +21,14 @@ class DataBaseService {
     nome TEXT NOT NULL,
     dosagem REAL,
     tarja TEXT,
-    data_inicial INT NOT NULL,
+    data_inicial TIMESTAMP NOT NULL,
     dias_de_uso INT NOT NULL
     );
     
     CREATE TABLE eliminacoes(
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    idPaciente INTEGER,
-    createAt INT NOT NULL,
+    paciente_id INTEGER,
+    createAt TIMESTAMP NOT NULL,
     excrecao TEXT,
     description TEXT
     );
@@ -36,28 +36,28 @@ class DataBaseService {
     CREATE TABLE frequecia_cardiaca(
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     idPaciente INTEGER,
-    createAt INT NOT NULL,
-    frequencia REAL NOT NULL
+    createAt TIMESTAMP NOT NULLL,
+    batimentos REAL NOT NULL
     );      
     
     CREATE TABLE frequencia_respiratoria(
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     idPaciente INTEGER,
-    createAt INT NOT NULL,
+    createAt TIMESTAMP NOT NULL,
     frequencia INTEGER NOT NULL
     );  
     
     CREATE TABLE glicemia(
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     idPaciente INTEGER,
-    createA INT NOT NULL,
+    createA TIMESTAMP NOT NULL,
     value REAL NOT NULL
     );  
     
     CREATE TABLE pressao_arterial(
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     idPaciente INTEGER,
-    createAt INT NOT NULL,
+    createAt TIMESTAMP NOT NULL,
     maxima INTEGER NOT NULL,
     minima INTEGER NOT NULL
     );  
@@ -65,7 +65,7 @@ class DataBaseService {
     CREATE TABLE reclamacoes(
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     idPaciente INTEGER,
-    createAt INT NOT NULL,
+    createAt TIMESTAMP NOT NULL,
     reclamacao TEXT NOT NULL
     );  
     ''');

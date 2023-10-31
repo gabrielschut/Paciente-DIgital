@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart' as sql;
 
 class PacienteDatabaseHelper{
 
-  static Future<int> createPaciente(String name, String sexo, int idade, String? tipoSanguineo, double? peso,
+  static Future<int> create(String name, String sexo, int idade, String? tipoSanguineo, double? peso,
       int? altura, double? circAbdominal) async {
     final db = await DataBaseService.openDatabase();
     final paciente = {
@@ -15,14 +15,14 @@ class PacienteDatabaseHelper{
     return id;
   }
 
-  static Future<List<Map<String, dynamic>>> getPaciente(int id) async {
+  static Future<List<Map<String, dynamic>>> get(int id) async {
     final db = await DataBaseService.openDatabase();
     Future<List<Map<String,dynamic>>> paciente = db.query('paciente', where: "id = ?", whereArgs: [id], limit: 1);
     db.close();
     return paciente;
   }
 
-  static Future<int> updatePaciente(int id, String name, String sexo, int idade, String? tipoSanguineo, double? peso,
+  static Future<int> update(int id, String name, String sexo, int idade, String? tipoSanguineo, double? peso,
       int? altura, double? circAbdominal) async {
     final db = await DataBaseService.openDatabase();
     final paciente = {
