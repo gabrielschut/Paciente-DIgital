@@ -4,17 +4,16 @@ description: Trabalho de graduação
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.18.4 <3.0.0'
+  sdk: '>=3.1.5 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  sqflite: ^2.0.0+3
 
   #format datetime
-  intl: ^0.17.0
+  intl: 0.18.1
 
   #aplica mascara em campos de texto
   mask_text_input_formatter: ^2.4.0
@@ -23,7 +22,9 @@ dependencies:
 
   path: ^1.8.2
 
-  path_provider: ^2.0.11
+  path_provider: ^2.1.1
+
+  sqflite: ^2.3.0
 
 dev_dependencies:
   flutter_test:
@@ -34,7 +35,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.0
+  flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -46,6 +47,3 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-  sqflite: any
-  path_provider: any
-
