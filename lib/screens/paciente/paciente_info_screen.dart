@@ -17,14 +17,14 @@ class _PacienteInfoState extends State<PacienteInfo> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.fromLTRB(16, 16, 8, 8),
+        padding: const EdgeInsets.fromLTRB(16, 16, 8, 8),
         child: Container(
-          padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
           alignment: Alignment.topLeft,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
             shape: BoxShape.rectangle,
-            border: Border(
+            border: const Border(
               top: BorderSide(
                 width: 2,
                 color: Colors.lightBlue,
@@ -53,7 +53,7 @@ class _PacienteInfoState extends State<PacienteInfo> {
                 Padding(
                   padding: const EdgeInsets.only(top: 0),
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         border: Border(
                       bottom: BorderSide(
                         width: 2,
@@ -69,14 +69,14 @@ class _PacienteInfoState extends State<PacienteInfo> {
                         ),
                         Text(
                           widget.paciente.sexo,
-                          style: TextStyle(fontSize: 22, color: Colors.blueAccent),
+                          style: const TextStyle(fontSize: 22, color: Colors.blueAccent),
                         ),
                       ],
                     ),
                   ),
                 ),
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       border: Border(
                     bottom: BorderSide(
                       width: 2,
@@ -91,17 +91,17 @@ class _PacienteInfoState extends State<PacienteInfo> {
                         style: TextStyle(fontSize: 22, color: Colors.blueAccent),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(right: 32),
+                        padding: const EdgeInsets.only(right: 32),
                         child: Text(
                           widget.paciente.idade.toString(),
-                          style: TextStyle(fontSize: 22, color: Colors.blueAccent),
+                          style: const TextStyle(fontSize: 22, color: Colors.blueAccent),
                         ),
                       ),
                     ],
                   ),
                 ),
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       border: Border(
                     bottom: BorderSide(
                       width: 2,
@@ -116,19 +116,19 @@ class _PacienteInfoState extends State<PacienteInfo> {
                         style: TextStyle(fontSize: 22, color: Colors.blueAccent),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(right: 28),
+                        padding: const EdgeInsets.only(right: 28),
                         child: Text(
                           widget.paciente.tipoSanguineo != null
                               ? widget.paciente.tipoSanguineo.toString()
                               : "???",
-                          style: TextStyle(fontSize: 22, color: Colors.blueAccent),
+                          style: const TextStyle(fontSize: 22, color: Colors.blueAccent),
                         ),
                       ),
                     ],
                   ),
                 ),
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       border: Border(
                     bottom: BorderSide(
                       width: 2,
@@ -143,12 +143,12 @@ class _PacienteInfoState extends State<PacienteInfo> {
                         style: TextStyle(fontSize: 22, color: Colors.blueAccent),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(right: 20),
+                        padding: const EdgeInsets.only(right: 20),
                         child: Text(
                           widget.paciente.peso != null
                               ? widget.paciente.peso.toString()
                               : "???",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 21,
                             color: Colors.blueAccent,
                           ),
@@ -158,7 +158,7 @@ class _PacienteInfoState extends State<PacienteInfo> {
                   ),
                 ),
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       border: Border(
                     bottom: BorderSide(
                       width: 2,
@@ -173,13 +173,13 @@ class _PacienteInfoState extends State<PacienteInfo> {
                         style: TextStyle(fontSize: 22, color: Colors.blueAccent),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(right: 20),
+                        padding: const EdgeInsets.only(right: 20),
                         child: Text(
                           widget.paciente.circunferenciaAbdominal != null
                               ? widget.paciente.circunferenciaAbdominal
                                   .toString()
                               : "???",
-                          style: TextStyle(fontSize: 21, color: Colors.blueAccent),
+                          style: const TextStyle(fontSize: 21, color: Colors.blueAccent),
                         ),
                       ),
                     ],

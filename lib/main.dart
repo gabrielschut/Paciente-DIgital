@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:paciente_digital/db/database_service.dart';
-import 'package:paciente_digital/screens/paciente/pacientes_select.dart';
+import 'package:paciente_digital/model/paciente.dart';
 import 'package:paciente_digital/theme/paciente_digital_input_theme.dart';
+import 'package:paciente_digital/db/paciente_database_helper.dart';
+import 'package:paciente_digital/screens/paciente/new_paciente_form_screen.dart';
+import 'package:paciente_digital/screens/tabBar_paciente_controll_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Get.putAsync(() => DataBaseService().init());
+  await DataBaseService.openDatabase();
   runApp(const PacienteDigital());
 }
 
@@ -19,6 +21,8 @@ class PacienteDigital extends StatefulWidget {
 }
 
 class _PacienteDigitalState extends State<PacienteDigital> {
+  late Paciente paciente;
+  
   @override
   Widget build(BuildContext context) {
 
@@ -31,7 +35,7 @@ class _PacienteDigitalState extends State<PacienteDigital> {
 
       initialRoute: '/',
       routes: {
-        '/': (context) =>  PacienteSelect(),
+        '/': (context) =>  paciente.asStream().isEmpty? NewPacienteForm() : TabBarPacienteControll(entitie: paciente)
       },
     );
   }

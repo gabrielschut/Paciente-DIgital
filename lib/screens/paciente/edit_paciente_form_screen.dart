@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:paciente_digital/controller/paciente_controller.dart';
-import 'package:paciente_digital/model/paciente.dart';
 import 'package:paciente_digital/widgets/components/number_field.dart';
 import 'package:paciente_digital/widgets/components/text_field.dart';
+import 'package:paciente_digital/db/paciente_database_helper.dart';
 
-class EditPacienteForm extends GetView<PacienteController> {
-  @override
-  final controller = Get.find<PacienteController>();
-  Paciente paciente;
+class EditPacienteForm {
+  final paciente = PacienteDatabaseHelper.get(1);
 
-  EditPacienteForm({super.key, required this.paciente});
+  TextEditingController nameController = TextEditingController();
+  FocusNode nameFocusNode = FocusNode();
+  TextEditingController idadeController = TextEditingController();
+  FocusNode idadeFocusNode = FocusNode();
+  TextEditingController sexoController = TextEditingController();
+  FocusNode sexoFocusNode = FocusNode();
+  TextEditingController tipoSanguineoController = TextEditingController();
+  FocusNode tipoSanguineoFocusNode = FocusNode();
+  TextEditingController pesoController = TextEditingController();
+  FocusNode pesoFocusNode = FocusNode();
+  TextEditingController alturaController = TextEditingController();
+  FocusNode alturaFocusNode = FocusNode();
+  TextEditingController circAbdominalController = TextEditingController();
+  FocusNode circAbdominalFocusNode = FocusNode();
 
-  @override
   Widget build(BuildContext context) {
-  controller.editPaciente(paciente);
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -25,7 +32,6 @@ class EditPacienteForm extends GetView<PacienteController> {
         ),
       ),
       body: Form(
-        key: controller.formKey,
         child: SingleChildScrollView(
           child: Column(children: [
             Padding(
@@ -34,8 +40,8 @@ class EditPacienteForm extends GetView<PacienteController> {
                 hint: 'João Maria',
                 fieldName: 'Nome',
                 suffix: 'abc',
-                controller: controller.nameController,
-                focusNode: controller.nameFocusNode,
+                controller: nameController,
+                focusNode: nameFocusNode,
               ),
             ),
             Padding(
@@ -44,8 +50,8 @@ class EditPacienteForm extends GetView<PacienteController> {
                 suffix: 'Anos',
                 fieldName: 'Idade',
                 hint: "30",
-                controller: controller.ageController,
-                focusNode: controller.ageFocusNode,
+                controller: idadeController,
+                focusNode: idadeFocusNode,
               ),
             ),
             Padding(
@@ -68,8 +74,8 @@ class EditPacienteForm extends GetView<PacienteController> {
                     width: 250,
                     child: MyTextField(
                       hint: "Masculino",
-                      controller: controller.sexController,
-                      focusNode: controller.sexFocusNode,
+                      controller: sexoController,
+                      focusNode: sexoFocusNode,
                       fieldName: "Sexo",
                       suffix: "",
                     ),
@@ -94,9 +100,9 @@ class EditPacienteForm extends GetView<PacienteController> {
                     width: 250,
                     child: MyTextField(
                       hint: "O+",
-                      controller: controller.bloodTypeController,
-                      focusNode: controller.bloodTypeFocusNode,
-                      fieldName: "Tipo sang.",
+                      controller: tipoSanguineoController,
+                      focusNode: tipoSanguineoFocusNode,
+                      fieldName: "Tipo de sangue",
                       suffix: "",
                     ),
                   ),
@@ -109,8 +115,8 @@ class EditPacienteForm extends GetView<PacienteController> {
                 suffix: 'KG',
                 fieldName: 'Peso',
                 hint: "70.45",
-                controller: controller.wightController,
-                focusNode: controller.wightFocusNode,
+                controller: pesoController,
+                focusNode: pesoFocusNode,
               ),
             ),
             Padding(
@@ -119,8 +125,8 @@ class EditPacienteForm extends GetView<PacienteController> {
                 suffix: 'Metros',
                 fieldName: 'Altura',
                 hint: "1.70",
-                controller: controller.heightController,
-                focusNode: controller.heightFocusNode,
+                controller: alturaController,
+                focusNode: alturaFocusNode,
               ),
             ),
             Padding(
@@ -129,21 +135,23 @@ class EditPacienteForm extends GetView<PacienteController> {
                 suffix: 'Centimetros',
                 fieldName: 'Circunferência Abdominal',
                 hint: "101,5",
-                controller: controller.circAbdominalCOntroller,
-                focusNode: controller.circAbdominalFocusNode,
+                controller: circAbdominalController,
+                focusNode: circAbdominalFocusNode,
               ),
             ),
             FloatingActionButton(
               onPressed: () async {
-                controller.updatePaciente();
-
-                controller.nameController.text = "";
-                controller.ageController.text = "";
-                controller.sexController.text = "";
-                controller.bloodTypeController.text = "";
-                controller.wightController.text = "";
-                controller.heightController.text = "";
-                controller.circAbdominalCOntroller.text = "";
+                PacienteDatabaseHelper.update(1,
+                    nameController.text, sexoController.text,
+                    idadeController.value as int, tipoSanguineoController.text, pesoController.value as double?,
+                    alturaController.text as int?, circAbdominalController.text as double?);
+                nameController.clear();
+                idadeController.clear();
+                sexoController.clear();
+                tipoSanguineoController.clear();
+                pesoController.clear();
+                alturaController.clear();
+                circAbdominalController.clear();
                 Navigator.pop(context);
               },
               backgroundColor: Colors.indigo,
