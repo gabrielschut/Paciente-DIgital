@@ -4,8 +4,10 @@ import 'package:paciente_digital/widgets/components/text_field.dart';
 import 'package:paciente_digital/db/paciente_database_helper.dart';
 
 class NewPacienteForm {
-  int id = 1;
-  final paciente = PacienteDatabaseHelper.get(1);
+
+  NewPacienteForm({
+    Key? key,
+  });
 
   TextEditingController nameController = TextEditingController();
   FocusNode nameFocusNode = FocusNode();

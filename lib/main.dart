@@ -12,7 +12,6 @@ void main() async {
   runApp(const PacienteDigital());
 }
 
-
 class PacienteDigital extends StatefulWidget {
   const PacienteDigital({Key? key}) : super(key: key);
 
@@ -21,22 +20,40 @@ class PacienteDigital extends StatefulWidget {
 }
 
 class _PacienteDigitalState extends State<PacienteDigital> {
+  @override
+  void initState() {
+    super.initState();
+    _refreshPaciente(); 
+  }
+
   late Paciente paciente;
-  
+
+  Future<void> _refreshPaciente() async {
+    final List<Map<String, dynamic>> pacienteMap =
+    await PacienteDatabaseHelper.getAll();
+    setState(() {
+      paciente = Paciente(
+          id: pacienteMap[1]['id'],
+          nome: pacienteMap[1]['nome'],
+          sexo: pacienteMap[1]['sexo'],
+          idade: pacienteMap[1]['idade'],
+          altura: pacienteMap[1]['altura'],
+          peso: pacienteMap[1]['peso'],
+          tipoSanguineo: pacienteMap[1]['tipo_sanguineo'],
+          circunferenciaAbdominal: pacienteMap[1]['circunferencia_abdominal']);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,
         inputDecorationTheme: PacienteDIgitalInputTheme().theme(),
       ),
-
       initialRoute: '/',
-      routes: {
-        '/': (context) =>  paciente.asStream().isEmpty? NewPacienteForm() : TabBarPacienteControll(entitie: paciente)
-      },
+      routes: {'/': (context) => NewPacienteForm().build(context)},
     );
   }
 }
