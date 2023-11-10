@@ -19,7 +19,7 @@ class PacienteDIgitalInputTheme{
   }
 
   InputDecorationTheme theme() => InputDecorationTheme(
-    contentPadding: EdgeInsets.all(20),
+    contentPadding: const EdgeInsets.all(20),
     floatingLabelBehavior:  FloatingLabelBehavior.always,
     enabledBorder: _buildBorder(Colors.lightBlueAccent),
     errorBorder: _buildBorder(Colors.red.shade500),
