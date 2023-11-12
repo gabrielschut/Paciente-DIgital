@@ -1,22 +1,6 @@
-import 'dart:convert';
 import 'dart:core';
 
 class Paciente {
-  List<Paciente> pacienteFromJson(String str) =>
-      List<Paciente>.from(jsonDecode(str).map((x) => Paciente.fromJson(x)));
-
-  String pacienteToJson(List<Paciente> data) =>
-      json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
-  factory Paciente.fromJson(Map<String, dynamic> json) => Paciente(
-      nome: json['nome'],
-      idade: json['idade'],
-      sexo: json['sexo'],
-      altura: json['altura'],
-      peso: json['peso'],
-      tipoSanguineo: json['tipoSanguineo'],
-      circunferenciaAbdominal: json['circunferenciaAbdominal'],
-      id: json['id']);
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -29,7 +13,7 @@ class Paciente {
         "circunferenciaAbdominal": circunferenciaAbdominal,
       };
 
-  int? id;
+  int id;
   String nome = "";
   String sexo = "";
   int idade = 0;
@@ -39,7 +23,8 @@ class Paciente {
   double? circunferenciaAbdominal;
 
   Paciente(
-      {this.id,
+      {
+      required this.id,
       required this.nome,
       required this.sexo,
       required this.idade,

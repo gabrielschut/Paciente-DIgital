@@ -32,21 +32,22 @@ class _PacienteDigitalState extends State<PacienteDigital> {
   }
 
   late Paciente paciente;
+  late List<Map<String, dynamic>> pacientes;
   late List<Medicamento> medicamentos;
 
   Future<void> _refreshPaciente() async {
-    final List<Map<String, dynamic>> pacienteMap =
+    final List<Map<String, dynamic>> pacientes =
         await PacienteDatabaseHelper.getAll();
     setState(() {
       paciente = Paciente(
-          id: pacienteMap[1]['id'],
-          nome: pacienteMap[1]['nome'],
-          sexo: pacienteMap[1]['sexo'],
-          idade: pacienteMap[1]['idade'],
-          altura: pacienteMap[1]['altura'],
-          peso: pacienteMap[1]['peso'],
-          tipoSanguineo: pacienteMap[1]['tipo_sanguineo'],
-          circunferenciaAbdominal: pacienteMap[1]['circunferencia_abdominal']);
+          id: pacientes[1]['id'],
+          nome: pacientes[1]['nome'],
+          sexo: pacientes[1]['sexo'],
+          idade: pacientes[1]['idade'],
+          altura: pacientes[1]['altura'],
+          peso: pacientes[1]['peso'],
+          tipoSanguineo: pacientes[1]['tipo_sanguineo'],
+          circunferenciaAbdominal: pacientes[1]['circunferencia_abdominal']);
     });
   }
 
@@ -63,7 +64,7 @@ class _PacienteDigitalState extends State<PacienteDigital> {
               dosagem: item['dosagem'],
               tarja: item['tarja'],
               dataInicial: item['dataInicial'],
-              dataTermino: item['dataTermino'])
+              diasDeUso: item['dias_de_uso'])
           );
         }
       }
@@ -71,7 +72,7 @@ class _PacienteDigitalState extends State<PacienteDigital> {
   }
 
   checkIfPacienteExist() async {
-    if(paciente.id != null){
+    if(pacientes.isEmpty){
       Navigator.pushReplacementNamed(context, '/');
     }else{
       Navigator.pushReplacementNamed(context, '/novoPaciente');

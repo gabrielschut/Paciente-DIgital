@@ -48,7 +48,7 @@ class TabBarPacienteControll {
         ),
         body: TabBarView(
           children: [
-            PacienteInfo(paciente: entitie.paciente,),
+            PacienteInfo(paciente: entitie.paciente),
             MedicinesListScreen(entitie: entitie),
             SelectAfericaoType(paciente: entitie.paciente),
           ],

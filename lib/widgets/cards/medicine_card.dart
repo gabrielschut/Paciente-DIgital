@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paciente_digital/model/medicamento.dart';
+import 'package:paciente_digital/db/medicamento_database_helper.dart';
 
 class MedicineCard extends StatefulWidget {
   final Medicamento medicine;
@@ -65,15 +66,9 @@ class _MedicineCardState extends State<MedicineCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.edit,
-                        color: Colors.blue,
-                        size: 26,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        MedicamentoDatabaseHelper.delete(widget.medicine.id);
+                      },
                       icon: const Icon(
                         Icons.close_sharp,
                         color: Colors.red,
@@ -105,14 +100,14 @@ class _MedicineCardState extends State<MedicineCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                   Text("De: ${DateFormat("dd/MM/yyyy").format(widget.medicine.dataInicial)}",
+                   Text("Início: ${DateFormat("dd/MM/yyyy").format(widget.medicine.dataInicial)}",
                     style: const TextStyle(
                       color: Colors.blueAccent,
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text("Até: ${DateFormat("dd/MM/yyyy").format(widget.medicine.dataTermino)}",
+                  Text("Durante ${widget.medicine.diasDeUso} dias",
                     style: const TextStyle(
                       color: Colors.blueAccent,
                       fontSize: 17,
