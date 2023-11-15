@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:paciente_digital/model/paciente.dart';
+import 'package:paciente_digital/model/afericoes/eliminacoes.dart';
 import 'package:paciente_digital/screens/afericoes/eliminacoes/list_eliminacoes.dart';
 import 'package:paciente_digital/screens/afericoes/freq_respiratoria/list_freq_respirat%C3%B3ria_screen.dart';
 import 'package:paciente_digital/screens/afericoes/frequencia_cardiaca/list_freq_cardicada_screen.dart';
 import 'package:paciente_digital/screens/afericoes/glicemia/list_glicemia.dart';
 import 'package:paciente_digital/screens/afericoes/pressao_arterial/list_pressao_arterial.dart';
 import 'package:paciente_digital/screens/afericoes/reclamacoes/list_reclamacoes_screen.dart';
+import 'package:paciente_digital/db/eliminacoes_database_helper.dart';
+import 'package:paciente_digital/db/frequenci_respiratoria_database_helper.dart';
+import 'package:paciente_digital/db/frequencia_cardiaca_database_helper.dart';
+import 'package:paciente_digital/db/glicemia_database_helper.dart';
+import 'package:paciente_digital/db/pressao_arterial_database_helper.dart';
+import 'package:paciente_digital/db/reclamacoes_database_helper.dart';
+
 
 class SelectAfericaoType extends StatefulWidget {
-  final Paciente paciente;
-
+  final int pacienteId;
   const SelectAfericaoType({
     Key? key,
-    required this.paciente,
+    required this.pacienteId
   }) : super(key: key);
 
   @override
@@ -23,14 +29,14 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.fromLTRB(16, 16, 8, 8),
+        padding: const EdgeInsets.fromLTRB(16, 16, 8, 8),
         child: Container(
-          padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
           alignment: Alignment.topLeft,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
             shape: BoxShape.rectangle,
-            border: Border(
+            border: const Border(
               top: BorderSide(
                 width: 2,
                 color: Colors.lightBlue,
@@ -57,23 +63,24 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(8, 36, 0, 10),
+                  padding: const EdgeInsets.fromLTRB(8, 36, 0, 10),
                   child: Container(
                     width: 300,
                     height: 60,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
                       ),
                       color: Colors.blueAccent,
                     ),
                     child: TextButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        List<Eliminacoes> listEliminacoes = await EliminacoesDatabaseHelper.getList();
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => ListEliminacoes())
+                            MaterialPageRoute(builder: (context) => ListEliminacoes(listEsliminacoes: listEliminacoes))
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         "Eliminações",
                         style: TextStyle(color: Colors.white,
                           fontSize: 20,
@@ -83,11 +90,11 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(8, 8, 0, 10),
+                  padding: const EdgeInsets.fromLTRB(8, 8, 0, 10),
                   child: Container(
                     width: 300,
                     height: 60,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
                       ),
@@ -96,10 +103,10 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                     child: TextButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => ListFrequenciaCardiaca())
+                            MaterialPageRoute(builder: (context) => const ListFrequenciaCardiaca())
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         "Freq. Cardíaca",
                         style: TextStyle(color: Colors.white,
                           fontSize: 20,
@@ -109,11 +116,11 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(8, 8, 0, 10),
+                  padding: const EdgeInsets.fromLTRB(8, 8, 0, 10),
                   child: Container(
                     width: 300,
                     height: 60,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
                       ),
@@ -122,10 +129,10 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                     child: TextButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => ListFrequenciaRespiratoria(frequencias: [],))
+                            MaterialPageRoute(builder: (context) => const ListFrequenciaRespiratoria(frequencias: [],))
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         "Frequência Respiratória",
                         style: TextStyle(color: Colors.white,
                           fontSize: 20,
@@ -135,11 +142,11 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(8, 8, 0, 10),
+                  padding: const EdgeInsets.fromLTRB(8, 8, 0, 10),
                   child: Container(
                     width: 300,
                     height: 60,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
                       ),
@@ -148,10 +155,10 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                     child: TextButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => ListGlicemia())
+                            MaterialPageRoute(builder: (context) => const ListGlicemia())
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         "Glicemia",
                         style: TextStyle(color: Colors.white,
                           fontSize: 20,
@@ -161,11 +168,11 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(8, 8, 0, 10),
+                  padding: const EdgeInsets.fromLTRB(8, 8, 0, 10),
                   child: Container(
                     width: 300,
                     height: 60,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
                       ),
@@ -177,7 +184,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                             MaterialPageRoute(builder: (context) => ListPressaoArterial(pressoes: [],))
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         "Pressão Arterial",
                         style: TextStyle(color: Colors.white,
                           fontSize: 20,
@@ -187,11 +194,11 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(8, 8, 0, 10),
+                  padding: const EdgeInsets.fromLTRB(8, 8, 0, 10),
                   child: Container(
                     width: 300,
                     height: 60,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
                       ),
@@ -200,10 +207,10 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                     child: TextButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => ListReclaacoesScreen())
+                            MaterialPageRoute(builder: (context) => const ListReclaacoesScreen())
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         "Reclamações",
                         style: TextStyle(color: Colors.white,
                           fontSize: 20,
