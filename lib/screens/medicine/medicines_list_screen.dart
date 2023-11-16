@@ -196,6 +196,7 @@ class _MedicinesListState extends State<MedicinesListScreen> {
                                       tarjaController.text,
                                       initDateController.text as DateTime,
                                       endDateController.text as int?);
+                                  Navigator.pop(context);
                                 },
                                 child: const Icon(
                                   Icons.check_circle,

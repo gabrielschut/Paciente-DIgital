@@ -75,9 +75,9 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                     ),
                     child: TextButton(
                       onPressed: () async {
-                        List<Eliminacoes> listEliminacoes = await EliminacoesDatabaseHelper.getList();
+                        List<Eliminacoes> listEliminacoes = await EliminacoesDatabaseHelper.listAll();
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => ListEliminacoes(listEsliminacoes: listEliminacoes))
+                            MaterialPageRoute(builder: (context) => ListEliminacoes(listEsliminacoes: listEliminacoes, pacienteId: widget.pacienteId,))
                         );
                       },
                       child: const Text(

@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:paciente_digital/model/afericoes/frequencia_respiratoria.dart';
-import 'package:paciente_digital/screens/afericoes/freq_respiratoria/new_freq_respiratoria_screen.dart';
-import 'package:paciente_digital/widgets/cards/card_frequencia_resirat%C3%B3ria.dart';
+import 'package:paciente_digital/widgets/cards/card_frequencia_resiratoria.dart';
+import 'package:paciente_digital/widgets/components/date_picker_field.dart';
+import 'package:paciente_digital/widgets/components/number_field.dart';
+import 'package:paciente_digital/db/frequenci_respiratoria_database_helper.dart';
 
+// ignore: must_be_immutable
 class ListFrequenciaRespiratoria extends StatefulWidget {
-  final List<FrequenciaRespiratoria> frequencias;
+  List<FrequenciaRespiratoria> frequencias;
+  int pacienteId;
 
-  const ListFrequenciaRespiratoria({
+  ListFrequenciaRespiratoria({
     Key? key,
     required this.frequencias,
+    required this.pacienteId,
   }) : super(key: key);
 
   @override
@@ -16,22 +21,22 @@ class ListFrequenciaRespiratoria extends StatefulWidget {
       _ListFrequenciaRespiratoriaState();
 }
 
-void removeDupliciti(List<FrequenciaRespiratoria> frequencias) {
-  frequencias = frequencias.toSet().toList();
-}
+class _ListFrequenciaRespiratoriaState extends State<ListFrequenciaRespiratoria> {
 
-class _ListFrequenciaRespiratoriaState
-    extends State<ListFrequenciaRespiratoria> {
+  TextEditingController dateController = TextEditingController();
+  TextEditingController frequenciaController = TextEditingController();
+
+  FocusNode dateFocusNode = FocusNode();
+  FocusNode frequenciaFocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
-    removeDupliciti(widget.frequencias);
-
     return Scaffold(
       appBar: AppBar(
-        title: Center(
+        title: const Center(
           child: Text(
             "Frequências respiratórias",
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.white,
             ),
           ),
@@ -96,10 +101,90 @@ class _ListFrequenciaRespiratoriaState
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          //nova eliminação seja destruida após sair ou finalizar e traga
-          // de volta para esta tela. E essa pagina seja carregada do zero.
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => NewFreqRespiratoria())
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text(
+                'Novo medicamento',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              content: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: DatePickerField(
+                      hint: "01/01/2000",
+                      dateFieldName: "Tirado em ",
+                      suffix: "",
+                      controller: dateController,
+                      focusNode: dateFocusNode,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(24, 0, 16, 24),
+                        child: Text(
+                          'Frequência',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.lightBlue,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 30,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 0, 24, 0),
+                        child: SizedBox(
+                          width: 230,
+                          child: NumberField(
+                            hint: "80",
+                            fieldName: "Respirações / min",
+                            suffix: "mrm",
+                            controller: frequenciaController,
+                            focusNode: frequenciaFocusNode,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Icon(Icons.cancel,
+                                  color: Colors.red, size: 15),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                FrequenciaRespiratoriaDatabaseHelper.create(
+                                    widget.pacienteId, dateController.text as DateTime, frequenciaController.text as double);
+                                Navigator.pop(context);
+                              },
+                              child: const Icon(
+                                Icons.check_circle,
+                                color: Colors.lightGreen,
+                                size: 15,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           );
         },
         child: const Icon(
