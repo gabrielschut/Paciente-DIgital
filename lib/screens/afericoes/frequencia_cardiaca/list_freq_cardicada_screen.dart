@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:paciente_digital/model/afericoes/frequencia_cardiaca.dart';
 import 'package:paciente_digital/widgets/cards/freq_cardiaca_card.dart';
-import 'package:paciente_digital/db/frequenci_respiratoria_database_helper.dart';
+import 'package:paciente_digital/db/frequencia_cardiaca_database_helper.dart';
 import 'package:paciente_digital/widgets/components/date_picker_field.dart';
 import 'package:paciente_digital/widgets/components/number_field.dart';
 
 // ignore: must_be_immutable
 class ListFrequenciaCardiaca extends StatefulWidget {
-  List<FrenquenciaCardiaca> frequenciasList;
   int pacienteId;
-
   ListFrequenciaCardiaca(
-      {Key? key, required this.frequenciasList, required this.pacienteId})
+      {Key? key, required this.pacienteId})
       : super(key: key);
 
   @override
@@ -25,6 +23,21 @@ class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
 
   FocusNode dateFocusNode = FocusNode();
   FocusNode frequenciaFocusNode = FocusNode();
+  List<FrenquenciaCardiaca> frequenciasList = [];
+
+  @override
+  void initState(){
+    super.initState();
+    _callDb();
+  }
+
+  Future<void> _callDb() async {
+    FrequenciaCardiacaDatabaseHelper db = FrequenciaCardiacaDatabaseHelper();
+    List<FrenquenciaCardiaca> list = await db.listAll();
+    setState(() {
+      frequenciasList = list;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,16 +83,16 @@ class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
           width: 800,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
-            child: widget.frequenciasList.isNotEmpty
+            child: frequenciasList.isNotEmpty
                 ? ListView.builder(
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: CardFreqCardiaca(
-                          frenquenciaCardiaca: widget.frequenciasList[index],
+                          frenquenciaCardiaca: frequenciasList[index],
                         ),
                       );
                     },
-                    itemCount: widget.frequenciasList.length,
+                    itemCount: frequenciasList.length,
                   )
                 : const Center(
                     child: Padding(
@@ -164,10 +177,10 @@ class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                FrequenciaRespiratoriaDatabaseHelper.create(
+                                FrequenciaCardiacaDatabaseHelper.create(
                                     widget.pacienteId,
                                     dateController.text as DateTime,
-                                    frequenciaController.text as double);
+                                    frequenciaController.text as int);
                                 Navigator.pop(context);
                               },
                               child: const Icon(

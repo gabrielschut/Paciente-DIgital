@@ -7,12 +7,10 @@ import 'package:paciente_digital/db/frequenci_respiratoria_database_helper.dart'
 
 // ignore: must_be_immutable
 class ListFrequenciaRespiratoria extends StatefulWidget {
-  List<FrequenciaRespiratoria> frequencias;
   int pacienteId;
 
   ListFrequenciaRespiratoria({
     Key? key,
-    required this.frequencias,
     required this.pacienteId,
   }) : super(key: key);
 
@@ -28,6 +26,21 @@ class _ListFrequenciaRespiratoriaState extends State<ListFrequenciaRespiratoria>
 
   FocusNode dateFocusNode = FocusNode();
   FocusNode frequenciaFocusNode = FocusNode();
+  List<FrequenciaRespiratoria> frequencias = [];
+
+  @override
+  void initState(){
+    super.initState();
+    _callDb();
+  }
+
+  Future<void> _callDb() async {
+    FrequenciaRespiratoriaDatabaseHelper db = FrequenciaRespiratoriaDatabaseHelper();
+    List<FrequenciaRespiratoria> list = await db.listAll();
+    setState(() {
+      frequencias = list;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,16 +86,16 @@ class _ListFrequenciaRespiratoriaState extends State<ListFrequenciaRespiratoria>
           width: 800,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
-            child: widget.frequencias.isNotEmpty
+            child: frequencias.isNotEmpty
                 ? ListView.builder(
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: CardFrequenciaRespiratoria(
-                          frequenciaRespiratoria: widget.frequencias[index],
+                          frequenciaRespiratoria: frequencias[index],
                         ),
                       );
                     },
-                    itemCount: widget.frequencias.length,
+                    itemCount: frequencias.length,
                   )
                 : const Center(
                     child: Padding(

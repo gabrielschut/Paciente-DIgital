@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paciente_digital/model/afericoes/pressao_arterial.dart';
+import 'package:paciente_digital/db/pressao_arterial_database_helper.dart';
 
 class PressaoArterialCard extends StatefulWidget {
   final PressaoArterial pressaoArterial;
@@ -67,7 +68,9 @@ class _PressaoArterialCardState extends State<PressaoArterialCard> {
                     width: 1,
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      PressaoArterialDatabaseHelper.delete(widget.pressaoArterial.id);
+                    },
                     icon: const Icon(
                       Icons.close_sharp,
                       color: Colors.red,

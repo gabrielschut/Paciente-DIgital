@@ -82,7 +82,7 @@ class MedicamentoDatabaseHelper {
     return response;
   }
 
-  static Future<Medicamento> getById(int id) async {
+  Future<Medicamento> getById(int id) async {
     List<Map<String, dynamic>> dbResp = await _get(id);
     return Medicamento(id: dbResp[0]['id'],
         idPaciente: dbResp[0]['paciente_id'],

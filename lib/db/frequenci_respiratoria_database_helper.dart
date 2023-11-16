@@ -61,7 +61,7 @@ class FrequenciaRespiratoriaDatabaseHelper {
     db.close();
   }
 
-  static Future<List<FrequenciaRespiratoria>> listAll() async {
+  Future<List<FrequenciaRespiratoria>> listAll() async {
     List<Map<String, dynamic>> dbResp = await _getAll();
     List<FrequenciaRespiratoria> response = [];
     if (dbResp.isNotEmpty) {
@@ -76,7 +76,7 @@ class FrequenciaRespiratoriaDatabaseHelper {
     return response;
   }
 
-  static Future<FrequenciaRespiratoria> getById(int id) async {
+  Future<FrequenciaRespiratoria> getById(int id) async {
     List<Map<String, dynamic>> dbResp = await _get(id);
     return FrequenciaRespiratoria(
         id: dbResp[0]['id'],

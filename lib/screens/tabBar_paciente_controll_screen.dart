@@ -50,7 +50,7 @@ class TabBarPacienteControll {
           children: [
             PacienteInfo(paciente: entitie.paciente),
             MedicinesListScreen(entitie: entitie),
-            SelectAfericaoType(paciente: entitie.paciente),
+            SelectAfericaoType(pacienteId: entitie.paciente.id),
           ],
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paciente_digital/model/afericoes/frequencia_cardiaca.dart';
+import 'package:paciente_digital/db/frequencia_cardiaca_database_helper.dart';
 
 class CardFreqCardiaca extends StatefulWidget {
   final FrenquenciaCardiaca frenquenciaCardiaca;
@@ -66,7 +67,9 @@ class _CardFreqCardiacaState extends State<CardFreqCardiaca> {
                     width: 1,
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      FrequenciaCardiacaDatabaseHelper.delete(widget.frenquenciaCardiaca.id);
+                    },
                     icon: const Icon(
                       Icons.close_sharp,
                       color: Colors.red,

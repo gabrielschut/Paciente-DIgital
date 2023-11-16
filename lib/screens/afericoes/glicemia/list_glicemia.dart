@@ -1,39 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:paciente_digital/model/afericoes/glicemia.dart';
-import 'package:paciente_digital/screens/afericoes/glicemia/new_glicemia_screen.dart';
 import 'package:paciente_digital/widgets/cards/glicemi_card.dart';
+import 'package:paciente_digital/db/glicemia_database_helper.dart';
+import 'package:paciente_digital/widgets/components/date_picker_field.dart';
+import 'package:paciente_digital/widgets/components/number_field.dart';
 
+// ignore: must_be_immutable
 class ListGlicemia extends StatefulWidget {
+  int pacienteId;
 
-  const ListGlicemia({
-    Key? key,
-  }) : super(key: key);
+  ListGlicemia({Key? key,
+    required this.pacienteId})
+      : super(key: key);
 
   @override
   State<ListGlicemia> createState() => _ListGlicemiaState();
 }
 
-void removeDupliciti(List<Glicemia> glicemias) {
-  glicemias = glicemias.toSet().toList();
-}
-
 class _ListGlicemiaState extends State<ListGlicemia> {
+  TextEditingController dateController = TextEditingController();
+  TextEditingController valueController = TextEditingController();
+
+  FocusNode dateFocusNode = FocusNode();
+  FocusNode valueFocusNode = FocusNode();
+  List<Glicemia> glicemiaList = [];
+
+  @override
+  void initState(){
+    super.initState();
+    _callDb();
+  }
+
+  Future<void> _callDb() async {
+    GlicemiaDatabaseHelper db = GlicemiaDatabaseHelper();
+    List<Glicemia> list = await db.listAll();
+    setState(() {
+      glicemiaList = list;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    Glicemia glicemia = Glicemia(idPaciente: 1, createA: DateTime(2022,10,25), value: 100);
-    Glicemia glicemia1 = Glicemia(idPaciente: 1, createA: DateTime(2022,10,26), value: 115);
-    Glicemia glicemia2 = Glicemia(idPaciente: 1, createA: DateTime(2022,10,27), value: 150);
-    List<Glicemia> glicemias = [];
-    glicemias.addAll([glicemia, glicemia1, glicemia2]);
-    
-    removeDupliciti(glicemias);
-
     return Scaffold(
       appBar: AppBar(
-        title: Center(
+        title: const Center(
           child: Text(
             "Glicemias",
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.white,
             ),
           ),
@@ -70,16 +83,16 @@ class _ListGlicemiaState extends State<ListGlicemia> {
           width: 800,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
-            child: glicemias.isNotEmpty
+            child: glicemiaList.isNotEmpty
                 ? ListView.builder(
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: GlicemiaCard(
-                          glicemia: glicemias[index],
+                          glicemia: glicemiaList[index],
                         ),
                       );
                     },
-                    itemCount: glicemias.length,
+                    itemCount: glicemiaList.length,
                   )
                 : const Center(
                     child: Padding(
@@ -98,10 +111,92 @@ class _ListGlicemiaState extends State<ListGlicemia> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          //nova eliminação seja destruida após sair ou finalizar e traga
-          // de volta para esta tela. E essa pagina seja carregada do zero.
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => NewGlicemia())
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text(
+                'Novo medicamento',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              content: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: DatePickerField(
+                      hint: "01/01/2000",
+                      dateFieldName: "Tirado em ",
+                      suffix: "",
+                      controller: dateController,
+                      focusNode: dateFocusNode,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(24, 0, 16, 24),
+                        child: Text(
+                          'Glicose',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.lightBlue,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 30,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 0, 24, 0),
+                        child: SizedBox(
+                          width: 230,
+                          child: NumberField(
+                            hint: "100",
+                            fieldName: "Valor",
+                            suffix: "ml/dl",
+                            controller: valueController,
+                            focusNode: valueFocusNode,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Icon(Icons.cancel,
+                                  color: Colors.red, size: 15),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                GlicemiaDatabaseHelper.create(
+                                    widget.pacienteId,
+                                    dateController.text as DateTime,
+                                    valueController.text as int);
+                                Navigator.pop(context);
+                              },
+                              child: const Icon(
+                                Icons.check_circle,
+                                color: Colors.lightGreen,
+                                size: 15,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           );
         },
         child: const Icon(

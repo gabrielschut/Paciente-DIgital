@@ -58,7 +58,7 @@ class GlicemiaDatabaseHelper {
     db.close();
   }
 
-  static Future<List<Glicemia>> listAll() async {
+  Future<List<Glicemia>> listAll() async {
     List<Map<String, dynamic>> dbResp = await _getAll();
     List<Glicemia> response = [];
     if (dbResp.isNotEmpty) {
@@ -73,7 +73,7 @@ class GlicemiaDatabaseHelper {
     return response;
   }
 
-  static Future<Glicemia> getById(int id) async {
+  Future<Glicemia> getById(int id) async {
     List<Map<String, dynamic>> dbResp = await _get(id);
     return Glicemia(
         id: dbResp[0]['id'],

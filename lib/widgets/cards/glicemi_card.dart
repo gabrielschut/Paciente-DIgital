@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paciente_digital/model/afericoes/glicemia.dart';
+import 'package:paciente_digital/db/glicemia_database_helper.dart';
 
 class GlicemiaCard extends StatefulWidget {
   final Glicemia glicemia;
@@ -66,7 +67,9 @@ class _GlicemiaCardState extends State<GlicemiaCard> {
                     width: 1,
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      GlicemiaDatabaseHelper.delete(widget.glicemia.id);
+                    },
                     icon: const Icon(
                       Icons.close_sharp,
                       color: Colors.red,
@@ -81,7 +84,7 @@ class _GlicemiaCardState extends State<GlicemiaCard> {
                   children: [
                     Text(
                       "Data : ${DateFormat("dd/MM/yyyy")
-                              .format(widget.glicemia.createA)}",
+                              .format(widget.glicemia.createAt)}",
                       style: const TextStyle(
                         color: Colors.blueAccent,
                         fontSize: 16,

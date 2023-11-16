@@ -11,11 +11,10 @@ import 'package:paciente_digital/widgets/components/text_field.dart';
 import 'package:paciente_digital/db/eliminacoes_database_helper.dart';
 
 class ListEliminacoes extends StatefulWidget {
-  List<Eliminacoes> listEsliminacoes;
   int pacienteId;
 
   ListEliminacoes(
-      {Key? key, required this.listEsliminacoes, required this.pacienteId})
+      {Key? key,required this.pacienteId})
       : super(key: key);
 
   @override
@@ -30,6 +29,22 @@ class _ListEliminacoesState extends State<ListEliminacoes> {
   FocusNode dateFocusNode = FocusNode();
   FocusNode eliminacaoFocusNode = FocusNode();
   FocusNode descricaoFocusNode = FocusNode();
+
+  List<Eliminacoes> listEsliminacoes = [];
+
+  @override
+  void initState(){
+    super.initState();
+    _callDb();
+  }
+
+  Future<void> _callDb() async {
+    EliminacoesDatabaseHelper db = EliminacoesDatabaseHelper();
+    List<Eliminacoes> list = await db.listAll();
+    setState(() {
+      listEsliminacoes = list;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,17 +90,16 @@ class _ListEliminacoesState extends State<ListEliminacoes> {
           width: 800,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
-            child: widget.listEsliminacoes.isNotEmpty
+            child: listEsliminacoes.isNotEmpty
                 ? ListView.builder(
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: EliminacaoCard(
-                          eliminacao: widget.listEsliminacoes[index],
-                          eliminaceosList: widget.listEsliminacoes,
+                          eliminacao: listEsliminacoes[index],
                         ),
                       );
                     },
-                    itemCount: widget.listEsliminacoes.length,
+                    itemCount: listEsliminacoes.length,
                   )
                 : const Center(
                     child: Text(

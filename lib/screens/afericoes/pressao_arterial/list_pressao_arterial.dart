@@ -1,69 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:paciente_digital/model/afericoes/pressao_arterial.dart';
-import 'package:paciente_digital/screens/afericoes/pressao_arterial/new_pressao_arterial_screen.dart';
 import 'package:paciente_digital/widgets/cards/pressao_aterial_card.dart';
+import 'package:paciente_digital/widgets/components/number_field.dart';
+import 'package:paciente_digital/db/pressao_arterial_database_helper.dart';
 
+// ignore: must_be_immutable
 class ListPressaoArterial extends StatefulWidget {
-  List<PressaoArterial> pressoes;
+  int pacienteId;
 
-  ListPressaoArterial({
-    Key? key,
-    required this.pressoes,
-  }) : super(key: key);
+  ListPressaoArterial(
+      {Key? key, required this.pacienteId})
+      : super(key: key);
 
   @override
   State<ListPressaoArterial> createState() => _ListPressaoArterialState();
 }
 
-void removeDupliciti(List<PressaoArterial> pressoes) {
-  pressoes = pressoes.toSet().toList();
-}
-
 class _ListPressaoArterialState extends State<ListPressaoArterial> {
-  @override
-  Widget build(BuildContext context) {
-    removeDupliciti(widget.pressoes);
 
-    PressaoArterial pressaoArterial = PressaoArterial(
-      idPaciente: 1,
-      createAt: DateTime(2022, 10, 25),
-      maxima: 12,
-      minima: 8,
-    );
+    TextEditingController maxController = TextEditingController();
+    TextEditingController minController = TextEditingController();
 
-    PressaoArterial pressaoArterial1 = PressaoArterial(
-      idPaciente: 1,
-      createAt: DateTime(2022, 10, 28),
-      maxima: 12,
-      minima: 8,
-    );
+    FocusNode maxFocusNode = FocusNode();
+    FocusNode minFocusNode = FocusNode();
+    List<PressaoArterial> pressoes = [];
 
-    PressaoArterial pressaoArterial2 = PressaoArterial(
-      idPaciente: 1,
-      createAt: DateTime(2022, 11, 5),
-      maxima: 13,
-      minima: 10,
-    );
+    Future<void> _callDb() async {
+      PressaoArterialDatabaseHelper db = PressaoArterialDatabaseHelper();
+      List<PressaoArterial> list = await db.listAll();
+      setState(() {
+        pressoes = list;
+      });
+    }
 
-    PressaoArterial pressaoArterial3 = PressaoArterial(
-      idPaciente: 1,
-      createAt: DateTime(2022, 11, 8),
-      maxima: 10,
-      minima: 6,
-    );
+    @override
+    void initState(){
+      super.initState();
+      _callDb();
+    }
 
-    widget.pressoes.addAll([
-      pressaoArterial,
-      pressaoArterial1,
-      pressaoArterial2,
-      pressaoArterial3
-    ]);
+    @override
+    Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
+        title: const Center(
           child: Text(
             "Pressões arteriais",
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.white,
             ),
           ),
@@ -100,16 +83,16 @@ class _ListPressaoArterialState extends State<ListPressaoArterial> {
           width: 800,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
-            child: widget.pressoes.isNotEmpty
+            child: pressoes.isNotEmpty
                 ? ListView.builder(
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: PressaoArterialCard(
-                          pressaoArterial: widget.pressoes[index],
+                          pressaoArterial: pressoes[index],
                         ),
                       );
                     },
-                    itemCount: widget.pressoes.length,
+                    itemCount: pressoes.length,
                   )
                 : const Center(
                     child: Padding(
@@ -128,10 +111,72 @@ class _ListPressaoArterialState extends State<ListPressaoArterial> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          //nova eliminação seja destruida após sair ou finalizar e traga
-          // de volta para esta tela. E essa pagina seja carregada do zero.
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => NewPressaoArterial()));
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text(
+                'Novo registro: pressão art.',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              content: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 0, 24, 0),
+                    child: NumberField(
+                      hint: "120",
+                      fieldName: "Sistólica | Maxima",
+                      suffix: "mmHg",
+                      controller: maxController,
+                      focusNode: maxFocusNode,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 0, 24, 0),
+                    child: NumberField(
+                      hint: "80",
+                      fieldName: "Diastólica | Minima",
+                      suffix: "mmHg",
+                      controller: minController,
+                      focusNode: minFocusNode,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Row(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            PressaoArterialDatabaseHelper.create(
+                                widget.pacienteId,
+                                DateTime.now(),
+                                maxController.text as int,
+                                minController as int);
+                            Navigator.pop(context);
+                          },
+                          child: const Icon(Icons.cancel,
+                              color: Colors.red, size: 15),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Icon(
+                            Icons.check_circle,
+                            color: Colors.lightGreen,
+                            size: 15,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
         },
         child: const Icon(
           Icons.add,

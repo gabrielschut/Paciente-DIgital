@@ -60,7 +60,7 @@ class EliminacoesDatabaseHelper {
     db.close();
   }
 
-  static Future<List<Eliminacoes>> listAll() async {
+  Future<List<Eliminacoes>> listAll() async {
     List<Map<String, dynamic>> dbResp = await _getAll();
     List<Eliminacoes> response = [];
     if (dbResp.isNotEmpty) {
@@ -76,7 +76,7 @@ class EliminacoesDatabaseHelper {
     return response;
   }
 
-  static Future<Eliminacoes> getById(int id) async {
+  Future<Eliminacoes> getById(int id) async {
     List<Map<String, dynamic>> dbResp = await _get(id);
     return Eliminacoes(
         id: dbResp[0]['id'],

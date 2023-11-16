@@ -61,7 +61,7 @@ class PressaoArterialDatabaseHelper {
     db.close();
   }
 
-  static Future<List<PressaoArterial>> listAll() async {
+  Future<List<PressaoArterial>> listAll() async {
     List<Map<String, dynamic>> dbResp = await _getAll();
     List<PressaoArterial> response = [];
     if (dbResp.isNotEmpty) {
@@ -76,7 +76,7 @@ class PressaoArterialDatabaseHelper {
     return response;
   }
 
-  static Future<PressaoArterial> getById(int id) async {
+  Future<PressaoArterial> getById(int id) async {
     List<Map<String, dynamic>> dbResp = await _get(id);
     return PressaoArterial(id: dbResp[0]['id'],
         idPaciente: dbResp[0]['paciente_id'],

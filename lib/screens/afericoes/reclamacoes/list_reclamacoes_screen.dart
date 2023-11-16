@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:paciente_digital/model/afericoes/reclamacoes.dart';
-import 'package:paciente_digital/screens/afericoes/reclamacoes/new_reclamacoes_screen.dart';
 import 'package:paciente_digital/widgets/cards/reclamaaco_card.dart';
+import 'package:paciente_digital/db/reclamacoes_database_helper.dart';
+import 'package:paciente_digital/widgets/components/date_picker_field.dart';
+import 'package:paciente_digital/widgets/components/multilene_field.dart';
 
+// ignore: must_be_immutable
 class ListReclaacoesScreen extends StatefulWidget {
-  const ListReclaacoesScreen({
+  int pacienteId;
+
+  ListReclaacoesScreen({
     Key? key,
+    required this.pacienteId
   }) : super(key: key);
 
   @override
@@ -17,36 +23,35 @@ void removeDupliciti(List<Reclamacoes> reclamacoes) {
 }
 
 class _ListReclaacoesScreenState extends State<ListReclaacoesScreen> {
+  TextEditingController dateController = TextEditingController();
+  TextEditingController reclamacaoController = TextEditingController();
+
+  FocusNode dateFocusNode = FocusNode();
+  FocusNode reclamacaoFocusNode = FocusNode();
+  List<Reclamacoes> reclamacoesList = [];
+
+  @override
+  void initState(){
+    super.initState();
+    _callDb();
+  }
+
+  Future<void> _callDb() async {
+    ReclamacoesDatabaseHelper db = ReclamacoesDatabaseHelper();
+    List<Reclamacoes> list = await db.listAll();
+    setState(() {
+      reclamacoesList = list;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    Reclamacoes reclamacoes = Reclamacoes(
-      idPaciente: 1,
-      createAt: DateTime(2022, 10, 25),
-      reclamacao: "Dores no peito quando cai a noite",
-    );
-
-    Reclamacoes reclamacoes1 = Reclamacoes(
-      idPaciente: 1,
-      createAt: DateTime(2022, 10, 26),
-      reclamacao: "Calafrios e febre continua durante todo o dia",
-    );
-
-    Reclamacoes reclamacoes2 = Reclamacoes(
-      idPaciente: 1,
-      createAt: DateTime(2022, 10, 27),
-      reclamacao: "Tosse com sangue esporadicamente",
-    );
-    final List<Reclamacoes> listReclamacoes = [];
-    listReclamacoes.addAll([reclamacoes, reclamacoes1, reclamacoes2]);
-
-    removeDupliciti(listReclamacoes);
-
     return Scaffold(
       appBar: AppBar(
-        title: Center(
+        title: const Center(
           child: Text(
             "Reclamações",
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.white,
             ),
           ),
@@ -83,16 +88,16 @@ class _ListReclaacoesScreenState extends State<ListReclaacoesScreen> {
           width: 800,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
-            child: listReclamacoes.isNotEmpty
+            child: reclamacoesList.isNotEmpty
                 ? ListView.builder(
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: ReclamacoesCard(
-                          reclamacao: listReclamacoes[index],
+                          reclamacao: reclamacoesList[index],
                         ),
                       );
                     },
-                    itemCount: listReclamacoes.length,
+                    itemCount: reclamacoesList.length,
                   )
                 : const Center(
                     child: Text(
@@ -108,10 +113,68 @@ class _ListReclaacoesScreenState extends State<ListReclaacoesScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          //nova eliminação seja destruida após sair ou finalizar e traga
-          // de volta para esta tela. E essa pagina seja carregada do zero.
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => NewReclamacao()));
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text(
+                'Novo medicamento',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              content: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
+                    child: DatePickerField(
+                      hint: "01/01/2000",
+                      dateFieldName: "Registrada em  ",
+                      suffix: "",
+                      controller: dateController, focusNode: dateFocusNode,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    child: MultilineField(controller: reclamacaoController,focusNode: reclamacaoFocusNode),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+
+                      Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Icon(Icons.cancel,
+                                  color: Colors.red, size: 15),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                ReclamacoesDatabaseHelper.create(widget.pacienteId,
+                                    dateController.text as DateTime, reclamacaoController.text);
+                                Navigator.pop(context);
+                              },
+                              child: const Icon(
+                                Icons.check_circle,
+                                color: Colors.lightGreen,
+                                size: 15,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
         },
         child: const Icon(
           Icons.add,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paciente_digital/model/afericoes/reclamacoes.dart';
+import 'package:paciente_digital/db/reclamacoes_database_helper.dart';
 
 class ReclamacoesCard extends StatefulWidget {
   final Reclamacoes reclamacao;
@@ -66,7 +67,9 @@ class _ReclamacoesCardState extends State<ReclamacoesCard> {
                     width: 30,
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      ReclamacoesDatabaseHelper.delete(widget.reclamacao.id);
+                    },
                     icon: const Icon(
                       Icons.close_sharp,
                       color: Colors.red,

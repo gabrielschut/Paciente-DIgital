@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paciente_digital/model/afericoes/eliminacoes.dart';
+import 'package:paciente_digital/db/eliminacoes_database_helper.dart';
 
 class EliminacaoCard extends StatefulWidget {
   final Eliminacoes eliminacao;
-  final List<Eliminacoes> eliminaceosList;
 
   const EliminacaoCard({
     Key? key,
     required this.eliminacao,
-    required this.eliminaceosList,
   }) : super(key: key);
 
   @override
@@ -69,7 +68,7 @@ class _EliminacaoCardState extends State<EliminacaoCard> {
                   ),
                   IconButton(
                     onPressed: () {
-                      widget.eliminaceosList.remove(widget.eliminacao);
+                      EliminacoesDatabaseHelper.delete(widget.eliminacao.id);
                     },
                     icon: const Icon(
                       Icons.close_sharp,

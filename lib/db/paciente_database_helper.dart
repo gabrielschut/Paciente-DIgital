@@ -40,7 +40,7 @@ class PacienteDatabaseHelper {
     return pacientes;
   }
 
-  static Future<int> update(int id, String name, String sexo, int idade,
+  Future<int> update(int id, String name, String sexo, int idade,
       String? tipoSanguineo, double? peso,
       int? altura, double? circAbdominal) async {
     final db = await DataBaseService.openDatabase();

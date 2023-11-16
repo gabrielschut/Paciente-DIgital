@@ -1,22 +1,17 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
-import 'package:paciente_digital/model/afericoes/eliminacoes.dart';
 import 'package:paciente_digital/screens/afericoes/eliminacoes/list_eliminacoes.dart';
 import 'package:paciente_digital/screens/afericoes/freq_respiratoria/list_freq_respirat%C3%B3ria_screen.dart';
 import 'package:paciente_digital/screens/afericoes/frequencia_cardiaca/list_freq_cardicada_screen.dart';
 import 'package:paciente_digital/screens/afericoes/glicemia/list_glicemia.dart';
 import 'package:paciente_digital/screens/afericoes/pressao_arterial/list_pressao_arterial.dart';
 import 'package:paciente_digital/screens/afericoes/reclamacoes/list_reclamacoes_screen.dart';
-import 'package:paciente_digital/db/eliminacoes_database_helper.dart';
-import 'package:paciente_digital/db/frequenci_respiratoria_database_helper.dart';
-import 'package:paciente_digital/db/frequencia_cardiaca_database_helper.dart';
-import 'package:paciente_digital/db/glicemia_database_helper.dart';
-import 'package:paciente_digital/db/pressao_arterial_database_helper.dart';
-import 'package:paciente_digital/db/reclamacoes_database_helper.dart';
-
 
 class SelectAfericaoType extends StatefulWidget {
-  final int pacienteId;
-  const SelectAfericaoType({
+  int pacienteId;
+
+  SelectAfericaoType({
     Key? key,
     required this.pacienteId
   }) : super(key: key);
@@ -26,6 +21,7 @@ class SelectAfericaoType extends StatefulWidget {
 }
 
 class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -75,9 +71,8 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                     ),
                     child: TextButton(
                       onPressed: () async {
-                        List<Eliminacoes> listEliminacoes = await EliminacoesDatabaseHelper.listAll();
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => ListEliminacoes(listEsliminacoes: listEliminacoes, pacienteId: widget.pacienteId,))
+                            MaterialPageRoute(builder: (context) => ListEliminacoes(pacienteId: widget.pacienteId,))
                         );
                       },
                       child: const Text(
@@ -103,7 +98,9 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                     child: TextButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => const ListFrequenciaCardiaca())
+                            MaterialPageRoute(builder: (context) => ListFrequenciaCardiaca(
+                              pacienteId: widget.pacienteId,
+                            ))
                         );
                       },
                       child: const Text(
@@ -129,7 +126,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                     child: TextButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => const ListFrequenciaRespiratoria(frequencias: [],))
+                            MaterialPageRoute(builder: (context) =>  ListFrequenciaRespiratoria(pacienteId: widget.pacienteId))
                         );
                       },
                       child: const Text(
@@ -155,7 +152,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                     child: TextButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => const ListGlicemia())
+                            MaterialPageRoute(builder: (context) => ListGlicemia(pacienteId: widget.pacienteId))
                         );
                       },
                       child: const Text(
@@ -181,7 +178,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                     child: TextButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => ListPressaoArterial(pressoes: [],))
+                            MaterialPageRoute(builder: (context) => ListPressaoArterial(pacienteId: widget.pacienteId))
                         );
                       },
                       child: const Text(
@@ -207,7 +204,7 @@ class _SelectAfericaoTypeState extends State<SelectAfericaoType> {
                     child: TextButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => const ListReclaacoesScreen())
+                            MaterialPageRoute(builder: (context) =>  ListReclaacoesScreen(pacienteId: widget.pacienteId))
                         );
                       },
                       child: const Text(

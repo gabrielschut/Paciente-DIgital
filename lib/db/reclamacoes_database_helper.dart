@@ -58,7 +58,7 @@ class ReclamacoesDatabaseHelper {
     db.close();
   }
 
-  static Future<List<Reclamacoes>> listAll() async {
+  Future<List<Reclamacoes>> listAll() async {
     List<Map<String, dynamic>> dbResp = await _getAll();
     List<Reclamacoes> response = [];
     if (dbResp.isNotEmpty) {
@@ -73,7 +73,7 @@ class ReclamacoesDatabaseHelper {
     return response;
   }
 
-  static Future<Reclamacoes> getById(int id) async {
+  Future<Reclamacoes> getById(int id) async {
     List<Map<String, dynamic>> dbResp = await _get(id);
     return Reclamacoes(id: dbResp[0]['id'],
         idPaciente: dbResp[0]['paciente_id'],
