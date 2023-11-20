@@ -10,7 +10,7 @@ class PacienteDatabaseHelper {
       int? altura, double? circAbdominal) async {
     final db = await DataBaseService.openDatabase();
     final paciente = {
-      'name': name,
+      'nome': name,
       'sexo': sexo,
       'idade': idade,
       'tipo_sanguineo': tipoSanguineo,
@@ -45,7 +45,7 @@ class PacienteDatabaseHelper {
       int? altura, double? circAbdominal) async {
     final db = await DataBaseService.openDatabase();
     final paciente = {
-      'name': name,
+      'nome': name,
       'sexo': sexo,
       'idade': idade,
       'tipo_sanguineo': tipoSanguineo,

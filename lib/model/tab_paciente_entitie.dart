@@ -3,7 +3,7 @@ import 'package:paciente_digital/model/paciente.dart';
 
 class TabPacienteEntitie {
   final Paciente paciente;
-  final List<Medicamento> medicamentos;
+  late final List<Medicamento> medicamentos;
 
   TabPacienteEntitie({
     required this.paciente,

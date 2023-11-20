@@ -65,7 +65,7 @@ class MedicamentoDatabaseHelper {
     db.close();
   }
 
-  static Future<List<Medicamento>> listAll() async {
+   Future<List<Medicamento>> listAll() async {
     List<Map<String, dynamic>> dbResp = await _getAll();
     List<Medicamento> response = [];
     if (dbResp.isNotEmpty) {
