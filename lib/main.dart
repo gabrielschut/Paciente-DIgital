@@ -3,6 +3,7 @@ import 'package:paciente_digital/db/database_service.dart';
 import 'package:paciente_digital/theme/paciente_digital_input_theme.dart';
 import 'package:paciente_digital/screens/paciente/new_paciente_form_screen.dart';
 import 'package:paciente_digital/screens/tabBar_paciente_controll_screen.dart';
+import 'package:paciente_digital/screens/init_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +35,8 @@ class _PacienteDigitalState extends State<PacienteDigital> {
       initialRoute: '/',
       routes: {
         '/paciente': (context) => TabBarPacienteControll(),
-        '/': (context) => NewPacienteForm(),
+        '/newPaciente' : (context) => NewPacienteForm(),
+        '/': (context) => InitScreen(),
       },
     );
   }

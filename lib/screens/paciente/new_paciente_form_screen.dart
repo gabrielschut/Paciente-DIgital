@@ -5,7 +5,7 @@ import 'package:paciente_digital/db/paciente_database_helper.dart';
 
 class NewPacienteForm  extends StatefulWidget {
 
-  const NewPacienteForm({super.key,});
+  NewPacienteForm({super.key});
 
   @override
   State<NewPacienteForm> createState() => _NewPacienteFormState();
