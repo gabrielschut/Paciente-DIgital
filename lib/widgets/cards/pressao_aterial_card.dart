@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paciente_digital/model/afericoes/pressao_arterial.dart';
-import 'package:paciente_digital/db/pressao_arterial_database_helper.dart';
+import 'package:paciente_digital/db/pressao_repository.dart';
 
 class PressaoArterialCard extends StatefulWidget {
   final PressaoArterial pressaoArterial;

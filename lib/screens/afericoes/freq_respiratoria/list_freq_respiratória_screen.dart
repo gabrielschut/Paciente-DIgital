@@ -3,7 +3,7 @@ import 'package:paciente_digital/model/afericoes/frequencia_respiratoria.dart';
 import 'package:paciente_digital/widgets/cards/card_frequencia_resiratoria.dart';
 import 'package:paciente_digital/widgets/components/date_picker_field.dart';
 import 'package:paciente_digital/widgets/components/number_field.dart';
-import 'package:paciente_digital/db/frequenci_respiratoria_database_helper.dart';
+import 'package:paciente_digital/db/frequenci_respiratoria_repository.dart';
 
 // ignore: must_be_immutable
 class ListFrequenciaRespiratoria extends StatefulWidget {

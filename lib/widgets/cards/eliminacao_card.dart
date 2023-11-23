@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paciente_digital/model/afericoes/eliminacoes.dart';
-import 'package:paciente_digital/db/eliminacoes_database_helper.dart';
+import 'package:paciente_digital/db/eliminacoes_repository.dart';
 
 class EliminacaoCard extends StatefulWidget {
   final Eliminacoes eliminacao;

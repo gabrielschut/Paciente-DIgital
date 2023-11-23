@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paciente_digital/model/afericoes/frequencia_cardiaca.dart';
-import 'package:paciente_digital/db/frequencia_cardiaca_database_helper.dart';
+import 'package:paciente_digital/db/frequencia_cardiaca_repository.dart';
 
 class CardFreqCardiaca extends StatefulWidget {
   final FrenquenciaCardiaca frenquenciaCardiaca;

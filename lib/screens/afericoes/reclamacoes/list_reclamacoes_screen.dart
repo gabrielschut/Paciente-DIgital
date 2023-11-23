@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paciente_digital/model/afericoes/reclamacoes.dart';
 import 'package:paciente_digital/widgets/cards/reclamaaco_card.dart';
-import 'package:paciente_digital/db/reclamacoes_database_helper.dart';
+import 'package:paciente_digital/db/reclamacoes_repository.dart';
 import 'package:paciente_digital/widgets/components/date_picker_field.dart';
 import 'package:paciente_digital/widgets/components/multilene_field.dart';
 

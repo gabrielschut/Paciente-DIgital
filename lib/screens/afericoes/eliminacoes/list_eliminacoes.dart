@@ -8,7 +8,7 @@ import 'package:paciente_digital/widgets/cards/eliminacao_card.dart';
 import 'package:paciente_digital/widgets/components/date_picker_field.dart';
 import 'package:paciente_digital/widgets/components/multilene_field.dart';
 import 'package:paciente_digital/widgets/components/text_field.dart';
-import 'package:paciente_digital/db/eliminacoes_database_helper.dart';
+import 'package:paciente_digital/db/eliminacoes_repository.dart';
 
 class ListEliminacoes extends StatefulWidget {
   int pacienteId;

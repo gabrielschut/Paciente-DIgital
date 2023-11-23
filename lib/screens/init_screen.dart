@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:paciente_digital/db/database_service.dart';
+import 'package:paciente_digital/db/medicamento_repository.dart';
+import 'package:paciente_digital/db/paciente_repository.dart';
+import 'package:paciente_digital/model/medicamento.dart';
+import 'package:paciente_digital/model/tab_paciente_entitie.dart';
+import 'package:paciente_digital/screens/tab_bar_paciente_controll_screen.dart';
 
 class InitScreen extends StatefulWidget {
   const InitScreen({
@@ -7,9 +13,18 @@ class InitScreen extends StatefulWidget {
 
   @override
   State<InitScreen> createState() => _InitScreenState();
+
+}
+
+Future<TabPacienteEntitie> _callDb() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await DataBaseService.openDatabase();
+  MedicamentoDatabaseHelper medicamentoDb = MedicamentoDatabaseHelper();
+  return TabPacienteEntitie(paciente: await PacienteDatabaseHelper.getPaciente(), medicamentos: await medicamentoDb.listAll());
 }
 
 class _InitScreenState extends State<InitScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +58,7 @@ class _InitScreenState extends State<InitScreen> {
                     ),
                     child: Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 540,
                         ),
                         const Padding(
@@ -75,8 +90,17 @@ class _InitScreenState extends State<InitScreen> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, '/newPaciente');
+                              onPressed: () async {
+                                TabPacienteEntitie entitie = await _callDb();
+                                if (entitie.paciente.id != 0) {
+                                  Navigator.pushReplacement(context,
+                                    MaterialPageRoute(
+                                        builder: (_) => TabBarPacienteControll(entitie: entitie),
+                                    ),
+                                  );
+                                }else {
+                                  Navigator.pushNamed(context, '/newPaciente');
+                                }
                               },
                               style: ButtonStyle(
                                 backgroundColor:

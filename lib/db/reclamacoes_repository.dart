@@ -1,42 +1,51 @@
+import 'package:flutter/cupertino.dart';
 import 'package:paciente_digital/model/afericoes/reclamacoes.dart';
+import 'package:sqflite/sqflite.dart';
 
 import 'database_service.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 
-class ReclamacoesDatabaseHelper {
-  static Future<int> create(int pacientId, DateTime? createAt,
+class ReclamacoesRepository extends ChangeNotifier{
+
+  late Database db;
+
+  ReclamacoesRepository(){
+    _initRepository();
+  }
+
+  _initRepository() async {
+    await _listAll();
+  }
+
+  _create(int pacientId, DateTime? createAt,
       String text) async {
-    final db = await DataBaseService.openDatabase();
+    final db = await DataBaseService.instance.database;
     final reclamacao = {
       'paciente_id': pacientId,
       'createAt': createAt,
       'reclamacao': text
     };
-    int id = await db.insert('reclamacoes', reclamacao,
-        conflictAlgorithm: sql.ConflictAlgorithm.replace);
-    db.close();
+    int id = await db.insert('reclamacoes', reclamacao, conflictAlgorithm: sql.ConflictAlgorithm.replace);
+    notifyListeners();
     return id;
   }
 
-  static Future<List<Map<String, dynamic>>> _get(int id) async {
-    final db = await DataBaseService.openDatabase();
+  _get(int id) async {
+    final db = await DataBaseService.instance.database;
     Future<List<Map<String, dynamic>>> reclamacao =
     db.query('reclamacoes', where: "id = ?", whereArgs: [id], limit: 1);
-    db.close();
     return reclamacao;
   }
 
-  static Future<List<Map<String, dynamic>>> _getAll() async {
-    final db = await DataBaseService.openDatabase();
+  _getAll() async {
+    final db = await DataBaseService.instance.database;
     Future<List<Map<String, dynamic>>> reclamacao =
     db.query('reclamacoes', orderBy: 'id');
-    db.close();
     return reclamacao;
   }
 
-  static Future<int> update(int id, int pacientId, DateTime? createAt,
-      String text) async {
-    final db = await DataBaseService.openDatabase();
+  _update(int id, int pacientId, DateTime? createAt, String text) async {
+    final db = await DataBaseService.instance.database;
     final reclamacao = {
       'paciente_id': pacientId,
       'createAt': createAt,
@@ -44,21 +53,21 @@ class ReclamacoesDatabaseHelper {
     };
     final result =
     db.update('reclamacoes', reclamacao, where: "id = ?", whereArgs: [id]);
-    db.close();
+    notifyListeners();
     return result;
   }
 
-  static Future<void> delete(int id) async {
-    final db = await DataBaseService.openDatabase();
+  _delete(int id) async {
+    final db = await DataBaseService.instance.database;
     try {
-      db.delete('reclamacoes', where: "id = ?", whereArgs: [id]);
+      db._delete('reclamacoes', where: "id = ?", whereArgs: [id]);
     } catch (e) {
       throw Exception("Falha ao deletar eliminação");
     }
-    db.close();
+    notifyListeners();
   }
 
-  Future<List<Reclamacoes>> listAll() async {
+  _listAll() async {
     List<Map<String, dynamic>> dbResp = await _getAll();
     List<Reclamacoes> response = [];
     if (dbResp.isNotEmpty) {
@@ -73,7 +82,7 @@ class ReclamacoesDatabaseHelper {
     return response;
   }
 
-  Future<Reclamacoes> getById(int id) async {
+  _getById(int id) async {
     List<Map<String, dynamic>> dbResp = await _get(id);
     return Reclamacoes(id: dbResp[0]['id'],
         idPaciente: dbResp[0]['paciente_id'],

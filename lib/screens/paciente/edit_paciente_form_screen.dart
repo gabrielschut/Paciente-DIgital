@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paciente_digital/widgets/components/number_field.dart';
 import 'package:paciente_digital/widgets/components/text_field.dart';
-import 'package:paciente_digital/db/paciente_database_helper.dart';
+import 'package:paciente_digital/db/paciente_repository.dart';
 
 class EditPacienteForm {
   final paciente = PacienteDatabaseHelper.get(1);

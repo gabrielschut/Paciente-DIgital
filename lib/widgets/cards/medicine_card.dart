@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paciente_digital/model/medicamento.dart';
-import 'package:paciente_digital/db/medicamento_database_helper.dart';
+import 'package:paciente_digital/db/medicamento_repository.dart';
 
 class MedicineCard extends StatefulWidget {
   final Medicamento medicine;

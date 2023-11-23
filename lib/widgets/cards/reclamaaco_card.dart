@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paciente_digital/model/afericoes/reclamacoes.dart';
-import 'package:paciente_digital/db/reclamacoes_database_helper.dart';
+import 'package:paciente_digital/db/reclamacoes_repository.dart';
 
 class ReclamacoesCard extends StatefulWidget {
   final Reclamacoes reclamacao;

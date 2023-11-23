@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paciente_digital/model/afericoes/frequencia_respiratoria.dart';
-import 'package:paciente_digital/db/frequenci_respiratoria_database_helper.dart';
+import 'package:paciente_digital/db/frequenci_respiratoria_repository.dart';
 
 class CardFrequenciaRespiratoria extends StatefulWidget {
   final FrequenciaRespiratoria frequenciaRespiratoria;

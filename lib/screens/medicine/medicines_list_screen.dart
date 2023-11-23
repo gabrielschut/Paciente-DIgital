@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paciente_digital/model/tab_paciente_entitie.dart';
 import 'package:paciente_digital/widgets/cards/medicine_card.dart';
-import 'package:paciente_digital/db/medicamento_database_helper.dart';
+import 'package:paciente_digital/db/medicamento_repository.dart';
 import 'package:paciente_digital/widgets/components/date_picker_field.dart';
 import 'package:paciente_digital/widgets/components/number_field.dart';
 import 'package:paciente_digital/widgets/components/text_field.dart';

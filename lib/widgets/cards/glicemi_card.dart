@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paciente_digital/model/afericoes/glicemia.dart';
-import 'package:paciente_digital/db/glicemia_database_helper.dart';
+import 'package:paciente_digital/db/glicemia_repository.dart';
 
 class GlicemiaCard extends StatefulWidget {
   final Glicemia glicemia;

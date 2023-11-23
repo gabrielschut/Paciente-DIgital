@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paciente_digital/model/afericoes/frequencia_cardiaca.dart';
 import 'package:paciente_digital/widgets/cards/freq_cardiaca_card.dart';
-import 'package:paciente_digital/db/frequencia_cardiaca_database_helper.dart';
+import 'package:paciente_digital/db/frequencia_cardiaca_repository.dart';
 import 'package:paciente_digital/widgets/components/date_picker_field.dart';
 import 'package:paciente_digital/widgets/components/number_field.dart';
 

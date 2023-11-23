@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:paciente_digital/model/afericoes/pressao_arterial.dart';
 import 'package:paciente_digital/widgets/cards/pressao_aterial_card.dart';
 import 'package:paciente_digital/widgets/components/number_field.dart';
-import 'package:paciente_digital/db/pressao_arterial_database_helper.dart';
+import 'package:paciente_digital/db/pressao_repository.dart';
 
 // ignore: must_be_immutable
 class ListPressaoArterial extends StatefulWidget {

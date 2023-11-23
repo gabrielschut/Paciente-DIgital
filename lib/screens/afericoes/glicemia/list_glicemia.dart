@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paciente_digital/model/afericoes/glicemia.dart';
 import 'package:paciente_digital/widgets/cards/glicemi_card.dart';
-import 'package:paciente_digital/db/glicemia_database_helper.dart';
+import 'package:paciente_digital/db/glicemia_repository.dart';
 import 'package:paciente_digital/widgets/components/date_picker_field.dart';
 import 'package:paciente_digital/widgets/components/number_field.dart';
 
