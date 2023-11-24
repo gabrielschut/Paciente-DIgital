@@ -15,6 +15,8 @@ class EliminacaoCard extends StatefulWidget {
   State<EliminacaoCard> createState() => _EliminacaoCardState();
 }
 
+EliminacoesRepository eliminacoesRepository = EliminacoesRepository();
+
 class _EliminacaoCardState extends State<EliminacaoCard> {
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,7 @@ class _EliminacaoCardState extends State<EliminacaoCard> {
                   ),
                   IconButton(
                     onPressed: () {
-                      EliminacoesDatabaseHelper.delete(widget.eliminacao.id);
+                      eliminacoesRepository.delete(widget.eliminacao.id);
                     },
                     icon: const Icon(
                       Icons.close_sharp,

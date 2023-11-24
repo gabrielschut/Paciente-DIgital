@@ -6,7 +6,7 @@ import 'package:paciente_digital/screens/init_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await DataBaseService.openDatabase();
+  await DataBaseService.database();
   runApp(const PacienteDigital());
 }
 
@@ -34,7 +34,7 @@ class _PacienteDigitalState extends State<PacienteDigital> {
       initialRoute: '/',
       routes: {
         '/newPaciente' : (context) => NewPacienteForm(),
-        '/': (context) => InitScreen(),
+        '/': (context) => const InitScreen(),
       },
     );
   }

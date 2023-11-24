@@ -1,25 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:paciente_digital/model/afericoes/frequencia_cardiaca.dart';
-import 'package:sqflite/sqflite.dart';
-
 import 'database_service.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 
 class FrequenciaCardiacaRepository extends ChangeNotifier{
 
-  late Database db;
-
-  FrequenciaCardiacaRepository(){
-    _initRepository();
-  }
-
-  _initRepository() async {
-    await _listAll();
-  }
-
-  _create(
-      int pacientId, DateTime? createAt, int frequencia) async {
-    final db = await DataBaseService.instance.database;
+  Future<int> create(int pacientId, DateTime? createAt, int frequencia) async {
+    final db = await DataBaseService.database();
     final frequenciaCardiaca = {
       'paciente_id': pacientId,
       'createAt': createAt,
@@ -31,8 +18,8 @@ class FrequenciaCardiacaRepository extends ChangeNotifier{
     return id;
   }
 
-  _get(int id) async {
-    final db = await DataBaseService.instance.database;
+  Future<List<Map<String, dynamic>>> _get(int id) async {
+    final db = await DataBaseService.database();
     Future<List<Map<String, dynamic>>> frequencia = db.query(
         'frequencia_respiratoria',
         where: "id = ?",
@@ -41,16 +28,16 @@ class FrequenciaCardiacaRepository extends ChangeNotifier{
     return frequencia;
   }
 
-  _getAll() async {
-    final db = await DataBaseService.instance.database;
+  Future<List<Map<String, dynamic>>> _getAll() async {
+    final db = await DataBaseService.database();
     Future<List<Map<String, dynamic>>> frequencia =
         db.query('frequencia_respiratoria', orderBy: 'id');
     return frequencia;
   }
 
-  _update(
+  Future<int> update(
       int id, int pacientId, DateTime? createAt, int frequencia) async {
-    final db = await DataBaseService.instance.database;
+    final db = await DataBaseService.database();
     final frequenciaCardiaca = {
       'paciente_id': pacientId,
       'createAt': createAt,
@@ -62,17 +49,17 @@ class FrequenciaCardiacaRepository extends ChangeNotifier{
     return result;
   }
 
-  _delete(int id) async {
-    final db = await DataBaseService.instance.database;
+  Future<void> delete(int id) async {
+    final db = await DataBaseService.database();
     try {
-      db._delete('frequencia_respiratoria', where: "id = ?", whereArgs: [id]);
+      db.delete('frequencia_respiratoria', where: "id = ?", whereArgs: [id]);
     } catch (e) {
       throw Exception("Falha ao deletar eliminação");
     }
     notifyListeners();
   }
 
-   _listAll() async {
+   Future<List<FrenquenciaCardiaca>> listAll() async {
     List<Map<String, dynamic>> dbResp = await _getAll();
     List<FrenquenciaCardiaca> response = [];
     if (dbResp.isNotEmpty) {
@@ -87,7 +74,7 @@ class FrequenciaCardiacaRepository extends ChangeNotifier{
     return response;
   }
 
-  _getById(int id) async {
+  Future<FrenquenciaCardiaca> getById(int id) async {
     List<Map<String, dynamic>> dbResp = await _get(id);
     return FrenquenciaCardiaca(
         id: dbResp[0]['id'],

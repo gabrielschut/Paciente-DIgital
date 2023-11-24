@@ -22,6 +22,8 @@ void removeDupliciti(List<Reclamacoes> reclamacoes) {
   reclamacoes = reclamacoes.toSet().toList();
 }
 
+ReclamacoesRepository reclamacoesRepository = ReclamacoesRepository();
+
 class _ListReclaacoesScreenState extends State<ListReclaacoesScreen> {
   TextEditingController dateController = TextEditingController();
   TextEditingController reclamacaoController = TextEditingController();
@@ -37,8 +39,7 @@ class _ListReclaacoesScreenState extends State<ListReclaacoesScreen> {
   }
 
   Future<void> _callDb() async {
-    ReclamacoesDatabaseHelper db = ReclamacoesDatabaseHelper();
-    List<Reclamacoes> list = await db.listAll();
+    List<Reclamacoes> list = await reclamacoesRepository.listAll();
     setState(() {
       reclamacoesList = list;
     });
@@ -156,7 +157,7 @@ class _ListReclaacoesScreenState extends State<ListReclaacoesScreen> {
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                ReclamacoesDatabaseHelper.create(widget.pacienteId,
+                                reclamacoesRepository.create(widget.pacienteId,
                                     dateController.text as DateTime, reclamacaoController.text);
                                 Navigator.pop(context);
                               },

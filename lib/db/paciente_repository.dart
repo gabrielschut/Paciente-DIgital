@@ -1,26 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:paciente_digital/model/paciente.dart';
-import 'package:sqflite/sqflite.dart';
 
 import 'database_service.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 
 class PacienteRepository extends ChangeNotifier{
 
-  late Database db;
-
-  PacienteRepository(){
-    _initRepository();
-  }
-
-  _initRepository() async {
-    await _getPaciente();
-  }
-
-  _create(String name, String sexo, int idade,
-      String? tipoSanguineo, double? peso,
-      int? altura, double? circAbdominal) async {
-    final db = await DataBaseService.instance.database;
+  Future<int> create(String name, String sexo, int idade, String? tipoSanguineo, double? peso, int? altura,
+      double? circAbdominal) async {
+    final db = await DataBaseService.database();
     final paciente = {
       'nome': name,
       'sexo': sexo,
@@ -35,23 +23,23 @@ class PacienteRepository extends ChangeNotifier{
     return id;
   }
 
-  _get(int id) async {
-    final db = await DataBaseService.instance.database;
+  Future<List<Map<String, dynamic>>> _get(int id) async {
+    final db = await DataBaseService.database();
     Future<List<Map<String, dynamic>>> paciente = db.query(
         'paciente', where: "id = ?", whereArgs: [id], limit: 1);
     return paciente;
   }
 
-  _getAll() async {
-    final db = await DataBaseService.instance.database;
+  Future<List<Map<String, dynamic>>> _getAll() async {
+    final db = await DataBaseService.database();
     Future<List<Map<String, dynamic>>> pacientes = db.query(
         'paciente', orderBy: 'id');
     return pacientes;
   }
 
-  _update(int id, String name, String sexo, int idade, String? tipoSanguineo, double? peso,
+  Future<int> update(int id, String name, String sexo, int idade, String? tipoSanguineo, double? peso,
       int? altura, double? circAbdominal) async {
-    final db = await DataBaseService.instance.database;
+    final db = await DataBaseService.database();
     final paciente = {
       'nome': name,
       'sexo': sexo,
@@ -66,7 +54,7 @@ class PacienteRepository extends ChangeNotifier{
     return result;
   }
 
-  _getPaciente() async {
+  Future<Paciente> getPaciente() async {
     List<Map<String,dynamic>> dbResp = await _getAll();
     if(dbResp.isNotEmpty){
       return Paciente(id: dbResp[0]['id'], nome: dbResp[0]['nome'], sexo: dbResp[0]['sexo'], idade: dbResp[0]['idade'],

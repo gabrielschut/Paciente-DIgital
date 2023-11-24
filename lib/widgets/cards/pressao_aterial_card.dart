@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:paciente_digital/model/afericoes/pressao_arterial.dart';
 import 'package:paciente_digital/db/pressao_repository.dart';
+import 'package:paciente_digital/model/afericoes/pressao_arterial.dart';
 
 class PressaoArterialCard extends StatefulWidget {
   final PressaoArterial pressaoArterial;
@@ -14,6 +14,8 @@ class PressaoArterialCard extends StatefulWidget {
   @override
   State<PressaoArterialCard> createState() => _PressaoArterialCardState();
 }
+
+PressaoArterialRepository pressaoArterialRepository = PressaoArterialRepository();
 
 class _PressaoArterialCardState extends State<PressaoArterialCard> {
   @override
@@ -69,7 +71,7 @@ class _PressaoArterialCardState extends State<PressaoArterialCard> {
                   ),
                   IconButton(
                     onPressed: () {
-                      PressaoArterialDatabaseHelper.delete(widget.pressaoArterial.id);
+                      pressaoArterialRepository.delete(widget.pressaoArterial.id);
                     },
                     icon: const Icon(
                       Icons.close_sharp,

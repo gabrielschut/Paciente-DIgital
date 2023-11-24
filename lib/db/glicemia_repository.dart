@@ -1,25 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:paciente_digital/model/afericoes/glicemia.dart';
-import 'package:sqflite/sqflite.dart';
 
 import 'database_service.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 
 class GlicemiaRepository extends ChangeNotifier{
 
-  late Database db;
-
-  GlicemiaRepository(){
-    _initRepository();
-  }
-
-  _initRepository() async {
-    await _listAll();
-  }
-
-  _create(
-      int pacientId, DateTime? createAt, int value) async {
-    final db = await DataBaseService.instance.database;
+  Future<int> create(int pacientId, DateTime? createAt, int value) async {
+    final db = await DataBaseService.database();
     final glicemia = {
       'paciente_id': pacientId,
       'createAt': createAt,
@@ -31,23 +19,22 @@ class GlicemiaRepository extends ChangeNotifier{
     return id;
   }
 
-  _get(int id) async {
-    final db = await DataBaseService.instance.database;
+  Future<List<Map<String, dynamic>>> _get(int id) async {
+    final db = await DataBaseService.database();
     Future<List<Map<String, dynamic>>> glicemia =
         db.query('glicemia', where: "id = ?", whereArgs: [id], limit: 1);
     return glicemia;
   }
 
-   _getAll() async {
-     final db = await DataBaseService.instance.database;
+   Future<List<Map<String, dynamic>>> _getAll() async {
+    final db = await DataBaseService.database();
     Future<List<Map<String, dynamic>>> glicemia =
         db.query('glicemia', orderBy: 'id');
     return glicemia;
   }
 
-  _update(
-      int id, int pacientId, DateTime? createAt, int value) async {
-    final db = await DataBaseService.instance.database;
+  Future<int> update(int id, int pacientId, DateTime? createAt, int value) async {
+    final db = await DataBaseService.database();
     final glicemia = {
       'paciente_id': pacientId,
       'createAt': createAt,
@@ -58,8 +45,8 @@ class GlicemiaRepository extends ChangeNotifier{
     return result;
   }
 
-  _delete(int id) async {
-    final db = await DataBaseService.instance.database;
+  Future<void> delete(int id) async {
+    final db = await DataBaseService.database();
     try {
       db.delete('glicemia', where: "id = ?", whereArgs: [id]);
     } catch (e) {
@@ -68,7 +55,7 @@ class GlicemiaRepository extends ChangeNotifier{
     notifyListeners();
   }
 
-  _listAll() async {
+  Future<List<Glicemia>> listAll() async {
     List<Map<String, dynamic>> dbResp = await _getAll();
     List<Glicemia> response = [];
     if (dbResp.isNotEmpty) {
@@ -83,7 +70,7 @@ class GlicemiaRepository extends ChangeNotifier{
     return response;
   }
 
-  _getById(int id) async {
+  Future<Glicemia> getById(int id) async {
     List<Map<String, dynamic>> dbResp = await _get(id);
     return Glicemia(
         id: dbResp[0]['id'],

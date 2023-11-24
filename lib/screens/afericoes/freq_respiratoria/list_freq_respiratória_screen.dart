@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:paciente_digital/db/frequenci_respiratoria_repository.dart';
 import 'package:paciente_digital/model/afericoes/frequencia_respiratoria.dart';
 import 'package:paciente_digital/widgets/cards/card_frequencia_resiratoria.dart';
 import 'package:paciente_digital/widgets/components/date_picker_field.dart';
 import 'package:paciente_digital/widgets/components/number_field.dart';
-import 'package:paciente_digital/db/frequenci_respiratoria_repository.dart';
 
 // ignore: must_be_immutable
 class ListFrequenciaRespiratoria extends StatefulWidget {
@@ -18,6 +18,9 @@ class ListFrequenciaRespiratoria extends StatefulWidget {
   State<ListFrequenciaRespiratoria> createState() =>
       _ListFrequenciaRespiratoriaState();
 }
+
+FrequenciaRespiratoriaRepository frequenciaRespiratoriaRepository = FrequenciaRespiratoriaRepository();
+
 
 class _ListFrequenciaRespiratoriaState extends State<ListFrequenciaRespiratoria> {
 
@@ -35,8 +38,7 @@ class _ListFrequenciaRespiratoriaState extends State<ListFrequenciaRespiratoria>
   }
 
   Future<void> _callDb() async {
-    FrequenciaRespiratoriaDatabaseHelper db = FrequenciaRespiratoriaDatabaseHelper();
-    List<FrequenciaRespiratoria> list = await db.listAll();
+    List<FrequenciaRespiratoria> list = await frequenciaRespiratoriaRepository.listAll();
     setState(() {
       frequencias = list;
     });
@@ -180,7 +182,7 @@ class _ListFrequenciaRespiratoriaState extends State<ListFrequenciaRespiratoria>
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                FrequenciaRespiratoriaDatabaseHelper.create(
+                                frequenciaRespiratoriaRepository.create(
                                     widget.pacienteId, dateController.text as DateTime, frequenciaController.text as double);
                                 Navigator.pop(context);
                               },

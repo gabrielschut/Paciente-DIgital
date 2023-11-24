@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:paciente_digital/model/medicamento.dart';
 import 'package:paciente_digital/db/medicamento_repository.dart';
+import 'package:paciente_digital/model/medicamento.dart';
 
 class MedicineCard extends StatefulWidget {
   final Medicamento medicine;
@@ -11,6 +11,8 @@ class MedicineCard extends StatefulWidget {
   @override
   State<MedicineCard> createState() => _MedicineCardState();
 }
+
+MedicamentoRepository medicamentoRepository = MedicamentoRepository();
 
 class _MedicineCardState extends State<MedicineCard> {
   @override
@@ -67,7 +69,7 @@ class _MedicineCardState extends State<MedicineCard> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        MedicamentoDatabaseHelper.delete(widget.medicine.id);
+                        medicamentoRepository.delete(widget.medicine.id);
                       },
                       icon: const Icon(
                         Icons.close_sharp,

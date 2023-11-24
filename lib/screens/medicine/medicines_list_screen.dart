@@ -18,6 +18,8 @@ class MedicinesListScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _MedicinesListState();
 }
 
+MedicamentoRepository medicamentoRepository = MedicamentoRepository();
+
 class _MedicinesListState extends State<MedicinesListScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController tarjaController = TextEditingController();
@@ -189,7 +191,7 @@ class _MedicinesListState extends State<MedicinesListScreen> {
                               ),
                               ElevatedButton(
                                 onPressed: () {
-                                  MedicamentoDatabaseHelper.create(
+                                  medicamentoRepository.create(
                                       widget.entitie.paciente.id,
                                       nameController.text,
                                       dosagemController.text as double,

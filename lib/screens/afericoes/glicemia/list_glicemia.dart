@@ -31,9 +31,10 @@ class _ListGlicemiaState extends State<ListGlicemia> {
     _callDb();
   }
 
+  GlicemiaRepository glicemiaRepository = GlicemiaRepository();
+
   Future<void> _callDb() async {
-    GlicemiaDatabaseHelper db = GlicemiaDatabaseHelper();
-    List<Glicemia> list = await db.listAll();
+    List<Glicemia> list = await glicemiaRepository.listAll();
     setState(() {
       glicemiaList = list;
     });
@@ -177,7 +178,7 @@ class _ListGlicemiaState extends State<ListGlicemia> {
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                GlicemiaDatabaseHelper.create(
+                                glicemiaRepository.create(
                                     widget.pacienteId,
                                     dateController.text as DateTime,
                                     valueController.text as int);

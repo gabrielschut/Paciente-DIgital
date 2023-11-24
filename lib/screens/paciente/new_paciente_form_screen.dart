@@ -8,17 +8,20 @@ import 'package:paciente_digital/widgets/components/text_field.dart';
 import 'package:paciente_digital/db/paciente_repository.dart';
 
 class NewPacienteForm extends StatefulWidget {
-  NewPacienteForm({super.key});
+  const NewPacienteForm({super.key});
 
   @override
   State<NewPacienteForm> createState() => _NewPacienteFormState();
 }
 
+MedicamentoRepository medicamentoDb = MedicamentoRepository();
+PacienteRepository pacienteRepository = PacienteRepository();
+
 Future<TabPacienteEntitie> _callDb() async {
-  MedicamentoDatabaseHelper medicamentoDb = MedicamentoDatabaseHelper();
   List<Medicamento> list = await medicamentoDb.listAll();
+
   return TabPacienteEntitie(
-      paciente: await PacienteDatabaseHelper.getPaciente(), medicamentos: list);
+      paciente: await pacienteRepository.getPaciente(), medicamentos: list);
 }
 
 class _NewPacienteFormState extends State<NewPacienteForm> {
@@ -157,7 +160,7 @@ class _NewPacienteFormState extends State<NewPacienteForm> {
             ),
             FloatingActionButton(
               onPressed: () async {
-                PacienteDatabaseHelper.create(
+                pacienteRepository.create(
                     nameController.text,
                     sexoController.text,
                     int.parse(idadeController.text),

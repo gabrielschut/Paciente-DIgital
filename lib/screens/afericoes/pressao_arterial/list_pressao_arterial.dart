@@ -16,6 +16,8 @@ class ListPressaoArterial extends StatefulWidget {
   State<ListPressaoArterial> createState() => _ListPressaoArterialState();
 }
 
+PressaoArterialRepository pressaoArterialRepository = PressaoArterialRepository();
+
 class _ListPressaoArterialState extends State<ListPressaoArterial> {
 
     TextEditingController maxController = TextEditingController();
@@ -26,8 +28,7 @@ class _ListPressaoArterialState extends State<ListPressaoArterial> {
     List<PressaoArterial> pressoes = [];
 
     Future<void> _callDb() async {
-      PressaoArterialDatabaseHelper db = PressaoArterialDatabaseHelper();
-      List<PressaoArterial> list = await db.listAll();
+      List<PressaoArterial> list = await pressaoArterialRepository.listAll();
       setState(() {
         pressoes = list;
       });
@@ -150,7 +151,7 @@ class _ListPressaoArterialState extends State<ListPressaoArterial> {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            PressaoArterialDatabaseHelper.create(
+                            pressaoArterialRepository.create(
                                 widget.pacienteId,
                                 DateTime.now(),
                                 maxController.text as int,

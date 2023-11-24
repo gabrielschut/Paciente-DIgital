@@ -12,6 +12,8 @@ class ReclamacoesCard extends StatefulWidget {
   State<ReclamacoesCard> createState() => _ReclamacoesCardState();
 }
 
+ReclamacoesRepository reclamacoesRepository = ReclamacoesRepository();
+
 class _ReclamacoesCardState extends State<ReclamacoesCard> {
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,7 @@ class _ReclamacoesCardState extends State<ReclamacoesCard> {
                   ),
                   IconButton(
                     onPressed: () {
-                      ReclamacoesDatabaseHelper.delete(widget.reclamacao.id);
+                      reclamacoesRepository.delete(widget.reclamacao.id);
                     },
                     icon: const Icon(
                       Icons.close_sharp,

@@ -15,6 +15,8 @@ class CardFrequenciaRespiratoria extends StatefulWidget {
   State<CardFrequenciaRespiratoria> createState() => _CardFrequenciaRespiratoriaState();
 }
 
+FrequenciaRespiratoriaRepository frequenciaRespiratoriaRepository = FrequenciaRespiratoriaRepository();
+
 class _CardFrequenciaRespiratoriaState extends State<CardFrequenciaRespiratoria> {
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,7 @@ class _CardFrequenciaRespiratoriaState extends State<CardFrequenciaRespiratoria>
                   ),
                   IconButton(
                     onPressed: () {
-                      FrequenciaRespiratoriaDatabaseHelper.delete(widget.frequenciaRespiratoria.id);
+                      frequenciaRespiratoriaRepository.delete(widget.frequenciaRespiratoria.id);
                     },
                     icon: const Icon(
                       Icons.close_sharp,

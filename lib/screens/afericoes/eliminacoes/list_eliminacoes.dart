@@ -21,6 +21,8 @@ class ListEliminacoes extends StatefulWidget {
   State<ListEliminacoes> createState() => _ListEliminacoesState();
 }
 
+EliminacoesRepository eliminacoesRepository = EliminacoesRepository();
+
 class _ListEliminacoesState extends State<ListEliminacoes> {
   TextEditingController dateController = TextEditingController();
   TextEditingController eliminacaoController = TextEditingController();
@@ -39,8 +41,7 @@ class _ListEliminacoesState extends State<ListEliminacoes> {
   }
 
   Future<void> _callDb() async {
-    EliminacoesDatabaseHelper db = EliminacoesDatabaseHelper();
-    List<Eliminacoes> list = await db.listAll();
+    List<Eliminacoes> list = await eliminacoesRepository.listAll();
     setState(() {
       listEsliminacoes = list;
     });
@@ -187,7 +188,7 @@ class _ListEliminacoesState extends State<ListEliminacoes> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            EliminacoesDatabaseHelper.create(
+                            eliminacoesRepository.create(
                                 widget.pacienteId,
                                 eliminacaoController.text,
                                 descricaoController.text,

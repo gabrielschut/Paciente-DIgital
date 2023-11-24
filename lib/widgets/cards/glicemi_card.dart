@@ -15,6 +15,8 @@ class GlicemiaCard extends StatefulWidget {
   State<GlicemiaCard> createState() => _GlicemiaCardState();
 }
 
+GlicemiaRepository glicemiaRepository = GlicemiaRepository();
+
 class _GlicemiaCardState extends State<GlicemiaCard> {
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,7 @@ class _GlicemiaCardState extends State<GlicemiaCard> {
                   ),
                   IconButton(
                     onPressed: () {
-                      GlicemiaDatabaseHelper.delete(widget.glicemia.id);
+                      glicemiaRepository.delete(widget.glicemia.id);
                     },
                     icon: const Icon(
                       Icons.close_sharp,

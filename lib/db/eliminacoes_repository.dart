@@ -1,23 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:paciente_digital/model/afericoes/eliminacoes.dart';
-import 'package:sqflite/sqlite_api.dart';
-
 import 'database_service.dart';
 import 'package:sqflite/sqflite.dart' as sql;
+
 class EliminacoesRepository extends ChangeNotifier{
 
-  late Database db;
-
-  EliminacoesRepository(){
-    _initRepository();
-  }
-
-  _initRepository() async {
-    await _listAll();
-  }
-
-  _create(int pacientId, String excrecao, String? descricao, DateTime? createAt) async {
-    final db = await DataBaseService.instance.database;
+  Future<int> create(int pacientId, String excrecao, String? descricao, DateTime? createAt) async {
+    final db = await DataBaseService.database();
     final eliminacao = {
       'paciente_id': pacientId,
       'excrecao': excrecao,
@@ -30,22 +19,23 @@ class EliminacoesRepository extends ChangeNotifier{
     return id;
   }
 
-  _get(int id) async {
-    final db = await DataBaseService.instance.database;
+  Future<List<Map<String, dynamic>>> _get(int id) async {
+    final db = await DataBaseService.database();
     Future<List<Map<String, dynamic>>> eliminacao =
         db.query('eliminacao', where: "id = ?", whereArgs: [id], limit: 1);
     return eliminacao;
   }
 
-  _getAll() async {
-    final db = await DataBaseService.instance.database;
+  Future<List<Map<String, dynamic>>> _getAll() async {
+    final db = await DataBaseService.database();
     Future<List<Map<String, dynamic>>> eliminacao =
         db.query('eliminacao', orderBy: 'id');
     return eliminacao;
   }
 
-  _update(int id, int pacientId, String excrecao, String? descricao, DateTime? createAt) async {
-    final db = await DataBaseService.instance.database;    final eliminacao = {
+  Future<int> update(int id, int pacientId, String excrecao, String? descricao, DateTime? createAt) async {
+    final db = await DataBaseService.database();
+    final eliminacao = {
       'paciente_id': pacientId,
       'excrecao': excrecao,
       'description': descricao,
@@ -56,8 +46,9 @@ class EliminacoesRepository extends ChangeNotifier{
     return result;
   }
 
-  _delete(int id) async {
-    final db = await DataBaseService.instance.database;    try {
+  Future<void> delete(int id) async {
+    final db = await DataBaseService.database();
+    try {
       db.delete('eliminacao', where: "id = ?", whereArgs: [id]);
     } catch (e) {
       throw Exception("Falha ao deletar eliminação");
@@ -65,7 +56,7 @@ class EliminacoesRepository extends ChangeNotifier{
     notifyListeners();
   }
 
-  _listAll() async {
+  Future<List<Eliminacoes>> listAll() async {
     List<Map<String, dynamic>> dbResp = await _getAll();
     List<Eliminacoes> response = [];
     if (dbResp.isNotEmpty) {

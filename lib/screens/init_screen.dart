@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:paciente_digital/db/database_service.dart';
 import 'package:paciente_digital/db/medicamento_repository.dart';
 import 'package:paciente_digital/db/paciente_repository.dart';
-import 'package:paciente_digital/model/medicamento.dart';
 import 'package:paciente_digital/model/tab_paciente_entitie.dart';
 import 'package:paciente_digital/screens/tab_bar_paciente_controll_screen.dart';
 
@@ -16,17 +15,20 @@ class InitScreen extends StatefulWidget {
 
 }
 
-Future<TabPacienteEntitie> _callDb() async {
+
+Future<TabPacienteEntitie> _callDb(pacienteRepository, medicamentoRepository) async {
   WidgetsFlutterBinding.ensureInitialized();
-  await DataBaseService.openDatabase();
-  MedicamentoDatabaseHelper medicamentoDb = MedicamentoDatabaseHelper();
-  return TabPacienteEntitie(paciente: await PacienteDatabaseHelper.getPaciente(), medicamentos: await medicamentoDb.listAll());
+  await DataBaseService.database();
+  return TabPacienteEntitie(paciente: await pacienteRepository.getPaciente(), medicamentos: await medicamentoRepository.listAll());
 }
 
 class _InitScreenState extends State<InitScreen> {
-
   @override
   Widget build(BuildContext context) {
+
+    final PacienteRepository pacienteRepository = PacienteRepository();
+    final MedicamentoRepository medicamentoRepository = MedicamentoRepository();
+
     return Scaffold(
       backgroundColor: Colors.lightBlue,
       body: Padding(
@@ -91,7 +93,7 @@ class _InitScreenState extends State<InitScreen> {
                             padding: const EdgeInsets.all(8.0),
                             child: ElevatedButton(
                               onPressed: () async {
-                                TabPacienteEntitie entitie = await _callDb();
+                                TabPacienteEntitie entitie = await _callDb(pacienteRepository, medicamentoRepository);
                                 if (entitie.paciente.id != 0) {
                                   Navigator.pushReplacement(context,
                                     MaterialPageRoute(

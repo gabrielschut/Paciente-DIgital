@@ -1,24 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:paciente_digital/model/afericoes/pressao_arterial.dart';
-import 'package:sqflite/sqflite.dart';
-
 import 'database_service.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 
 class PressaoArterialRepository extends ChangeNotifier{
 
-  late Database db;
-
-  PressaoArterialRepository(){
-    _initRepository();
-  }
-
-  _initRepository() async {
-    await _listAll();
-  }
-
-  _create(int pacientId, DateTime? createAt, int max, int min) async {
-    final db = await DataBaseService.instance.database;
+  Future<int> create(int pacientId, DateTime? createAt, int max, int min) async {
+    final db = await DataBaseService.database();
     final pressao = {
       'paciente_id': pacientId,
       'createAt': createAt,
@@ -30,23 +18,23 @@ class PressaoArterialRepository extends ChangeNotifier{
     return id;
   }
 
-  _get(int id) async {
-    final db = await DataBaseService.instance.database;
+  Future<List<Map<String, dynamic>>> _get(int id) async {
+    final db = await DataBaseService.database();
     Future<List<Map<String, dynamic>>> pressao = db.query(
         'pressao_arterial', where: "id = ?", whereArgs: [id], limit: 1);
     return pressao;
   }
 
-  _getAll() async {
-    final db = await DataBaseService.instance.database;
+  Future<List<Map<String, dynamic>>> _getAll() async {
+    final db = await DataBaseService.database();
     Future<List<Map<String, dynamic>>> pressao = db.query(
         'pressao_arterial', orderBy: 'id');
     return pressao;
   }
 
-  _update(int id, int pacientId, DateTime? createAt, int max,
+  Future<int> update(int id, int pacientId, DateTime? createAt, int max,
       int min) async {
-    final db = await DataBaseService.instance.database;
+    final db = await DataBaseService.database();
     final pressao = {
       'paciente_id': pacientId,
       'createAt': createAt,
@@ -59,8 +47,8 @@ class PressaoArterialRepository extends ChangeNotifier{
     return result;
   }
 
-  _delete(int id) async {
-    final db = await DataBaseService.instance.database;
+  Future<void> delete(int id) async {
+    final db = await DataBaseService.database();
     try {
       db.delete('pressao_arterial', where: "id = ?", whereArgs: [id]);
     } catch (e) {
@@ -69,7 +57,7 @@ class PressaoArterialRepository extends ChangeNotifier{
     notifyListeners();
   }
 
-  _listAll() async {
+  Future<List<PressaoArterial>> listAll() async {
     List<Map<String, dynamic>> dbResp = await _getAll();
     List<PressaoArterial> response = [];
     if (dbResp.isNotEmpty) {
@@ -84,7 +72,7 @@ class PressaoArterialRepository extends ChangeNotifier{
     return response;
   }
 
-  _getById(int id) async {
+  Future<PressaoArterial> getById(int id) async {
     List<Map<String, dynamic>> dbResp = await _get(id);
     return PressaoArterial(id: dbResp[0]['id'],
         idPaciente: dbResp[0]['paciente_id'],

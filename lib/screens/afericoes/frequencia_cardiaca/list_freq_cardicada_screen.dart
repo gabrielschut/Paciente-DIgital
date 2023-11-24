@@ -31,9 +31,10 @@ class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
     _callDb();
   }
 
+  FrequenciaCardiacaRepository frequenciaCardiacaRepository = FrequenciaCardiacaRepository();
+
   Future<void> _callDb() async {
-    FrequenciaCardiacaDatabaseHelper db = FrequenciaCardiacaDatabaseHelper();
-    List<FrenquenciaCardiaca> list = await db.listAll();
+    List<FrenquenciaCardiaca> list = await frequenciaCardiacaRepository.listAll();
     setState(() {
       frequenciasList = list;
     });
@@ -177,7 +178,7 @@ class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                FrequenciaCardiacaDatabaseHelper.create(
+                                frequenciaCardiacaRepository.create(
                                     widget.pacienteId,
                                     dateController.text as DateTime,
                                     frequenciaController.text as int);
