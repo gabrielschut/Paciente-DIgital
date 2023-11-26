@@ -3,6 +3,7 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:paciente_digital/Utils/ProjectUtils.dart';
 import 'package:paciente_digital/model/afericoes/eliminacoes.dart';
 import 'package:paciente_digital/widgets/cards/eliminacao_card.dart';
 import 'package:paciente_digital/widgets/components/date_picker_field.dart';
@@ -13,15 +14,15 @@ import 'package:paciente_digital/db/eliminacoes_repository.dart';
 class ListEliminacoes extends StatefulWidget {
   int pacienteId;
 
-  ListEliminacoes(
-      {Key? key,required this.pacienteId})
-      : super(key: key);
+  ListEliminacoes({Key? key, required this.pacienteId}) : super(key: key);
 
   @override
   State<ListEliminacoes> createState() => _ListEliminacoesState();
 }
 
 EliminacoesRepository eliminacoesRepository = EliminacoesRepository();
+
+
 
 class _ListEliminacoesState extends State<ListEliminacoes> {
   TextEditingController dateController = TextEditingController();
@@ -34,8 +35,14 @@ class _ListEliminacoesState extends State<ListEliminacoes> {
 
   List<Eliminacoes> listEsliminacoes = [];
 
+  cleanControllers(){
+    eliminacaoController.clear();
+    descricaoController.clear();
+    dateController.clear();
+  }
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _callDb();
   }
@@ -51,7 +58,8 @@ class _ListEliminacoesState extends State<ListEliminacoes> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
+        title: Padding(
+          padding: EdgeInsets.only(left: 80),
           child: Text(
             "Eliminações",
             style: TextStyle(
@@ -119,92 +127,113 @@ class _ListEliminacoesState extends State<ListEliminacoes> {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: const Text(
-                'Novo medicamento',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+              title: const Padding(
+                padding: EdgeInsets.only(left: 16),
+                child: Text(
+                  'Novo registro - Eliminação',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.lightBlue,
+                  ),
                 ),
               ),
-              content: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 16, 16, 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.fromLTRB(24, 0, 0, 0),
-                          child: Text(
-                            'Tipo',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.lightBlue,
-                              fontWeight: FontWeight.w400,
+              content: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: 252,
+                            child: MyTextField(
+                              hint: 'Urina',
+                              fieldName: 'Eliminação',
+                              suffix: 'abc',
+                              controller: eliminacaoController,
+                              focusNode: eliminacaoFocusNode,
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 300,
-                          child: MyTextField(
-                            hint: 'Urina',
-                            fieldName: 'Eliminação',
-                            suffix: 'abc',
-                            controller: eliminacaoController,
-                            focusNode: eliminacaoFocusNode,
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                      child: DatePickerField(
+                        hint: "01/01/2000",
+                        dateFieldName: "Data      ",
+                        suffix: "",
+                        controller: dateController,
+                        focusNode: dateFocusNode,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                      child: MultilineField(
+                        controller: descricaoController,
+                        focusNode: descricaoFocusNode,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 8, 0, 8),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 120,
+                            height: 42,
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty
+                                  .resolveWith<Color?>((states) {
+                                return Colors.redAccent.shade200;
+                              }),
+                            ),
+                              onPressed: () {
+                                cleanControllers();
+                                Navigator.pop(context);
+                              },
+                              child: const Text(
+                                "Cancelar",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                    child: DatePickerField(
-                      hint: "01/01/2000",
-                      dateFieldName: "Data      ",
-                      suffix: "",
-                      controller: dateController,
-                      focusNode: dateFocusNode,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                    child: MultilineField(
-                      controller: descricaoController,
-                      focusNode: descricaoFocusNode,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Row(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Icon(Icons.cancel,
-                              color: Colors.red, size: 15),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            eliminacoesRepository.create(
-                                widget.pacienteId,
-                                eliminacaoController.text,
-                                descricaoController.text,
-                                dateController.text as DateTime?);
-                            Navigator.pop(context);
-                          },
-                          child: const Icon(
-                            Icons.check_circle,
-                            color: Colors.lightGreen,
-                            size: 15,
+                          const SizedBox(width: 12),
+                          SizedBox(
+                            width: 120,
+                            height: 42,
+                            child:  ElevatedButton(
+                              onPressed: () {
+                                eliminacoesRepository.create(
+                                    widget.pacienteId,
+                                    eliminacaoController.text,
+                                    descricaoController.text,
+                                    ProjectUtils.convertStringToDateTime(dateController.text));
+                                cleanControllers();
+                                Navigator.pop(context);
+                              },
+                              style: ButtonStyle(
+                                backgroundColor:
+                                MaterialStateProperty.resolveWith<Color?>(
+                                        (states) {
+                                      return Colors.green.shade300;
+                                    }),
+                              ),
+                              child: const Text(
+                                "Salvar",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );

@@ -27,52 +27,35 @@ class _DatePickerFieldState extends State<DatePickerField> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 0, 8),
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 12, 16),
-                child: Text(
-                  widget.dateFieldName,
-                  style: const TextStyle(
-                    color: Colors.lightBlue,
-                  ),
-                ),
+      child: Container(
+        color: Colors.white,
+        width: 252,
+        child: Flexible(
+          child: TextFormField(
+            controller: widget.controller,
+            focusNode: widget.focusNode,
+            onFieldSubmitted: (String string) {
+              widget.focusNode.requestFocus();
+            },
+            inputFormatters: [maskDate],
+            keyboardType: const TextInputType.numberWithOptions(
+              decimal: true,
+              signed: false,
+            ),
+            style: const TextStyle(
+              color: Colors.black,
+            ),
+            decoration: InputDecoration(
+              labelText: widget.dateFieldName,
+              labelStyle: const TextStyle(
+                color: Colors.lightBlue,
               ),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(40, 0, 8, 0),
-                child: SizedBox(),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: SizedBox(
-                  width: 230,
-                  child: Flexible(
-                    child: TextFormField(
-                      controller: widget.controller,
-                      focusNode: widget.focusNode,
-                      onFieldSubmitted: (String string){
-                        widget.focusNode.requestFocus();
-                      },
-                      inputFormatters: [maskDate],
-                      keyboardType: const TextInputType.numberWithOptions(
-                        decimal: true,
-                        signed: false,
-                      ),
-                      style: const TextStyle(
-                        color: Colors.black87,
-                      ),
-                      decoration: InputDecoration(
-                        helperText: "",
-                        hintText: widget.hint,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          )),
+              helperText: "",
+              hintText: widget.hint,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -23,7 +23,7 @@ class _MultilineFieldState extends State<MultilineField> {
       onFieldSubmitted: (String string){
         widget.focusNode.requestFocus();
       },
-      maxLines: 8,
+      maxLines: 6,
       maxLength: 255,
       decoration: const InputDecoration(
         helperText: "",

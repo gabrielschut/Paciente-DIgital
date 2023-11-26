@@ -9,9 +9,7 @@ import 'package:paciente_digital/widgets/components/number_field.dart';
 class ListGlicemia extends StatefulWidget {
   int pacienteId;
 
-  ListGlicemia({Key? key,
-    required this.pacienteId})
-      : super(key: key);
+  ListGlicemia({Key? key, required this.pacienteId}) : super(key: key);
 
   @override
   State<ListGlicemia> createState() => _ListGlicemiaState();
@@ -25,8 +23,13 @@ class _ListGlicemiaState extends State<ListGlicemia> {
   FocusNode valueFocusNode = FocusNode();
   List<Glicemia> glicemiaList = [];
 
+  cleanControllers(){
+    dateController.clear();
+    valueController.clear();
+  }
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _callDb();
   }
@@ -115,87 +118,90 @@ class _ListGlicemiaState extends State<ListGlicemia> {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: const Text(
-                'Novo medicamento',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+              title: const Padding(
+                padding: EdgeInsets.only(left: 16),
+                child: Text(
+                  'Novo registro de glicemia',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.lightBlue,
+                  ),
                 ),
               ),
-              content: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: DatePickerField(
-                      hint: "01/01/2000",
-                      dateFieldName: "Tirado em ",
-                      suffix: "",
-                      controller: dateController,
-                      focusNode: dateFocusNode,
+              content: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: 252,
+                      child: DatePickerField(
+                        hint: "01/01/2000",
+                        dateFieldName: "Data da medição ",
+                        suffix: "",
+                        controller: dateController,
+                        focusNode: dateFocusNode,
+                      ),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.fromLTRB(24, 0, 16, 24),
-                        child: Text(
-                          'Glicose',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.lightBlue,
-                            fontWeight: FontWeight.w400,
+                    SizedBox(
+                      width: 252,
+                      child: NumberField(
+                        hint: "100",
+                        fieldName: "Valor",
+                        suffix: "ml/dl",
+                        controller: valueController,
+                        focusNode: valueFocusNode,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 120,
+                          height: 42,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty
+                                  .resolveWith<Color?>((states) {
+                                return Colors.redAccent.shade200;
+                              }),
+                            ),
+                            onPressed: () {
+                              cleanControllers();
+                              Navigator.pop(context);
+                            },
+                            child: const Text(
+                              "Cancelar",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20),
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 0, 24, 0),
-                        child: SizedBox(
-                          width: 230,
-                          child: NumberField(
-                            hint: "100",
-                            fieldName: "Valor",
-                            suffix: "ml/dl",
-                            controller: valueController,
-                            focusNode: valueFocusNode,
+                        const SizedBox(width: 12),
+                        SizedBox(
+                          width: 120,
+                          height: 42,
+                          child:  ElevatedButton(
+                            onPressed: () {
+                              cleanControllers();
+                              Navigator.pop(context);
+                            },
+                            style: ButtonStyle(
+                              backgroundColor:
+                              MaterialStateProperty.resolveWith<Color?>(
+                                      (states) {
+                                    return Colors.green.shade300;
+                                  }),
+                            ),
+                            child: const Text(
+                              "Salvar",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20),
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Row(
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Icon(Icons.cancel,
-                                  color: Colors.red, size: 15),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                glicemiaRepository.create(
-                                    widget.pacienteId,
-                                    dateController.text as DateTime,
-                                    valueController.text as int);
-                                Navigator.pop(context);
-                              },
-                              child: const Icon(
-                                Icons.check_circle,
-                                color: Colors.lightGreen,
-                                size: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           );

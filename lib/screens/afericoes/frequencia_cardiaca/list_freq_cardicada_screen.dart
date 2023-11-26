@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paciente_digital/Utils/ProjectUtils.dart';
 import 'package:paciente_digital/model/afericoes/frequencia_cardiaca.dart';
 import 'package:paciente_digital/widgets/cards/freq_cardiaca_card.dart';
 import 'package:paciente_digital/db/frequencia_cardiaca_repository.dart';
@@ -25,6 +26,11 @@ class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
   FocusNode frequenciaFocusNode = FocusNode();
   List<FrenquenciaCardiaca> frequenciasList = [];
 
+  cleanControllers(){
+    frequenciaController.clear();
+    dateController.clear();
+  }
+
   @override
   void initState(){
     super.initState();
@@ -44,9 +50,10 @@ class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
+        title: const Padding(
+          padding: EdgeInsets.only(left: 32),
           child: Text(
-            "Frequências cardiácas",
+            "Frequências cardíacas",
             style: TextStyle(
               color: Colors.white,
             ),
@@ -115,87 +122,105 @@ class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: const Text(
-                'Novo medicamento',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+              title: const Padding(
+                padding: EdgeInsets.only(left: 16),
+                child: Text(
+                  'Novo registro',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.lightBlue,
+                  ),
                 ),
               ),
-              content: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: DatePickerField(
-                      hint: "01/01/2000",
-                      dateFieldName: "Tirado em ",
-                      suffix: "",
-                      controller: dateController,
-                      focusNode: dateFocusNode,
+              content: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: SizedBox(
+                        width: 252,
+                        child: DatePickerField(
+                          hint: "01/01/2000",
+                          dateFieldName: "Data da medição",
+                          suffix: "",
+                          controller: dateController,
+                          focusNode: dateFocusNode,
+                        ),
+                      ),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.fromLTRB(24, 0, 16, 24),
-                        child: Text(
-                          'Frequência',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.lightBlue,
-                            fontWeight: FontWeight.w400,
-                          ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                      child: SizedBox(
+                        width: 252,
+                        child: NumberField(
+                          hint: "80.5",
+                          fieldName: "Batimentos / min",
+                          suffix: "/min",
+                          controller: frequenciaController,
+                          focusNode: frequenciaFocusNode,
                         ),
                       ),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 0, 24, 0),
-                        child: SizedBox(
-                          width: 230,
-                          child: NumberField(
-                            hint: "80.5",
-                            fieldName: "Batimentos / min",
-                            suffix: "/min",
-                            controller: frequenciaController,
-                            focusNode: frequenciaFocusNode,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(5),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8),
                         child: Row(
                           children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Icon(Icons.cancel,
-                                  color: Colors.red, size: 15),
+                            SizedBox(
+                              width: 120,
+                              height: 42,
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty
+                                      .resolveWith<Color?>((states) {
+                                    return Colors.redAccent.shade200;
+                                  }),
+                                ),
+                                onPressed: () {
+                                  cleanControllers();
+                                  Navigator.pop(context);
+                                },
+                                child: const Text(
+                                  "Cancelar",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                              ),
                             ),
-                            ElevatedButton(
-                              onPressed: () {
-                                frequenciaCardiacaRepository.create(
-                                    widget.pacienteId,
-                                    dateController.text as DateTime,
-                                    frequenciaController.text as int);
-                                Navigator.pop(context);
-                              },
-                              child: const Icon(
-                                Icons.check_circle,
-                                color: Colors.lightGreen,
-                                size: 15,
+                            const SizedBox(width: 12),
+                            SizedBox(
+                              width: 120,
+                              height: 42,
+                              child:  ElevatedButton(
+                                onPressed: () {
+                                  frequenciaCardiacaRepository.create(widget.pacienteId,
+                                      ProjectUtils.convertStringToDateTime(dateController.text),
+                                      double.parse(frequenciaController.text));
+                                  cleanControllers();
+                                  Navigator.pop(context);
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                  MaterialStateProperty.resolveWith<Color?>(
+                                          (states) {
+                                        return Colors.green.shade300;
+                                      }),
+                                ),
+                                child: const Text(
+                                  "Salvar",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
             ),
           );

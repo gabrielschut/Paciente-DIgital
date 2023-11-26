@@ -32,6 +32,11 @@ class _ListReclaacoesScreenState extends State<ListReclaacoesScreen> {
   FocusNode reclamacaoFocusNode = FocusNode();
   List<Reclamacoes> reclamacoesList = [];
 
+  cleanControllers(){
+    dateController.clear();
+    reclamacaoController.clear();
+  }
+
   @override
   void initState(){
     super.initState();
@@ -117,62 +122,83 @@ class _ListReclaacoesScreenState extends State<ListReclaacoesScreen> {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: const Text(
-                'Novo medicamento',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+              title: const Padding(
+                padding: EdgeInsets.only(left: 8),
+                child: Text(
+                  'Novo registro - reclamação',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.lightBlue,
+                  ),
                 ),
               ),
-              content: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
-                    child: DatePickerField(
-                      hint: "01/01/2000",
-                      dateFieldName: "Registrada em  ",
-                      suffix: "",
-                      controller: dateController, focusNode: dateFocusNode,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                    child: MultilineField(controller: reclamacaoController,focusNode: reclamacaoFocusNode),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-
-                      Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Row(
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Icon(Icons.cancel,
-                                  color: Colors.red, size: 15),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                reclamacoesRepository.create(widget.pacienteId,
-                                    dateController.text as DateTime, reclamacaoController.text);
-                                Navigator.pop(context);
-                              },
-                              child: const Icon(
-                                Icons.check_circle,
-                                color: Colors.lightGreen,
-                                size: 15,
-                              ),
-                            ),
-                          ],
-                        ),
+              content: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: 252,
+                      child: DatePickerField(
+                        hint: "01/01/2000",
+                        dateFieldName: "Registrada em  ",
+                        suffix: "",
+                        controller: dateController, focusNode: dateFocusNode,
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    SizedBox(
+                      width: 252,
+                      child: MultilineField(controller: reclamacaoController,focusNode: reclamacaoFocusNode),
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 120,
+                          height: 42,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty
+                                  .resolveWith<Color?>((states) {
+                                return Colors.redAccent.shade200;
+                              }),
+                            ),
+                            onPressed: () {
+                              cleanControllers();
+                              Navigator.pop(context);
+                            },
+                            child: const Text(
+                              "Cancelar",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        SizedBox(
+                          width: 120,
+                          height: 42,
+                          child:  ElevatedButton(
+                            onPressed: () {
+                              cleanControllers();
+                              Navigator.pop(context);
+                            },
+                            style: ButtonStyle(
+                              backgroundColor:
+                              MaterialStateProperty.resolveWith<Color?>(
+                                      (states) {
+                                    return Colors.green.shade300;
+                                  }),
+                            ),
+                            child: const Text(
+                              "Salvar",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           );

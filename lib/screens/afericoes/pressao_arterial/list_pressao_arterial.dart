@@ -8,8 +8,7 @@ import 'package:paciente_digital/db/pressao_repository.dart';
 class ListPressaoArterial extends StatefulWidget {
   int pacienteId;
 
-  ListPressaoArterial(
-      {Key? key, required this.pacienteId})
+  ListPressaoArterial({Key? key, required this.pacienteId})
       : super(key: key);
 
   @override
@@ -20,28 +19,33 @@ PressaoArterialRepository pressaoArterialRepository = PressaoArterialRepository(
 
 class _ListPressaoArterialState extends State<ListPressaoArterial> {
 
-    TextEditingController maxController = TextEditingController();
-    TextEditingController minController = TextEditingController();
+  TextEditingController maxController = TextEditingController();
+  TextEditingController minController = TextEditingController();
 
-    FocusNode maxFocusNode = FocusNode();
-    FocusNode minFocusNode = FocusNode();
-    List<PressaoArterial> pressoes = [];
+  FocusNode maxFocusNode = FocusNode();
+  FocusNode minFocusNode = FocusNode();
+  List<PressaoArterial> pressoes = [];
 
-    Future<void> _callDb() async {
-      List<PressaoArterial> list = await pressaoArterialRepository.listAll();
-      setState(() {
-        pressoes = list;
-      });
-    }
+  cleanControllers(){
+    maxController.clear();
+    minController.clear();
+  }
 
-    @override
-    void initState(){
-      super.initState();
-      _callDb();
-    }
+  Future<void> _callDb() async {
+    List<PressaoArterial> list = await pressaoArterialRepository.listAll();
+    setState(() {
+      pressoes = list;
+    });
+  }
 
-    @override
-    Widget build(BuildContext context) {
+  @override
+  void initState() {
+    super.initState();
+    _callDb();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -86,27 +90,27 @@ class _ListPressaoArterialState extends State<ListPressaoArterial> {
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
             child: pressoes.isNotEmpty
                 ? ListView.builder(
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: PressaoArterialCard(
-                          pressaoArterial: pressoes[index],
-                        ),
-                      );
-                    },
-                    itemCount: pressoes.length,
-                  )
-                : const Center(
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(16, 0, 8, 0),
-                      child: Text(
-                        "Nenhuma aferição de nível de glicemia foi registrada",
-                        style: TextStyle(
-                          color: Colors.blueAccent,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: PressaoArterialCard(
+                    pressaoArterial: pressoes[index],
                   ),
+                );
+              },
+              itemCount: pressoes.length,
+            )
+                : const Center(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(16, 0, 8, 0),
+                child: Text(
+                  "Nenhuma aferição de nível de glicemia foi registrada",
+                  style: TextStyle(
+                    color: Colors.blueAccent,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
       ),
@@ -114,69 +118,97 @@ class _ListPressaoArterialState extends State<ListPressaoArterial> {
         onPressed: () {
           showDialog(
             context: context,
-            builder: (context) => AlertDialog(
-              title: const Text(
-                'Novo registro: pressão art.',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              content: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 0, 24, 0),
-                    child: NumberField(
-                      hint: "120",
-                      fieldName: "Sistólica | Maxima",
-                      suffix: "mmHg",
-                      controller: maxController,
-                      focusNode: maxFocusNode,
+            builder: (context) =>
+                AlertDialog(
+                  title: const Padding(
+                    padding: EdgeInsets.only(left: 8),
+                    child: Text(
+                      'Novo registro - pressão arterial',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.lightBlue,
+                      ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 0, 24, 0),
-                    child: NumberField(
-                      hint: "80",
-                      fieldName: "Diastólica | Minima",
-                      suffix: "mmHg",
-                      controller: minController,
-                      focusNode: minFocusNode,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Row(
+                  content: SingleChildScrollView(
+                    child: Column(
                       children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            pressaoArterialRepository.create(
-                                widget.pacienteId,
-                                DateTime.now(),
-                                maxController.text as int,
-                                minController as int);
-                            Navigator.pop(context);
-                          },
-                          child: const Icon(Icons.cancel,
-                              color: Colors.red, size: 15),
+                        SizedBox(
+                          width: 252,
+                          child: NumberField(
+                            hint: "120",
+                            fieldName: "Sistólica | Maxima",
+                            suffix: "mmHg",
+                            controller: maxController,
+                            focusNode: maxFocusNode,
+                          ),
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Icon(
-                            Icons.check_circle,
-                            color: Colors.lightGreen,
-                            size: 15,
+                        SizedBox(
+                          width: 252,
+                          child: NumberField(
+                            hint: "80",
+                            fieldName: "Diastólica | Minima",
+                            suffix: "mmHg",
+                            controller: minController,
+                            focusNode: minFocusNode,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: Row(
+                        children: [
+                        SizedBox(
+                        width: 120,
+                          height: 42,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty
+                                  .resolveWith<Color?>((states) {
+                                return Colors.redAccent.shade200;
+                              }),
+                            ),
+                            onPressed: () {
+                              cleanControllers();
+                              Navigator.pop(context);
+                            },
+                            child: const Text(
+                              "Cancelar",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        SizedBox(
+                          width: 120,
+                          height: 42,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              cleanControllers();
+                              Navigator.pop(context);
+                            },
+                            style: ButtonStyle(
+                              backgroundColor:
+                              MaterialStateProperty.resolveWith<Color?>(
+                                      (states) {
+                                    return Colors.green.shade300;
+                                  }),
+                            ),
+                            child: const Text(
+                              "Salvar",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20),
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                ],
-              ),
-            ),
+                  ],
+                ),
+          ),)
+          ,
           );
         },
         child: const Icon(
