@@ -33,7 +33,7 @@ class ReclamacoesRepository extends ChangeNotifier{
     return reclamacao;
   }
 
-  Future<int> update(int id, int pacientId, DateTime? createAt, String text) async {
+  Future<int> update(int id, int pacientId, int createAt, String text) async {
     final db = await DataBaseService.database();
     final reclamacao = {
       'paciente_id': pacientId,

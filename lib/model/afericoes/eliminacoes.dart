@@ -2,7 +2,7 @@ class Eliminacoes {
 
   int id;
   int idPaciente;
-  DateTime createAt;
+  int createAt;
   String? excrecao;
   String? description;
 

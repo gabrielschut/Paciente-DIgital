@@ -2,7 +2,7 @@ class Reclamacoes {
 
   int id;
   int idPaciente;
-  final DateTime createAt;
+  int createAt;
   String reclamacao;
 
   Reclamacoes(

@@ -2,7 +2,7 @@ class FrenquenciaCardiaca {
 
   int id;
   int idPaciente;
-  DateTime createAt;
+  int createAt;
   double frequencia;
 
   FrenquenciaCardiaca(

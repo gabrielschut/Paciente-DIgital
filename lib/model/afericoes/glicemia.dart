@@ -2,7 +2,7 @@ class Glicemia {
 
   int id;
   int idPaciente;
-  DateTime createAt;
+  int createAt;
   double value;
 
   Glicemia(

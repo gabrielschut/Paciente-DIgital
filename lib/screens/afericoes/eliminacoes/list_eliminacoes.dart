@@ -58,7 +58,7 @@ class _ListEliminacoesState extends State<ListEliminacoes> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Padding(
+        title: const Padding(
           padding: EdgeInsets.only(left: 80),
           child: Text(
             "Eliminações",
@@ -211,7 +211,7 @@ class _ListEliminacoesState extends State<ListEliminacoes> {
                                     widget.pacienteId,
                                     eliminacaoController.text,
                                     descricaoController.text,
-                                    ProjectUtils.convertStringToDateTime(dateController.text));
+                                    ProjectUtils.convertUsinEphoch(dateController.text));
                                 cleanControllers();
                                 Navigator.pop(context);
                               },

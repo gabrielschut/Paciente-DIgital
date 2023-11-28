@@ -5,7 +5,7 @@ import 'package:sqflite/sqflite.dart' as sql;
 
 class EliminacoesRepository extends ChangeNotifier{
 
-  Future<int> create(int pacientId, String excrecao, String? descricao, DateTime? createAt) async {
+  Future<int> create(int pacientId, String excrecao, String? descricao, int createAt) async {
     final db = await DataBaseService.database();
     final eliminacao = {
       'paciente_id': pacientId,

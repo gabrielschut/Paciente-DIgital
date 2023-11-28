@@ -44,6 +44,7 @@ class _MedicinesListState extends State<MedicinesListScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 16, 8, 8),
@@ -222,13 +223,13 @@ class _MedicinesListState extends State<MedicinesListScreen> {
                               return Colors.green.shade300;
                             }),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             medicamentoRepository.create(
                                 widget.entitie.paciente.id,
                                 nameController.text,
                                 double.parse(dosagemController.text),
                                 tarjaController.text,
-                                ProjectUtils.convertStringToDateTime(initDateController.text),
+                                ProjectUtils.convertUsinEphoch(initDateController.text),
                                 int.parse(endDateController.text));
                             cleanControllers();
                             Navigator.pop(context);

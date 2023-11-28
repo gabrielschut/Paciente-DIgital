@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:paciente_digital/Utils/ProjectUtils.dart';
 import 'package:paciente_digital/db/medicamento_repository.dart';
 import 'package:paciente_digital/model/medicamento.dart';
 
@@ -102,7 +102,7 @@ class _MedicineCardState extends State<MedicineCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                   Text("Início: ${DateFormat("dd/MM/yyyy").format(widget.medicine.dataInicial)}",
+                   Text("Início: ${ProjectUtils.intToDateTime(widget.medicine.dataInicial)}",
                     style: const TextStyle(
                       color: Colors.blueAccent,
                       fontSize: 17,

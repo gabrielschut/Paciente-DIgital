@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:paciente_digital/Utils/ProjectUtils.dart';
 import 'package:paciente_digital/db/pressao_repository.dart';
 import 'package:paciente_digital/model/afericoes/pressao_arterial.dart';
 
@@ -105,8 +106,7 @@ class _PressaoArterialCardState extends State<PressaoArterialCard> {
                 child: Row(
                   children: [
                     Text(
-                      "Aferido em : ${DateFormat("dd/MM/yyyy")
-                              .format(widget.pressaoArterial.createAt)}",
+                      "Aferido em : ${DateFormat("dd/MM/yyyy").format(ProjectUtils.intToDateTime(widget.pressaoArterial.createAt))}",
                       style: const TextStyle(
                         color: Colors.blueAccent,
                         fontSize: 16,

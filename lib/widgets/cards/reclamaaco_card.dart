@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:paciente_digital/Utils/ProjectUtils.dart';
 import 'package:paciente_digital/model/afericoes/reclamacoes.dart';
 import 'package:paciente_digital/db/reclamacoes_repository.dart';
 
@@ -54,8 +55,7 @@ class _ReclamacoesCardState extends State<ReclamacoesCard> {
                     child: Row(
                       children: [
                         Text(
-                          "Feita em : ${DateFormat("dd/MM/yyyy")
-                                  .format(widget.reclamacao.createAt)}",
+                          "Feita em : ${DateFormat("dd/MM/yyyy").format(ProjectUtils.intToDateTime(widget.reclamacao.createAt))}",
                           style: const TextStyle(
                             color: Colors.blueAccent,
                             fontSize: 17,

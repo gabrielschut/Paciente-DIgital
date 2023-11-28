@@ -196,7 +196,7 @@ class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
                               child:  ElevatedButton(
                                 onPressed: () {
                                   frequenciaCardiacaRepository.create(widget.pacienteId,
-                                      ProjectUtils.convertStringToDateTime(dateController.text),
+                                      ProjectUtils.convertUsinEphoch(dateController.text),
                                       double.parse(frequenciaController.text));
                                   cleanControllers();
                                   Navigator.pop(context);

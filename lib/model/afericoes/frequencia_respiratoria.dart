@@ -2,7 +2,7 @@ class FrequenciaRespiratoria {
 
   int id;
   int idPaciente;
-  DateTime createAt;
+  int createAt;
   int frequencia;
 
   FrequenciaRespiratoria(

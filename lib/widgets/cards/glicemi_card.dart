@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:paciente_digital/Utils/ProjectUtils.dart';
 import 'package:paciente_digital/model/afericoes/glicemia.dart';
 import 'package:paciente_digital/db/glicemia_repository.dart';
 
@@ -85,8 +86,7 @@ class _GlicemiaCardState extends State<GlicemiaCard> {
                 child: Row(
                   children: [
                     Text(
-                      "Data : ${DateFormat("dd/MM/yyyy")
-                              .format(widget.glicemia.createAt)}",
+                      "Data : ${DateFormat("dd/MM/yyyy").format(ProjectUtils.intToDateTime(widget.glicemia.createAt))}",
                       style: const TextStyle(
                         color: Colors.blueAccent,
                         fontSize: 16,

@@ -27,13 +27,14 @@ class _PacienteDigitalState extends State<PacienteDigital> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,
         inputDecorationTheme: PacienteDIgitalInputTheme().theme(),
       ),
       initialRoute: '/',
       routes: {
-        '/newPaciente' : (context) => NewPacienteForm(),
+        '/newPaciente' : (context) => const NewPacienteForm(),
         '/': (context) => const InitScreen(),
       },
     );

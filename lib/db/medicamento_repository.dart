@@ -6,11 +6,11 @@ import 'package:sqflite/sqflite.dart' as sql;
 
 class MedicamentoRepository extends ChangeNotifier{
 
-  Future<int> create(int pacientId, String name, double dosagem, String? tarja, DateTime? dataIncio, int? diasDeUso) async {
+  Future<Medicamento> create(int pacientId, String name, double dosagem, String? tarja, int dataIncio, int? diasDeUso) async {
     final db = await DataBaseService.database();
     final medicamento = {
       'paciente_id': pacientId,
-      'name': name,
+      'nome': name,
       'dosagem': dosagem,
       'tarja': tarja,
       'data_inicial': dataIncio,
@@ -18,7 +18,9 @@ class MedicamentoRepository extends ChangeNotifier{
     };
     int id = await db.insert('medicamento', medicamento, conflictAlgorithm: sql.ConflictAlgorithm.replace);
     notifyListeners();
-    return id;
+    return Medicamento(id: id,
+        idPaciente: pacientId, nome: name, dosagem: dosagem,
+        tarja: tarja, dataInicial: dataIncio, diasDeUso: diasDeUso);
   }
 
   Future<List<Map<String, dynamic>>> _get(int id) async {

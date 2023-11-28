@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:paciente_digital/Utils/ProjectUtils.dart';
 import 'package:paciente_digital/model/afericoes/eliminacoes.dart';
 import 'package:paciente_digital/db/eliminacoes_repository.dart';
 
@@ -84,7 +85,7 @@ class _EliminacaoCardState extends State<EliminacaoCard> {
                 padding: const EdgeInsets.only(left: 16),
                 child: Row(
                   children: [
-                    Text("Data : ${DateFormat("dd/MM/yyyy").format(widget.eliminacao.createAt)}",
+                    Text("Data : ${DateFormat("dd/MM/yyyy").format(ProjectUtils.intToDateTime(widget.eliminacao.createAt))}",
                       style: const TextStyle(
                         color: Colors.blueAccent,
                         fontSize: 17,

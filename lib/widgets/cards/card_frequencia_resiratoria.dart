@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:paciente_digital/Utils/ProjectUtils.dart';
 import 'package:paciente_digital/model/afericoes/frequencia_respiratoria.dart';
 import 'package:paciente_digital/db/frequenci_respiratoria_repository.dart';
 
@@ -85,7 +86,7 @@ class _CardFrequenciaRespiratoriaState extends State<CardFrequenciaRespiratoria>
                 child: Row(
                   children: [
                     Text(
-                      "Aferido em : ${DateFormat("dd/MM/yyyy").format(widget.frequenciaRespiratoria.createAt)}",
+                      "Aferido em : ${DateFormat("dd/MM/yyyy").format(ProjectUtils.intToDateTime(widget.frequenciaRespiratoria.createAt))}",
                       style: const TextStyle(
                         color: Colors.blueAccent,
                         fontSize: 16,

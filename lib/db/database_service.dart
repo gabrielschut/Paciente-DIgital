@@ -18,51 +18,51 @@ class DataBaseService {
           altura INTEGER,
           circunferencia_abdominal REAL)''');
       db.execute('''
-        CREATE TABLE IF NOT EXISTS medicamento(
+        CREATE TABLE IF NOT EXISTS medicamento (
           id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
           paciente_id INTEGER,
           nome TEXT NOT NULL,
           dosagem REAL,
           tarja TEXT,
-          data_inicial TIMESTAMP NOT NULL,
-          dias_de_uso INT NOT NULL)''');
+          data_inicial INTEGER NOT NULL,
+          dias_de_uso INTEGER NOT NULL)''');
       db.execute('''
         CREATE TABLE IF NOT EXISTS eliminacoes(
           id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
           paciente_id INTEGER,
-          createAt TIMESTAMP NOT NULL,
+          createAt INTEGER NOT NULL,
           excrecao TEXT,
           description TEXT)''');
       db.execute( '''
         CREATE TABLE IF NOT EXISTS frequecia_cardiaca(
           id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
           paciente_id INTEGER,
-          createAt TIMESTAMP NOT NULLL,
+          createAt INTEGER NOT NULLL,
           batimentos REAL NOT NULL)''');
       db.execute('''
         CREATE TABLE IF NOT EXISTS frequencia_respiratoria(
           id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
           paciente_id INTEGER,
-          createAt TIMESTAMP NOT NULL,
+          createAt INTEGER NOT NULL,
           frequencia INTEGER NOT NULL)''');
       db.execute('''
         CREATE TABLE IF NOT EXISTS glicemia(
           id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
           paciente_id INTEGER,
-          createAt TIMESTAMP NOT NULL,
+          createAt INTEGER NOT NULL,
         value REAL NOT NULL)''');
       db.execute('''
         CREATE TABLE IF NOT EXISTS pressao_arterial(
           id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
           paciente_id INTEGER,
-          createAt TIMESTAMP NOT NULL,
+          createAt INTEGER NOT NULL,
           maxima INTEGER NOT NULL,
           minima INTEGER NOT NULL)''');
       db.execute('''    
         CREATE TABLE IF NOT EXISTS reclamacoes(
           id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
           paciente_id INTEGER,
-          createAt TIMESTAMP NOT NULL,
+          createAt INTEGER NOT NULL,
           reclamacao TEXT NOT NULL)''');
     });
   }

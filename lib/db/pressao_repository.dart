@@ -5,7 +5,7 @@ import 'package:sqflite/sqflite.dart' as sql;
 
 class PressaoArterialRepository extends ChangeNotifier{
 
-  Future<int> create(int pacientId, DateTime? createAt, int max, int min) async {
+  Future<int> create(int pacientId, int createAt, int max, int min) async {
     final db = await DataBaseService.database();
     final pressao = {
       'paciente_id': pacientId,

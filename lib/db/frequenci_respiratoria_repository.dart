@@ -4,7 +4,7 @@ import 'database_service.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 class FrequenciaRespiratoriaRepository extends ChangeNotifier{
 
-  Future<int> create(int pacientId, DateTime? createAt, double batimentos) async {
+  Future<int> create(int pacientId, int createAt, double batimentos) async {
     final db = await DataBaseService.database();
     final frequencia = {
       'paciente_id': pacientId,
