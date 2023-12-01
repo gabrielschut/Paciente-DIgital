@@ -5,7 +5,7 @@ class DataBaseService {
   static Future<Database> database() async {
     final dbPath = await getDatabasesPath();
 
-    return await openDatabase(join(dbPath, "paciente_digital.db"), version: 1,
+    return await openDatabase(join(dbPath, "database"), version: 1,
         onCreate: (db, version) {
       db.execute('''
          CREATE TABLE IF NOT EXISTS paciente (
@@ -33,24 +33,24 @@ class DataBaseService {
           createAt INTEGER NOT NULL,
           excrecao TEXT,
           description TEXT)''');
-      db.execute( '''
-        CREATE TABLE IF NOT EXISTS frequecia_cardiaca(
+      db.execute('''
+        CREATE TABLE IF NOT EXISTS frequencia_cardiaca(
           id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
           paciente_id INTEGER,
-          createAt INTEGER NOT NULLL,
-          batimentos REAL NOT NULL)''');
+          createAt INTEGER NOT NULL,
+          batimentos REAL)''');
       db.execute('''
         CREATE TABLE IF NOT EXISTS frequencia_respiratoria(
           id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
           paciente_id INTEGER,
           createAt INTEGER NOT NULL,
-          frequencia INTEGER NOT NULL)''');
+          frequencia REAL''');
       db.execute('''
         CREATE TABLE IF NOT EXISTS glicemia(
           id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
           paciente_id INTEGER,
           createAt INTEGER NOT NULL,
-        value REAL NOT NULL)''');
+          value REAL)''');
       db.execute('''
         CREATE TABLE IF NOT EXISTS pressao_arterial(
           id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -67,10 +67,9 @@ class DataBaseService {
     });
   }
 
-  static Future<List<Map<String,dynamic>>> findAll(String table) async{
+  static Future<List<Map<String, dynamic>>> findAll(String table) async {
     final db = await DataBaseService.database();
     return db.query(table);
     //return db.rawQuery("SELECT * from $table");
   }
-
 }

@@ -6,7 +6,7 @@ import 'package:sqflite/sqflite.dart' as sql;
 
 class GlicemiaRepository extends ChangeNotifier{
 
-  Future<int> create(int pacientId, int createAt, int value) async {
+  Future<int> create(int pacientId, int createAt, double value) async {
     final db = await DataBaseService.database();
     final glicemia = {
       'paciente_id': pacientId,
@@ -63,7 +63,7 @@ class GlicemiaRepository extends ChangeNotifier{
         response.add(Glicemia(
             id: glicemia['id'],
             idPaciente: glicemia['paciente_id'],
-            createAt: glicemia['createA'],
+            createAt: glicemia['createAt'],
             value: glicemia['value']));
       }
     }

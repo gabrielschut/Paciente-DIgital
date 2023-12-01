@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paciente_digital/Utils/ProjectUtils.dart';
 import 'package:paciente_digital/model/afericoes/reclamacoes.dart';
 import 'package:paciente_digital/widgets/cards/reclamaaco_card.dart';
 import 'package:paciente_digital/db/reclamacoes_repository.dart';
@@ -54,11 +55,13 @@ class _ListReclaacoesScreenState extends State<ListReclaacoesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
+        title: const Padding(
+          padding: EdgeInsets.only(left: 64),
           child: Text(
             "Reclamações",
             style: TextStyle(
               color: Colors.white,
+              fontSize: 26
             ),
           ),
         ),
@@ -139,7 +142,7 @@ class _ListReclaacoesScreenState extends State<ListReclaacoesScreen> {
                     SizedBox(
                       width: 252,
                       child: DatePickerField(
-                        hint: "01/01/2000",
+                        hint: ProjectUtils.dateTimeToString(DateTime.now()).replaceAll('-', '/'),
                         dateFieldName: "Registrada em  ",
                         suffix: "",
                         controller: dateController, focusNode: dateFocusNode,
@@ -178,6 +181,9 @@ class _ListReclaacoesScreenState extends State<ListReclaacoesScreen> {
                           height: 42,
                           child:  ElevatedButton(
                             onPressed: () {
+                              reclamacoesRepository.create(widget.pacienteId,
+                                  ProjectUtils.convertUsinEphoch(dateController.text),
+                                  reclamacaoController.text);
                               cleanControllers();
                               Navigator.pop(context);
                             },

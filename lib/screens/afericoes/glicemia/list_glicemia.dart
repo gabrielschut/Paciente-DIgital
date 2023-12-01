@@ -1,11 +1,13 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
+import 'package:paciente_digital/Utils/ProjectUtils.dart';
 import 'package:paciente_digital/model/afericoes/glicemia.dart';
 import 'package:paciente_digital/widgets/cards/glicemi_card.dart';
 import 'package:paciente_digital/db/glicemia_repository.dart';
 import 'package:paciente_digital/widgets/components/date_picker_field.dart';
 import 'package:paciente_digital/widgets/components/number_field.dart';
 
-// ignore: must_be_immutable
 class ListGlicemia extends StatefulWidget {
   int pacienteId;
 
@@ -47,11 +49,13 @@ class _ListGlicemiaState extends State<ListGlicemia> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
+        title: const Padding(
+          padding: EdgeInsets.only(left: 80),
           child: Text(
             "Glicemias",
             style: TextStyle(
               color: Colors.white,
+              fontSize: 26
             ),
           ),
         ),
@@ -135,7 +139,7 @@ class _ListGlicemiaState extends State<ListGlicemia> {
                     SizedBox(
                       width: 252,
                       child: DatePickerField(
-                        hint: "01/01/2000",
+                        hint: ProjectUtils.dateTimeToString(DateTime.now()).replaceAll('-', '/'),
                         dateFieldName: "Data da medição ",
                         suffix: "",
                         controller: dateController,
@@ -181,6 +185,9 @@ class _ListGlicemiaState extends State<ListGlicemia> {
                           height: 42,
                           child:  ElevatedButton(
                             onPressed: () {
+                              glicemiaRepository.create(widget.pacienteId,
+                                  ProjectUtils.convertUsinEphoch(dateController.text),
+                                  double.parse(valueController.text));
                               cleanControllers();
                               Navigator.pop(context);
                             },

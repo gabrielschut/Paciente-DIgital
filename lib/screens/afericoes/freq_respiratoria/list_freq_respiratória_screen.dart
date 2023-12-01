@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paciente_digital/Utils/ProjectUtils.dart';
 import 'package:paciente_digital/db/frequenci_respiratoria_repository.dart';
 import 'package:paciente_digital/model/afericoes/frequencia_respiratoria.dart';
 import 'package:paciente_digital/widgets/cards/card_frequencia_resiratoria.dart';
@@ -25,10 +26,10 @@ FrequenciaRespiratoriaRepository frequenciaRespiratoriaRepository = FrequenciaRe
 class _ListFrequenciaRespiratoriaState extends State<ListFrequenciaRespiratoria> {
 
   TextEditingController dateController = TextEditingController();
-  TextEditingController frequenciaController = TextEditingController();
+  TextEditingController freqController = TextEditingController();
 
   FocusNode dateFocusNode = FocusNode();
-  FocusNode frequenciaFocusNode = FocusNode();
+  FocusNode freqFocusNode = FocusNode();
   List<FrequenciaRespiratoria> frequencias = [];
 
   @override
@@ -46,7 +47,7 @@ class _ListFrequenciaRespiratoriaState extends State<ListFrequenciaRespiratoria>
 
   cleanControllers(){
     dateController.clear();
-    frequenciaController.clear();
+    freqController.clear();
   }
 
   @override
@@ -54,11 +55,12 @@ class _ListFrequenciaRespiratoriaState extends State<ListFrequenciaRespiratoria>
     return Scaffold(
       appBar: AppBar(
         title: const Padding(
-          padding: EdgeInsets.only(left: 20),
+          padding: EdgeInsets.only(left: 0),
           child: Text(
             "Frequências respiratórias",
             style: TextStyle(
               color: Colors.white,
+              fontSize: 26
             ),
           ),
         ),
@@ -142,7 +144,7 @@ class _ListFrequenciaRespiratoriaState extends State<ListFrequenciaRespiratoria>
                     SizedBox(
                       width: 252,
                       child: DatePickerField(
-                        hint: "01/01/2000",
+                        hint: ProjectUtils.dateTimeToString(DateTime.now()).replaceAll('-', '/'),
                         dateFieldName: "Tirado em ",
                         suffix: "",
                         controller: dateController,
@@ -155,8 +157,8 @@ class _ListFrequenciaRespiratoriaState extends State<ListFrequenciaRespiratoria>
                         hint: "80",
                         fieldName: "Respirações / min",
                         suffix: "mrm",
-                        controller: frequenciaController,
-                        focusNode: frequenciaFocusNode,
+                        controller: freqController,
+                        focusNode: freqFocusNode,
                       ),
                     ),
                     Padding(
@@ -190,7 +192,10 @@ class _ListFrequenciaRespiratoriaState extends State<ListFrequenciaRespiratoria>
                             height: 42,
                             child:  ElevatedButton(
                               onPressed: () {
-
+                                frequenciaRespiratoriaRepository.create(widget.pacienteId,
+                                    ProjectUtils.convertUsinEphoch(dateController.text),
+                                double.parse(freqController.text)
+                                );
                                 cleanControllers();
                                 Navigator.pop(context);
                               },

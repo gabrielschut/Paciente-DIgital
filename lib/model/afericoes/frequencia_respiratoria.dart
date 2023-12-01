@@ -3,7 +3,7 @@ class FrequenciaRespiratoria {
   int id;
   int idPaciente;
   int createAt;
-  int frequencia;
+  double frequencia;
 
   FrequenciaRespiratoria(
       {required this.id,

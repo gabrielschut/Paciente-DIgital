@@ -51,7 +51,6 @@ class _PressaoArterialCardState extends State<PressaoArterialCard> {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0, 4, 4, 0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -59,9 +58,9 @@ class _PressaoArterialCardState extends State<PressaoArterialCard> {
                   Padding(
                     padding: const EdgeInsets.only(left: 14),
                     child: Text(
-                      "$maxima Maxima",
+                      "Maxima   $maxima",
                       style: const TextStyle(
-                        color: Colors.blueAccent,
+                        color: Colors.blue,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
@@ -77,38 +76,34 @@ class _PressaoArterialCardState extends State<PressaoArterialCard> {
                     icon: const Icon(
                       Icons.close_sharp,
                       color: Colors.red,
-                      size: 30,
+                      size: 36,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Padding(
+                    padding:const EdgeInsets.only(left: 34),
+                    child: Text(
+                      "Minima    $minima",
+                      style: const TextStyle(
+                        color: Colors.blue,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
               ),
               Padding(
-                padding:const EdgeInsets.only(left: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding:const EdgeInsets.only(left: 14),
-                      child: Text(
-                        "$minima Minima",
-                        style: const TextStyle(
-                          color: Colors.blueAccent,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 34, bottom: 8),
+                padding: const EdgeInsets.only(left: 34),
                 child: Row(
                   children: [
                     Text(
                       "Aferido em : ${DateFormat("dd/MM/yyyy").format(ProjectUtils.intToDateTime(widget.pressaoArterial.createAt))}",
                       style: const TextStyle(
-                        color: Colors.blueAccent,
+                        color: Colors.blue,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),

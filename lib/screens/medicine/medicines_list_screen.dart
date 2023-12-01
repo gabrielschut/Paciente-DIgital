@@ -73,7 +73,7 @@ class _MedicinesListState extends State<MedicinesListScreen> {
               ),
             ),
           ),
-          height: 550,
+          height: 650,
           width: 800,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),

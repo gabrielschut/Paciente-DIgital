@@ -51,11 +51,12 @@ class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
     return Scaffold(
       appBar: AppBar(
         title: const Padding(
-          padding: EdgeInsets.only(left: 32),
+          padding: EdgeInsets.only(left: 12),
           child: Text(
             "Frequências cardíacas",
             style: TextStyle(
               color: Colors.white,
+              fontSize: 26
             ),
           ),
         ),
@@ -141,7 +142,7 @@ class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
                       child: SizedBox(
                         width: 252,
                         child: DatePickerField(
-                          hint: "01/01/2000",
+                          hint: ProjectUtils.dateTimeToString(DateTime.now()).replaceAll('-', '/'),
                           dateFieldName: "Data da medição",
                           suffix: "",
                           controller: dateController,

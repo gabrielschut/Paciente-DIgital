@@ -59,11 +59,12 @@ class _ListEliminacoesState extends State<ListEliminacoes> {
     return Scaffold(
       appBar: AppBar(
         title: const Padding(
-          padding: EdgeInsets.only(left: 80),
+          padding: EdgeInsets.only(left: 64),
           child: Text(
             "Eliminações",
             style: TextStyle(
               color: Colors.white,
+              fontSize: 26
             ),
           ),
         ),
@@ -162,7 +163,7 @@ class _ListEliminacoesState extends State<ListEliminacoes> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                       child: DatePickerField(
-                        hint: "01/01/2000",
+                        hint: ProjectUtils.dateTimeToString(DateTime.now()).replaceAll('-', '/'),
                         dateFieldName: "Data      ",
                         suffix: "",
                         controller: dateController,

@@ -10,9 +10,9 @@ class FrequenciaCardiacaRepository extends ChangeNotifier{
     final frequenciaCardiaca = {
       'paciente_id': pacientId,
       'createAt': createAt,
-      'frequencia': frequencia
+      'batimentos': frequencia
     };
-    int id = await db.insert('frequencia_respiratoria', frequenciaCardiaca,
+    int id = await db.insert('frequencia_cardiaca', frequenciaCardiaca,
         conflictAlgorithm: sql.ConflictAlgorithm.replace);
     notifyListeners();
     return id;
@@ -21,7 +21,7 @@ class FrequenciaCardiacaRepository extends ChangeNotifier{
   Future<List<Map<String, dynamic>>> _get(int id) async {
     final db = await DataBaseService.database();
     Future<List<Map<String, dynamic>>> frequencia = db.query(
-        'frequencia_respiratoria',
+        'frequencia_cardiaca',
         where: "id = ?",
         whereArgs: [id],
         limit: 1);
@@ -31,7 +31,7 @@ class FrequenciaCardiacaRepository extends ChangeNotifier{
   Future<List<Map<String, dynamic>>> _getAll() async {
     final db = await DataBaseService.database();
     Future<List<Map<String, dynamic>>> frequencia =
-        db.query('frequencia_respiratoria', orderBy: 'id');
+        db.query('frequencia_cardiaca', orderBy: 'id');
     return frequencia;
   }
 
@@ -41,9 +41,9 @@ class FrequenciaCardiacaRepository extends ChangeNotifier{
     final frequenciaCardiaca = {
       'paciente_id': pacientId,
       'createAt': createAt,
-      'frequencia': frequencia
+      'batimentos': frequencia
     };
-    final result = db.update('frequencia_respiratoria', frequenciaCardiaca,
+    final result = db.update('frequencia_cardiaca', frequenciaCardiaca,
         where: "id = ?", whereArgs: [id]);
     notifyListeners();
     return result;
@@ -52,7 +52,7 @@ class FrequenciaCardiacaRepository extends ChangeNotifier{
   Future<void> delete(int id) async {
     final db = await DataBaseService.database();
     try {
-      db.delete('frequencia_respiratoria', where: "id = ?", whereArgs: [id]);
+      db.delete('frequencia_cardiaca', where: "id = ?", whereArgs: [id]);
     } catch (e) {
       throw Exception("Falha ao deletar eliminação");
     }
@@ -68,7 +68,7 @@ class FrequenciaCardiacaRepository extends ChangeNotifier{
             id: frequencia['id'],
             idPaciente: frequencia['paciente_id'],
             createAt: frequencia['createAt'],
-            frequencia: frequencia['frequencia']));
+            frequencia: frequencia['batimentos']));
       }
     }
     return response;
@@ -80,6 +80,6 @@ class FrequenciaCardiacaRepository extends ChangeNotifier{
         id: dbResp[0]['id'],
         idPaciente: dbResp[0]['paciente_id'],
         createAt: dbResp[0]['createAt'],
-        frequencia: dbResp[0]['frequencia']);
+        frequencia: dbResp[0]['batimentos']);
   }
 }

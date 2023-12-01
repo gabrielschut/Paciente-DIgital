@@ -13,7 +13,7 @@ class EliminacoesRepository extends ChangeNotifier{
       'description': descricao,
       'createAt': createAt
     };
-    int id = await db.insert('eliminacao', eliminacao,
+    int id = await db.insert('eliminacoes', eliminacao,
         conflictAlgorithm: sql.ConflictAlgorithm.replace);
     notifyListeners();
     return id;
@@ -22,14 +22,14 @@ class EliminacoesRepository extends ChangeNotifier{
   Future<List<Map<String, dynamic>>> _get(int id) async {
     final db = await DataBaseService.database();
     Future<List<Map<String, dynamic>>> eliminacao =
-        db.query('eliminacao', where: "id = ?", whereArgs: [id], limit: 1);
+        db.query('eliminacoes', where: "id = ?", whereArgs: [id], limit: 1);
     return eliminacao;
   }
 
   Future<List<Map<String, dynamic>>> _getAll() async {
     final db = await DataBaseService.database();
     Future<List<Map<String, dynamic>>> eliminacao =
-        db.query('eliminacao', orderBy: 'id');
+        db.query('eliminacoes', orderBy: 'id');
     return eliminacao;
   }
 
@@ -41,7 +41,7 @@ class EliminacoesRepository extends ChangeNotifier{
       'description': descricao,
       'createAt': createAt
     };
-    final result = db.update('eliminacao', eliminacao, where: "id = ?", whereArgs: [id]);
+    final result = db.update('eliminacoes', eliminacao, where: "id = ?", whereArgs: [id]);
     notifyListeners();
     return result;
   }
@@ -49,7 +49,7 @@ class EliminacoesRepository extends ChangeNotifier{
   Future<void> delete(int id) async {
     final db = await DataBaseService.database();
     try {
-      db.delete('eliminacao', where: "id = ?", whereArgs: [id]);
+      db.delete('eliminacoes', where: "id = ?", whereArgs: [id]);
     } catch (e) {
       throw Exception("Falha ao deletar eliminação");
     }

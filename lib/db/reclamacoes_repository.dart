@@ -6,7 +6,7 @@ import 'package:sqflite/sqflite.dart' as sql;
 
 class ReclamacoesRepository extends ChangeNotifier{
 
-  Future<int> create(int pacientId, DateTime? createAt,
+  Future<int> create(int pacientId, int createAt,
       String text) async {
     final db = await DataBaseService.database();
     final reclamacao = {

@@ -31,19 +31,19 @@ class _CardFreqCardiacaState extends State<CardFreqCardiaca> {
           border: const Border(
             top: BorderSide(
               width: 1,
-              color: Colors.lightBlue,
+              color: Colors.blueAccent,
             ),
             right: BorderSide(
               width: 1,
-              color: Colors.lightBlue,
+              color: Colors.blueAccent,
             ),
             left: BorderSide(
               width: 1,
-              color: Colors.lightBlue,
+              color: Colors.blueAccent,
             ),
             bottom: BorderSide(
               width: 1,
-              color: Colors.lightBlue,
+              color: Colors.blueAccent,
             ),
           ),
         ),
@@ -60,7 +60,7 @@ class _CardFreqCardiacaState extends State<CardFreqCardiaca> {
                     child: Text(
                       "$frequencia Batimentos /min",
                       style: const TextStyle(
-                        color: Colors.blueAccent,
+                        color: Colors.blue,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
@@ -76,7 +76,7 @@ class _CardFreqCardiacaState extends State<CardFreqCardiaca> {
                     icon: const Icon(
                       Icons.close_sharp,
                       color: Colors.red,
-                      size: 30,
+                      size: 36,
                     ),
                   ),
                 ],
@@ -87,7 +87,7 @@ class _CardFreqCardiacaState extends State<CardFreqCardiaca> {
                   children: [
                     Text("Aferido em : ${DateFormat("dd/MM/yyyy").format(ProjectUtils.intToDateTime(widget.frenquenciaCardiaca.createAt))}",
                       style: const TextStyle(
-                        color: Colors.blueAccent,
+                        color: Colors.blue,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
