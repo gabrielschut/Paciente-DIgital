@@ -1,27 +1,59 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
+import 'package:paciente_digital/model/paciente.dart';
 import 'package:paciente_digital/widgets/components/number_field.dart';
 import 'package:paciente_digital/widgets/components/text_field.dart';
 import 'package:paciente_digital/db/paciente_repository.dart';
 
-class EditPacienteForm {
-  final paciente = PacienteDatabaseHelper.get(1);
+class EditPacienteForm extends StatefulWidget {
+  Paciente paciente;
+  EditPacienteForm({Key? key, required this.paciente}): super(key: key);
 
+  @override
+  State<StatefulWidget> createState() => _EditPacienteFormState();
+}
+
+PacienteRepository pacienteRepository = PacienteRepository();
+
+class _EditPacienteFormState extends State<EditPacienteForm> {
   TextEditingController nameController = TextEditingController();
-  FocusNode nameFocusNode = FocusNode();
   TextEditingController idadeController = TextEditingController();
-  FocusNode idadeFocusNode = FocusNode();
   TextEditingController sexoController = TextEditingController();
-  FocusNode sexoFocusNode = FocusNode();
   TextEditingController tipoSanguineoController = TextEditingController();
-  FocusNode tipoSanguineoFocusNode = FocusNode();
   TextEditingController pesoController = TextEditingController();
-  FocusNode pesoFocusNode = FocusNode();
   TextEditingController alturaController = TextEditingController();
-  FocusNode alturaFocusNode = FocusNode();
   TextEditingController circAbdominalController = TextEditingController();
+
+  FocusNode nameFocusNode = FocusNode();
+  FocusNode idadeFocusNode = FocusNode();
+  FocusNode sexoFocusNode = FocusNode();
+  FocusNode tipoSanguineoFocusNode = FocusNode();
+  FocusNode pesoFocusNode = FocusNode();
+  FocusNode alturaFocusNode = FocusNode();
   FocusNode circAbdominalFocusNode = FocusNode();
 
+  clearControllers(){
+    nameController.clear();
+    idadeController.clear();
+    sexoController.clear();
+    tipoSanguineoController.clear();
+    pesoController.clear();
+    alturaController.clear();
+    circAbdominalController.clear();
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+    nameController.text = widget.paciente.nome;
+    idadeController.text = widget.paciente.idade.toString();
+    sexoController.text = widget.paciente.sexo;
+    tipoSanguineoController.text = widget.paciente.tipoSanguineo!;
+    pesoController.text = widget.paciente.peso.toString();
+    alturaController.text = widget.paciente.altura.toString();
+    circAbdominalController.text = widget.paciente.circunferenciaAbdominal.toString();
+
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -141,17 +173,26 @@ class EditPacienteForm {
             ),
             FloatingActionButton(
               onPressed: () async {
-                PacienteDatabaseHelper.update(1,
-                    nameController.text, sexoController.text,
-                    idadeController.value as int, tipoSanguineoController.text, pesoController.value as double?,
-                    alturaController.text as int?, circAbdominalController.text as double?);
-                nameController.clear();
-                idadeController.clear();
-                sexoController.clear();
-                tipoSanguineoController.clear();
-                pesoController.clear();
-                alturaController.clear();
-                circAbdominalController.clear();
+                pacienteRepository.update(
+                    widget.paciente.id,
+                    nameController.text,
+                    sexoController.text,
+                    int.parse(idadeController.text),
+                    tipoSanguineoController.text,
+                    double.parse(pesoController.text),
+                    double.parse(alturaController.text),
+                    double.parse(circAbdominalController.text));
+                Paciente updatePaciente = Paciente(id: widget.paciente.id,
+                    nome: nameController.text,
+                    sexo: sexoController.text,
+                    idade: int.parse(idadeController.text),
+                    tipoSanguineo: tipoSanguineoController.text,
+                    peso: double.parse(pesoController.text),
+                    altura: double.parse(alturaController.text),
+                    circunferenciaAbdominal: double.parse(circAbdominalController.text)
+                );
+                widget.paciente = updatePaciente;
+                clearControllers();
                 Navigator.pop(context);
               },
               backgroundColor: Colors.indigo,

@@ -166,7 +166,7 @@ class _NewPacienteFormState extends State<NewPacienteForm> {
                     int.parse(idadeController.text),
                     tipoSanguineoController.text,
                     double.tryParse(pesoController.text),
-                    int.tryParse(alturaController.text),
+                    double.tryParse(alturaController.text),
                     double.tryParse(circAbdominalController.text));
                 TabPacienteEntitie entitie = await _callDb();
                 nameController.clear();

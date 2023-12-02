@@ -1,10 +1,13 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:paciente_digital/model/paciente.dart';
+import 'package:paciente_digital/screens/paciente/edit_paciente_form_screen.dart';
 
 class PacienteInfo extends StatefulWidget {
-  final Paciente paciente;
+  Paciente paciente;
 
-  const PacienteInfo({
+  PacienteInfo({
     Key? key,
     required this.paciente,
   }) : super(key: key);
@@ -164,6 +167,36 @@ class _PacienteInfoState extends State<PacienteInfo> {
               Container(
                 decoration: const BoxDecoration(
                     border: Border(
+                      bottom: BorderSide(
+                        width: 2,
+                        color: Colors.blueAccent,
+                      ),
+                    )),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Altura",
+                      style: TextStyle(fontSize: 22, color: Colors.blueAccent),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20),
+                      child: Text(
+                        widget.paciente.altura != null
+                            ? widget.paciente.altura.toString()
+                            : "???",
+                        style: const TextStyle(
+                          fontSize: 22,
+                          color: Colors.blueAccent,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                decoration: const BoxDecoration(
+                    border: Border(
                   bottom: BorderSide(
                     width: 2,
                     color: Colors.blueAccent,
@@ -199,7 +232,16 @@ class _PacienteInfoState extends State<PacienteInfo> {
                       return Colors.blueAccent;
                     }),
                   ),
-                  onPressed: () async {},
+                  onPressed: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            EditPacienteForm(paciente: widget.paciente),
+                      ),
+                    );
+                    widget.paciente = await pacienteRepository.getPaciente();
+                  },
                   child: const Text(
                     "Editar informações",
                     textAlign: TextAlign.center,

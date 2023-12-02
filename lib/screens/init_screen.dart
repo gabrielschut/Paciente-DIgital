@@ -12,20 +12,20 @@ class InitScreen extends StatefulWidget {
 
   @override
   State<InitScreen> createState() => _InitScreenState();
-
 }
 
-
-Future<TabPacienteEntitie> _callDb(pacienteRepository, medicamentoRepository) async {
+Future<TabPacienteEntitie> _callDb(
+    pacienteRepository, medicamentoRepository) async {
   WidgetsFlutterBinding.ensureInitialized();
   await DataBaseService.database();
-  return TabPacienteEntitie(paciente: await pacienteRepository.getPaciente(), medicamentos: await medicamentoRepository.listAll());
+  return TabPacienteEntitie(
+      paciente: await pacienteRepository.getPaciente(),
+      medicamentos: await medicamentoRepository.listAll());
 }
 
 class _InitScreenState extends State<InitScreen> {
   @override
   Widget build(BuildContext context) {
-
     final PacienteRepository pacienteRepository = PacienteRepository();
     final MedicamentoRepository medicamentoRepository = MedicamentoRepository();
 
@@ -60,19 +60,14 @@ class _InitScreenState extends State<InitScreen> {
                     ),
                     child: Column(
                       children: [
-                        const SizedBox(
-                          height: 540,
+                        SizedBox(
+                          height: 200,
                         ),
-                        const Padding(
-                          padding: EdgeInsets.fromLTRB(0, 12, 0, 0),
-                          child: Text(
-                            "Paciente Digital",
-                            style: TextStyle(
-                                color: Colors.blueAccent,
-                                fontSize: 30,
-                                decoration: TextDecoration.none),
-                            textAlign: TextAlign.center,
-                          ),
+                        Image.asset(
+                          'assets/welcome_logo.png',
+                        ),
+                        SizedBox(
+                          height: 100,
                         ),
                         const Padding(
                           padding: EdgeInsets.fromLTRB(0, 12, 0, 25),
@@ -93,14 +88,17 @@ class _InitScreenState extends State<InitScreen> {
                             padding: const EdgeInsets.all(8.0),
                             child: ElevatedButton(
                               onPressed: () async {
-                                TabPacienteEntitie entitie = await _callDb(pacienteRepository, medicamentoRepository);
+                                TabPacienteEntitie entitie = await _callDb(
+                                    pacienteRepository, medicamentoRepository);
                                 if (entitie.paciente.id != 0) {
-                                  Navigator.pushReplacement(context,
+                                  Navigator.pushReplacement(
+                                    context,
                                     MaterialPageRoute(
-                                        builder: (_) => TabBarPacienteControll(entitie: entitie),
+                                      builder: (_) => TabBarPacienteControll(
+                                          entitie: entitie),
                                     ),
                                   );
-                                }else {
+                                } else {
                                   Navigator.pushNamed(context, '/newPaciente');
                                 }
                               },

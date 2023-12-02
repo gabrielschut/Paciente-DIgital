@@ -6,7 +6,7 @@ import 'package:sqflite/sqflite.dart' as sql;
 
 class PacienteRepository extends ChangeNotifier{
 
-  Future<int> create(String name, String sexo, int idade, String? tipoSanguineo, double? peso, int? altura,
+  Future<int> create(String name, String sexo, int idade, String? tipoSanguineo, double? peso, double? altura,
       double? circAbdominal) async {
     final db = await DataBaseService.database();
     final paciente = {
@@ -38,7 +38,7 @@ class PacienteRepository extends ChangeNotifier{
   }
 
   Future<int> update(int id, String name, String sexo, int idade, String? tipoSanguineo, double? peso,
-      int? altura, double? circAbdominal) async {
+      double? altura, double? circAbdominal) async {
     final db = await DataBaseService.database();
     final paciente = {
       'nome': name,
@@ -49,7 +49,7 @@ class PacienteRepository extends ChangeNotifier{
       'altura': altura,
       'circunferencia_abdominal': circAbdominal
     };
-    final result = db.update('pacinete', paciente, where: "id = ?", whereArgs: [id]);
+    final result = db.update('paciente', paciente, where: "id = ?", whereArgs: [id]);
     notifyListeners();
     return result;
   }
