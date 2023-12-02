@@ -17,6 +17,13 @@ class PacienteInfo extends StatefulWidget {
 }
 
 class _PacienteInfoState extends State<PacienteInfo> {
+
+  void updatePaciente() {
+    setState(() async {
+      widget.paciente = await pacienteRepository.getPaciente();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -233,14 +240,14 @@ class _PacienteInfoState extends State<PacienteInfo> {
                     }),
                   ),
                   onPressed: () async {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (_) =>
                             EditPacienteForm(paciente: widget.paciente),
                       ),
                     );
-                    widget.paciente = await pacienteRepository.getPaciente();
+                    updatePaciente();
                   },
                   child: const Text(
                     "Editar informações",

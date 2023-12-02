@@ -1,7 +1,10 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:paciente_digital/db/medicamento_repository.dart';
 import 'package:paciente_digital/model/paciente.dart';
+import 'package:paciente_digital/model/tab_paciente_entitie.dart';
+import 'package:paciente_digital/screens/tab_bar_paciente_controll_screen.dart';
 import 'package:paciente_digital/widgets/components/number_field.dart';
 import 'package:paciente_digital/widgets/components/text_field.dart';
 import 'package:paciente_digital/db/paciente_repository.dart';
@@ -13,7 +16,7 @@ class EditPacienteForm extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _EditPacienteFormState();
 }
-
+MedicamentoRepository medicamentoRepository = MedicamentoRepository();
 PacienteRepository pacienteRepository = PacienteRepository();
 
 class _EditPacienteFormState extends State<EditPacienteForm> {
@@ -191,9 +194,11 @@ class _EditPacienteFormState extends State<EditPacienteForm> {
                     altura: double.parse(alturaController.text),
                     circunferenciaAbdominal: double.parse(circAbdominalController.text)
                 );
-                widget.paciente = updatePaciente;
                 clearControllers();
-                Navigator.pop(context);
+                TabPacienteEntitie entitie = TabPacienteEntitie(paciente: updatePaciente, medicamentos: await medicamentoRepository.listAll());
+                Navigator.pushReplacement(context, MaterialPageRoute(
+                  builder: (_) => TabBarPacienteControll(entitie: entitie),
+                ),);
               },
               backgroundColor: Colors.indigo,
               child: const Icon(

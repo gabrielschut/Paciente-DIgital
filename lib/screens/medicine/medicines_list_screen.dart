@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paciente_digital/model/medicamento.dart';
 import 'package:paciente_digital/model/tab_paciente_entitie.dart';
 import 'package:paciente_digital/widgets/cards/medicine_card.dart';
 import 'package:paciente_digital/db/medicamento_repository.dart';
@@ -42,9 +43,15 @@ class _MedicinesListState extends State<MedicinesListScreen> {
     dosagemController.clear();
   }
 
+
+  void updateList(Medicamento medicne) {
+    setState(() {
+      widget.entitie.medicamentos.add(medicne);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 16, 8, 8),
@@ -224,14 +231,16 @@ class _MedicinesListState extends State<MedicinesListScreen> {
                             }),
                           ),
                           onPressed: () async {
-                            medicamentoRepository.create(
+                           Medicamento medicine = await medicamentoRepository.create(
                                 widget.entitie.paciente.id,
                                 nameController.text,
                                 double.parse(dosagemController.text),
                                 tarjaController.text,
                                 ProjectUtils.convertUsinEphoch(initDateController.text),
                                 int.parse(endDateController.text));
+                           updateList(medicine);
                             cleanControllers();
+
                             Navigator.pop(context);
                           },
                           child: const Text(
