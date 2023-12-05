@@ -9,10 +9,11 @@ import 'package:paciente_digital/widgets/components/multilene_field.dart';
 // ignore: must_be_immutable
 class ListReclaacoesScreen extends StatefulWidget {
   int pacienteId;
-
+  List<Reclamacoes> reclamacoesList;
   ListReclaacoesScreen({
     Key? key,
-    required this.pacienteId
+    required this.pacienteId,
+    required this.reclamacoesList,
   }) : super(key: key);
 
   @override
@@ -31,7 +32,6 @@ class _ListReclaacoesScreenState extends State<ListReclaacoesScreen> {
 
   FocusNode dateFocusNode = FocusNode();
   FocusNode reclamacaoFocusNode = FocusNode();
-  List<Reclamacoes> reclamacoesList = [];
 
   cleanControllers(){
     dateController.clear();
@@ -47,7 +47,14 @@ class _ListReclaacoesScreenState extends State<ListReclaacoesScreen> {
   Future<void> _callDb() async {
     List<Reclamacoes> list = await reclamacoesRepository.listAll();
     setState(() {
-      reclamacoesList = list;
+      widget.reclamacoesList = list;
+    });
+  }
+
+
+  void updateList(Reclamacoes reclamacoes) {
+    setState(() {
+      widget.reclamacoesList.add(reclamacoes);
     });
   }
 
@@ -97,16 +104,21 @@ class _ListReclaacoesScreenState extends State<ListReclaacoesScreen> {
           width: 800,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
-            child: reclamacoesList.isNotEmpty
+            child: widget.reclamacoesList.isNotEmpty
                 ? ListView.builder(
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: ReclamacoesCard(
-                          reclamacao: reclamacoesList[index],
+                          reclamacao: widget.reclamacoesList[index],
+                          onExclude: () {
+                            setState(() {
+                              widget.reclamacoesList.removeAt(index);
+                            });
+                          }
                         ),
                       );
                     },
-                    itemCount: reclamacoesList.length,
+                    itemCount: widget.reclamacoesList.length,
                   )
                 : const Center(
                     child: Text(
@@ -180,10 +192,15 @@ class _ListReclaacoesScreenState extends State<ListReclaacoesScreen> {
                           width: 120,
                           height: 42,
                           child:  ElevatedButton(
-                            onPressed: () {
-                              reclamacoesRepository.create(widget.pacienteId,
+                            onPressed: () async {
+                              int id = await reclamacoesRepository.create(widget.pacienteId,
                                   ProjectUtils.convertUsinEphoch(dateController.text),
                                   reclamacaoController.text);
+                              Reclamacoes reclamacoes = Reclamacoes(id: id,
+                                  idPaciente: widget.pacienteId,
+                                  createAt: ProjectUtils.convertUsinEphoch(dateController.text),
+                                  reclamacao: reclamacaoController.text);
+                              updateList(reclamacoes);
                               cleanControllers();
                               Navigator.pop(context);
                             },

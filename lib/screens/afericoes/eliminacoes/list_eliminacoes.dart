@@ -9,20 +9,15 @@ import 'package:paciente_digital/widgets/cards/eliminacao_card.dart';
 import 'package:paciente_digital/widgets/components/date_picker_field.dart';
 import 'package:paciente_digital/widgets/components/multilene_field.dart';
 import 'package:paciente_digital/widgets/components/text_field.dart';
-import 'package:paciente_digital/db/eliminacoes_repository.dart';
 
 class ListEliminacoes extends StatefulWidget {
   int pacienteId;
-
-  ListEliminacoes({Key? key, required this.pacienteId}) : super(key: key);
+  List<Eliminacoes> listEsliminacoes;
+  ListEliminacoes({Key? key, required this.pacienteId, required this.listEsliminacoes}) : super(key: key);
 
   @override
   State<ListEliminacoes> createState() => _ListEliminacoesState();
 }
-
-EliminacoesRepository eliminacoesRepository = EliminacoesRepository();
-
-
 
 class _ListEliminacoesState extends State<ListEliminacoes> {
   TextEditingController dateController = TextEditingController();
@@ -32,8 +27,6 @@ class _ListEliminacoesState extends State<ListEliminacoes> {
   FocusNode dateFocusNode = FocusNode();
   FocusNode eliminacaoFocusNode = FocusNode();
   FocusNode descricaoFocusNode = FocusNode();
-
-  List<Eliminacoes> listEsliminacoes = [];
 
   cleanControllers(){
     eliminacaoController.clear();
@@ -47,10 +40,16 @@ class _ListEliminacoesState extends State<ListEliminacoes> {
     _callDb();
   }
 
+  void updateList(Eliminacoes eliminacoes) {
+    setState(() {
+      widget.listEsliminacoes.add(eliminacoes);
+    });
+  }
+
   Future<void> _callDb() async {
     List<Eliminacoes> list = await eliminacoesRepository.listAll();
     setState(() {
-      listEsliminacoes = list;
+      widget.listEsliminacoes = list;
     });
   }
 
@@ -100,16 +99,21 @@ class _ListEliminacoesState extends State<ListEliminacoes> {
           width: 800,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
-            child: listEsliminacoes.isNotEmpty
+            child: widget.listEsliminacoes.isNotEmpty
                 ? ListView.builder(
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: EliminacaoCard(
-                          eliminacao: listEsliminacoes[index],
+                          eliminacao: widget.listEsliminacoes[index],
+                            onExclude: () {
+                              setState(() {
+                                widget.listEsliminacoes.removeAt(index);
+                              });
+                            }
                         ),
                       );
                     },
-                    itemCount: listEsliminacoes.length,
+                    itemCount: widget.listEsliminacoes.length,
                   )
                 : const Center(
                     child: Text(
@@ -207,12 +211,18 @@ class _ListEliminacoesState extends State<ListEliminacoes> {
                             width: 120,
                             height: 42,
                             child:  ElevatedButton(
-                              onPressed: () {
-                                eliminacoesRepository.create(
+                              onPressed: () async {
+                                int id = await eliminacoesRepository.create(
                                     widget.pacienteId,
                                     eliminacaoController.text,
                                     descricaoController.text,
                                     ProjectUtils.convertUsinEphoch(dateController.text));
+                                Eliminacoes eliminacoes = Eliminacoes(id: id,
+                                    idPaciente: widget.pacienteId,
+                                    createAt: ProjectUtils.convertUsinEphoch(dateController.text),
+                                    excrecao: eliminacaoController.text,
+                                    description: descricaoController.text);
+                                updateList(eliminacoes);
                                 cleanControllers();
                                 Navigator.pop(context);
                               },

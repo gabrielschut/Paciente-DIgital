@@ -9,9 +9,9 @@ import 'package:paciente_digital/widgets/components/date_picker_field.dart';
 import 'package:paciente_digital/widgets/components/number_field.dart';
 
 class ListGlicemia extends StatefulWidget {
+  List<Glicemia> glicemiaList;
   int pacienteId;
-
-  ListGlicemia({Key? key, required this.pacienteId}) : super(key: key);
+  ListGlicemia({Key? key, required this.glicemiaList, required this.pacienteId}) : super(key: key);
 
   @override
   State<ListGlicemia> createState() => _ListGlicemiaState();
@@ -23,7 +23,6 @@ class _ListGlicemiaState extends State<ListGlicemia> {
 
   FocusNode dateFocusNode = FocusNode();
   FocusNode valueFocusNode = FocusNode();
-  List<Glicemia> glicemiaList = [];
 
   cleanControllers(){
     dateController.clear();
@@ -41,7 +40,13 @@ class _ListGlicemiaState extends State<ListGlicemia> {
   Future<void> _callDb() async {
     List<Glicemia> list = await glicemiaRepository.listAll();
     setState(() {
-      glicemiaList = list;
+      widget.glicemiaList = list;
+    });
+  }
+
+  void updateList(Glicemia glicemia) {
+    setState(() {
+      widget.glicemiaList.add(glicemia);
     });
   }
 
@@ -91,16 +96,21 @@ class _ListGlicemiaState extends State<ListGlicemia> {
           width: 800,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
-            child: glicemiaList.isNotEmpty
+            child: widget.glicemiaList.isNotEmpty
                 ? ListView.builder(
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: GlicemiaCard(
-                          glicemia: glicemiaList[index],
+                          glicemia: widget.glicemiaList[index],
+                            onExclude: () {
+                              setState(() {
+                                widget.glicemiaList.removeAt(index);
+                              });
+                            }
                         ),
                       );
                     },
-                    itemCount: glicemiaList.length,
+                    itemCount: widget.glicemiaList.length,
                   )
                 : const Center(
                     child: Padding(
@@ -184,10 +194,15 @@ class _ListGlicemiaState extends State<ListGlicemia> {
                           width: 120,
                           height: 42,
                           child:  ElevatedButton(
-                            onPressed: () {
-                              glicemiaRepository.create(widget.pacienteId,
+                            onPressed: () async {
+                              int id = await glicemiaRepository.create(widget.pacienteId,
                                   ProjectUtils.convertUsinEphoch(dateController.text),
                                   double.parse(valueController.text));
+                              Glicemia glicemia = Glicemia(id: id,
+                                  idPaciente: widget.pacienteId,
+                                  createAt: ProjectUtils.convertUsinEphoch(dateController.text),
+                                  value: double.parse(valueController.text));
+                              updateList(glicemia);
                               cleanControllers();
                               Navigator.pop(context);
                             },

@@ -6,8 +6,9 @@ import 'package:paciente_digital/model/medicamento.dart';
 
 class MedicineCard extends StatefulWidget {
   final Medicamento medicine;
-
-  const MedicineCard({Key? key, required this.medicine}) : super(key: key);
+  final VoidCallback onExclude;
+  const MedicineCard({Key? key, required this.medicine,
+  required this.onExclude}) : super(key: key);
 
   @override
   State<MedicineCard> createState() => _MedicineCardState();
@@ -73,6 +74,7 @@ class _MedicineCardState extends State<MedicineCard> {
                       IconButton(
                         onPressed: () {
                           medicamentoRepository.delete(widget.medicine.id);
+                          widget.onExclude();
                         },
                         icon: const Icon(
                           Icons.close_sharp,

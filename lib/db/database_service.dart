@@ -44,7 +44,7 @@ class DataBaseService {
           id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
           paciente_id INTEGER,
           createAt INTEGER NOT NULL,
-          frequencia REAL''');
+          frequencia REAL)''');
       db.execute('''
         CREATE TABLE IF NOT EXISTS glicemia(
           id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,

@@ -9,8 +9,8 @@ import 'package:paciente_digital/db/pressao_repository.dart';
 // ignore: must_be_immutable
 class ListPressaoArterial extends StatefulWidget {
   int pacienteId;
-
-  ListPressaoArterial({Key? key, required this.pacienteId}) : super(key: key);
+  List<PressaoArterial> pressoes;
+  ListPressaoArterial({Key? key, required this.pacienteId, required this.pressoes}) : super(key: key);
 
   @override
   State<ListPressaoArterial> createState() => _ListPressaoArterialState();
@@ -26,7 +26,6 @@ class _ListPressaoArterialState extends State<ListPressaoArterial> {
   FocusNode maxFocusNode = FocusNode();
   FocusNode minFocusNode = FocusNode();
   FocusNode dateFocusNode = FocusNode();
-  List<PressaoArterial> pressoes = [];
 
   cleanControllers() {
     maxController.clear();
@@ -36,7 +35,7 @@ class _ListPressaoArterialState extends State<ListPressaoArterial> {
   Future<void> _callDb() async {
     List<PressaoArterial> list = await pressaoArterialRepository.listAll();
     setState(() {
-      pressoes = list;
+      widget.pressoes = list;
     });
   }
 
@@ -44,6 +43,12 @@ class _ListPressaoArterialState extends State<ListPressaoArterial> {
   void initState() {
     super.initState();
     _callDb();
+  }
+
+  void updateList(PressaoArterial pressaoArterial) {
+    setState(() {
+      widget.pressoes.add(pressaoArterial);
+    });
   }
 
   @override
@@ -92,16 +97,21 @@ class _ListPressaoArterialState extends State<ListPressaoArterial> {
           width: 800,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
-            child: pressoes.isNotEmpty
+            child: widget.pressoes.isNotEmpty
                 ? ListView.builder(
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: PressaoArterialCard(
-                          pressaoArterial: pressoes[index],
+                          pressaoArterial: widget.pressoes[index],
+                            onExclude: () {
+                              setState(() {
+                                widget.pressoes.removeAt(index);
+                              });
+                            }
                         ),
                       );
                     },
-                    itemCount: pressoes.length,
+                    itemCount: widget.pressoes.length,
                   )
                 : const Center(
                     child: Padding(
@@ -202,12 +212,18 @@ class _ListPressaoArterialState extends State<ListPressaoArterial> {
                             width: 120,
                             height: 42,
                             child: ElevatedButton(
-                              onPressed: () {
-                                pressaoArterialRepository.create
+                              onPressed: () async {
+                                int id = await pressaoArterialRepository.create
                                   (widget.pacienteId,
                                     ProjectUtils.convertUsinEphoch(dateController.text),
                                     int.parse(maxController.text),
                                     int.parse(minController.text));
+                                PressaoArterial pressaoArterial = PressaoArterial(id: id,
+                                    idPaciente: widget.pacienteId,
+                                    createAt: ProjectUtils.convertUsinEphoch(dateController.text),
+                                    maxima: int.parse(maxController.text),
+                                    minima: int.parse(minController.text));
+                                updateList(pressaoArterial);
                                 cleanControllers();
                                 Navigator.pop(context);
                               },

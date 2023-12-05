@@ -6,10 +6,11 @@ import 'package:paciente_digital/model/afericoes/pressao_arterial.dart';
 
 class PressaoArterialCard extends StatefulWidget {
   final PressaoArterial pressaoArterial;
-
+  final VoidCallback onExclude;
   const PressaoArterialCard({
     Key? key,
     required this.pressaoArterial,
+    required this.onExclude
   }) : super(key: key);
 
   @override
@@ -72,6 +73,7 @@ class _PressaoArterialCardState extends State<PressaoArterialCard> {
                   IconButton(
                     onPressed: () {
                       pressaoArterialRepository.delete(widget.pressaoArterial.id);
+                      widget.onExclude();
                     },
                     icon: const Icon(
                       Icons.close_sharp,

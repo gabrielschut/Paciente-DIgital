@@ -90,6 +90,11 @@ class _MedicinesListState extends State<MedicinesListScreen> {
                       return ListTile(
                         title: MedicineCard(
                           medicine: widget.entitie.medicamentos[index],
+                            onExclude: () {
+                              setState(() {
+                                widget.entitie.medicamentos.removeAt(index);
+                              });
+                            }
                         ),
                       );
                     },
@@ -175,7 +180,7 @@ class _MedicinesListState extends State<MedicinesListScreen> {
                   ),
                 ),
                 DatePickerField(
-                  hint: "01/01/2001",
+                  hint: ProjectUtils.dateTimeToString(DateTime.now()).replaceAll('-', '/'),
                   dateFieldName: "data inicial",
                   suffix: "",
                   controller: initDateController,

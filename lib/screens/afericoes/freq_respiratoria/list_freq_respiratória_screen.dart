@@ -9,10 +9,11 @@ import 'package:paciente_digital/widgets/components/number_field.dart';
 // ignore: must_be_immutable
 class ListFrequenciaRespiratoria extends StatefulWidget {
   int pacienteId;
-
+  List<FrequenciaRespiratoria> frequencias;
   ListFrequenciaRespiratoria({
     Key? key,
     required this.pacienteId,
+    required this.frequencias
   }) : super(key: key);
 
   @override
@@ -30,7 +31,6 @@ class _ListFrequenciaRespiratoriaState extends State<ListFrequenciaRespiratoria>
 
   FocusNode dateFocusNode = FocusNode();
   FocusNode freqFocusNode = FocusNode();
-  List<FrequenciaRespiratoria> frequencias = [];
 
   @override
   void initState(){
@@ -41,13 +41,19 @@ class _ListFrequenciaRespiratoriaState extends State<ListFrequenciaRespiratoria>
   Future<void> _callDb() async {
     List<FrequenciaRespiratoria> list = await frequenciaRespiratoriaRepository.listAll();
     setState(() {
-      frequencias = list;
+      widget.frequencias = list;
     });
   }
 
   cleanControllers(){
     dateController.clear();
     freqController.clear();
+  }
+
+  void updateList(FrequenciaRespiratoria frequenciaRespiratoria) {
+    setState(() {
+      widget.frequencias.add(frequenciaRespiratoria);
+    });
   }
 
   @override
@@ -96,16 +102,21 @@ class _ListFrequenciaRespiratoriaState extends State<ListFrequenciaRespiratoria>
           width: 800,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
-            child: frequencias.isNotEmpty
+            child: widget.frequencias.isNotEmpty
                 ? ListView.builder(
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: CardFrequenciaRespiratoria(
-                          frequenciaRespiratoria: frequencias[index],
+                          frequenciaRespiratoria: widget.frequencias[index],
+                            onExclude: () {
+                              setState(() {
+                                widget.frequencias.removeAt(index);
+                              });
+                            }
                         ),
                       );
                     },
-                    itemCount: frequencias.length,
+                    itemCount: widget.frequencias.length,
                   )
                 : const Center(
                     child: Padding(
@@ -191,11 +202,14 @@ class _ListFrequenciaRespiratoriaState extends State<ListFrequenciaRespiratoria>
                             width: 120,
                             height: 42,
                             child:  ElevatedButton(
-                              onPressed: () {
-                                frequenciaRespiratoriaRepository.create(widget.pacienteId,
+                              onPressed: () async {
+                                int id = await frequenciaRespiratoriaRepository.create(widget.pacienteId,
                                     ProjectUtils.convertUsinEphoch(dateController.text),
-                                double.parse(freqController.text)
-                                );
+                                double.parse(freqController.text));
+                                FrequenciaRespiratoria frequenciaRespiratoria = FrequenciaRespiratoria(
+                                    id: id, createAt: ProjectUtils.convertUsinEphoch(dateController.text),
+                                    idPaciente: widget.pacienteId, frequencia: double.parse(freqController.text));
+                                updateList(frequenciaRespiratoria);
                                 cleanControllers();
                                 Navigator.pop(context);
                               },

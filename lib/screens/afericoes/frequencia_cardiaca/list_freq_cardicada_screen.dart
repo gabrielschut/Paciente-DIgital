@@ -9,8 +9,10 @@ import 'package:paciente_digital/widgets/components/number_field.dart';
 // ignore: must_be_immutable
 class ListFrequenciaCardiaca extends StatefulWidget {
   int pacienteId;
+  List<FrenquenciaCardiaca> frequenciasList;
+
   ListFrequenciaCardiaca(
-      {Key? key, required this.pacienteId})
+      {Key? key, required this.frequenciasList, required this.pacienteId})
       : super(key: key);
 
   @override
@@ -18,31 +20,37 @@ class ListFrequenciaCardiaca extends StatefulWidget {
 }
 
 class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
-
   TextEditingController dateController = TextEditingController();
   TextEditingController frequenciaController = TextEditingController();
 
   FocusNode dateFocusNode = FocusNode();
   FocusNode frequenciaFocusNode = FocusNode();
-  List<FrenquenciaCardiaca> frequenciasList = [];
 
-  cleanControllers(){
+  cleanControllers() {
     frequenciaController.clear();
     dateController.clear();
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _callDb();
   }
 
-  FrequenciaCardiacaRepository frequenciaCardiacaRepository = FrequenciaCardiacaRepository();
+  FrequenciaCardiacaRepository frequenciaCardiacaRepository =
+      FrequenciaCardiacaRepository();
 
   Future<void> _callDb() async {
-    List<FrenquenciaCardiaca> list = await frequenciaCardiacaRepository.listAll();
+    List<FrenquenciaCardiaca> list =
+        await frequenciaCardiacaRepository.listAll();
     setState(() {
-      frequenciasList = list;
+      widget.frequenciasList = list;
+    });
+  }
+
+  void updateList(FrenquenciaCardiaca frequenciaCardiaca) {
+    setState(() {
+      widget.frequenciasList.add(frequenciaCardiaca);
     });
   }
 
@@ -54,10 +62,7 @@ class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
           padding: EdgeInsets.only(left: 12),
           child: Text(
             "Frequências cardíacas",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 26
-            ),
+            style: TextStyle(color: Colors.white, fontSize: 26),
           ),
         ),
       ),
@@ -92,16 +97,21 @@ class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
           width: 800,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
-            child: frequenciasList.isNotEmpty
+            child: widget.frequenciasList.isNotEmpty
                 ? ListView.builder(
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: CardFreqCardiaca(
-                          frenquenciaCardiaca: frequenciasList[index],
+                          frenquenciaCardiaca: widget.frequenciasList[index],
+                            onExclude: () {
+                              setState(() {
+                                widget.frequenciasList.removeAt(index);
+                              });
+                            }
                         ),
                       );
                     },
-                    itemCount: frequenciasList.length,
+                    itemCount: widget.frequenciasList.length,
                   )
                 : const Center(
                     child: Padding(
@@ -142,7 +152,8 @@ class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
                       child: SizedBox(
                         width: 252,
                         child: DatePickerField(
-                          hint: ProjectUtils.dateTimeToString(DateTime.now()).replaceAll('-', '/'),
+                          hint: ProjectUtils.dateTimeToString(DateTime.now())
+                              .replaceAll('-', '/'),
                           dateFieldName: "Data da medição",
                           suffix: "",
                           controller: dateController,
@@ -174,8 +185,9 @@ class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
                               height: 42,
                               child: ElevatedButton(
                                 style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty
-                                      .resolveWith<Color?>((states) {
+                                  backgroundColor:
+                                      MaterialStateProperty.resolveWith<Color?>(
+                                          (states) {
                                     return Colors.redAccent.shade200;
                                   }),
                                 ),
@@ -194,20 +206,33 @@ class _ListFrequenciaCardiacaState extends State<ListFrequenciaCardiaca> {
                             SizedBox(
                               width: 120,
                               height: 42,
-                              child:  ElevatedButton(
-                                onPressed: () {
-                                  frequenciaCardiacaRepository.create(widget.pacienteId,
-                                      ProjectUtils.convertUsinEphoch(dateController.text),
-                                      double.parse(frequenciaController.text));
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  int id = await frequenciaCardiacaRepository.create(
+                                          widget.pacienteId,
+                                          ProjectUtils.convertUsinEphoch(
+                                              dateController.text),
+                                          double.parse(
+                                              frequenciaController.text));
+                                  FrenquenciaCardiaca frequenciaCardiaca =
+                                      FrenquenciaCardiaca(
+                                          id: id,
+                                          idPaciente: widget.pacienteId,
+                                          createAt:
+                                              ProjectUtils.convertUsinEphoch(
+                                                  dateController.text),
+                                          frequencia: double.parse(
+                                              frequenciaController.text));
+                                  updateList(frequenciaCardiaca);
                                   cleanControllers();
                                   Navigator.pop(context);
                                 },
                                 style: ButtonStyle(
                                   backgroundColor:
-                                  MaterialStateProperty.resolveWith<Color?>(
+                                      MaterialStateProperty.resolveWith<Color?>(
                                           (states) {
-                                        return Colors.green.shade300;
-                                      }),
+                                    return Colors.green.shade300;
+                                  }),
                                 ),
                                 child: const Text(
                                   "Salvar",

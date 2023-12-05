@@ -6,8 +6,8 @@ import 'package:paciente_digital/db/reclamacoes_repository.dart';
 
 class ReclamacoesCard extends StatefulWidget {
   final Reclamacoes reclamacao;
-
-  const ReclamacoesCard({Key? key, required this.reclamacao}) : super(key: key);
+  final VoidCallback onExclude;
+  const ReclamacoesCard({Key? key, required this.reclamacao, required this.onExclude}) : super(key: key);
 
   @override
   State<ReclamacoesCard> createState() => _ReclamacoesCardState();
@@ -71,6 +71,7 @@ class _ReclamacoesCardState extends State<ReclamacoesCard> {
                   IconButton(
                     onPressed: () {
                       reclamacoesRepository.delete(widget.reclamacao.id);
+                      widget.onExclude();
                     },
                     icon: const Icon(
                       Icons.close_sharp,

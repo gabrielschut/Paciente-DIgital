@@ -6,10 +6,11 @@ import 'package:paciente_digital/db/frequenci_respiratoria_repository.dart';
 
 class CardFrequenciaRespiratoria extends StatefulWidget {
   final FrequenciaRespiratoria frequenciaRespiratoria;
-
+  final VoidCallback onExclude;
   const CardFrequenciaRespiratoria({
     Key? key,
     required this.frequenciaRespiratoria,
+    required this.onExclude
   }) : super(key: key);
 
   @override
@@ -72,6 +73,7 @@ class _CardFrequenciaRespiratoriaState extends State<CardFrequenciaRespiratoria>
                   IconButton(
                     onPressed: () {
                       frequenciaRespiratoriaRepository.delete(widget.frequenciaRespiratoria.id);
+                      widget.onExclude();
                     },
                     icon: const Icon(
                       Icons.close_sharp,

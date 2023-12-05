@@ -6,10 +6,11 @@ import 'package:paciente_digital/db/eliminacoes_repository.dart';
 
 class EliminacaoCard extends StatefulWidget {
   final Eliminacoes eliminacao;
-
+  final VoidCallback onExclude;
   const EliminacaoCard({
     Key? key,
     required this.eliminacao,
+    required this.onExclude
   }) : super(key: key);
 
   @override
@@ -72,6 +73,7 @@ class _EliminacaoCardState extends State<EliminacaoCard> {
                   IconButton(
                     onPressed: () {
                       eliminacoesRepository.delete(widget.eliminacao.id);
+                      widget.onExclude();
                     },
                     icon: const Icon(
                       Icons.close_sharp,

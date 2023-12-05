@@ -6,10 +6,11 @@ import 'package:paciente_digital/db/glicemia_repository.dart';
 
 class GlicemiaCard extends StatefulWidget {
   final Glicemia glicemia;
-
+  final VoidCallback onExclude;
   const GlicemiaCard({
     Key? key,
     required this.glicemia,
+    required this.onExclude
   }) : super(key: key);
 
   @override
@@ -72,6 +73,7 @@ class _GlicemiaCardState extends State<GlicemiaCard> {
                   IconButton(
                     onPressed: () {
                       glicemiaRepository.delete(widget.glicemia.id);
+                      widget.onExclude();
                     },
                     icon: const Icon(
                       Icons.close_sharp,
