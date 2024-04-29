@@ -1,15 +1,13 @@
+class Reclamacoes {
 
-
-class Reclamacoes{
-  int? id ;
+  int id;
   int idPaciente;
-  final DateTime createAt;
+  int createAt;
   String reclamacao;
 
-  Reclamacoes({
-    this.id,
-    required this.idPaciente,
-    required this.createAt,
-    required this.reclamacao
-  });
+  Reclamacoes(
+      {required this.id,
+      required this.idPaciente,
+      required this.createAt,
+      required this.reclamacao});
 }

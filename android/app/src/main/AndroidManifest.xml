@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.itapetiniga.fatec.paciente_digital">
    <application
-        android:label="paciente_digital"
+        android:label="Paciente Digital"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

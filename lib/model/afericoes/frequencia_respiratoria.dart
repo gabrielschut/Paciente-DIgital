@@ -1,14 +1,13 @@
-class FrequenciaRespiratoria{
-  int? id;
+class FrequenciaRespiratoria {
+
+  int id;
   int idPaciente;
-  DateTime createAt ;
-  int frequencia;
+  int createAt;
+  double frequencia;
 
-  FrequenciaRespiratoria({
-    this.id,
-    required this.createAt,
-    required this.idPaciente,
-    required this.frequencia
-  });
-
+  FrequenciaRespiratoria(
+      {required this.id,
+      required this.createAt,
+      required this.idPaciente,
+      required this.frequencia});
 }

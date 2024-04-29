@@ -1,13 +1,13 @@
-class Glicemia{
-  int? id ;
+class Glicemia {
+
+  int id;
   int idPaciente;
-  DateTime createA;
+  int createAt;
   double value;
 
-  Glicemia({
-    this.id,
-    required this.idPaciente,
-    required this.createA,
-    required this.value
-  });
+  Glicemia(
+      {required this.id,
+      required this.idPaciente,
+      required this.createAt,
+      required this.value});
 }
